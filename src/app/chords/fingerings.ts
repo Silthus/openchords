@@ -1,4 +1,4 @@
-import { chordTones, type Chord } from "../../sheet";
+import { chordTones, essentialTones, type Chord } from "../../sheet";
 import guitar from "./chords-db/guitar.json";
 
 export type Fingering = { frets: number[]; fingers: number[]; barres: number[]; baseFret: number };
@@ -17,7 +17,8 @@ export function playsChord(fingering: Fingering, chord: Chord): boolean {
   const sounding = pitchesOf(fingering);
   const tones = chordTones(chord);
   const bassFits = chord.bass === undefined || sounding[0] === chord.bass;
-  return bassFits && sounding.every((pitch) => tones.includes(pitch));
+  const complete = essentialTones(chord).every((tone) => sounding.includes(tone));
+  return bassFits && complete && sounding.every((pitch) => tones.includes(pitch));
 }
 
 export function barresOf({ frets, fingers, barres }: Fingering): Barre[] {

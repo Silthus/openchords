@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { chordsIn, chordTones, isChord, notationOf, parse, readChord } from ".";
+import { chordsIn, chordTones, essentialTones, isChord, notationOf, parse, readChord } from ".";
 
 describe("readChord", () => {
   test.each([
@@ -102,5 +102,19 @@ describe("chordTones", () => {
 
   test("adds the bass of a slash chord", () => {
     expect(chordTones(readChord("Cmaj7/A")!)).toEqual([0, 4, 7, 11, 9]);
+  });
+});
+
+describe("essentialTones", () => {
+  test.each([
+    ["C", [0, 4]],
+    ["C5", [0, 7]],
+    ["C9", [0, 4, 10, 2]],
+    ["Cm11", [0, 3, 10, 5]],
+    ["C13", [0, 4, 10, 9]],
+    ["Cdim", [0, 3, 6]],
+    ["Caug", [0, 4, 8]],
+  ])("leaves out of %s only the tones a guitar voicing may drop", (written, tones) => {
+    expect(essentialTones(readChord(written)!)).toEqual(tones);
   });
 });

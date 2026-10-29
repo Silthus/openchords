@@ -39,6 +39,9 @@ const intervals: Record<string, number[]> = {
 
 export const chordSuffixes = Object.keys(intervals);
 
+const perfectFifth = 7;
+const droppableIntervals: Record<string, number[]> = { "5": [], "11": [7, 2], m11: [7, 2], "13": [7, 2, 5] };
+
 const naturals: Record<string, number> = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11, H: 11 };
 const accidentals: Array<[string, number]> = [
   ["is", 1],
@@ -77,6 +80,11 @@ export function notationOf(writtenChords: readonly string[]): Notation {
 export function chordTones({ root, suffix, bass }: Chord): number[] {
   const tones = intervals[suffix]!.map((interval) => (root + interval) % 12);
   return bass === undefined ? tones : [...tones, bass];
+}
+
+export function essentialTones({ root, suffix }: Chord): number[] {
+  const droppable = droppableIntervals[suffix] ?? [perfectFifth];
+  return intervals[suffix]!.filter((interval) => !droppable.includes(interval)).map((interval) => (root + interval) % 12);
 }
 
 export function chordsIn(sheet: ParsedSheet): Chord[] {

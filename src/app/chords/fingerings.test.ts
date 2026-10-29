@@ -33,6 +33,11 @@ describe("fingeringFor", () => {
   test("skips a chords-db position that plays another chord", () => {
     expect(fingeringOf("C#aug")).not.toEqual(fingeringOf("C#7sus4"));
     expect(fingeringOf("Emadd9")).not.toEqual(fingeringOf("Fmadd9"));
+    expect(fingeringOf("C9")).toMatchObject({ frets: [3, 3, 2, 3, 3, 3], baseFret: 1 });
+  });
+
+  test("has nothing for a chord whose every chords-db position misses a tone that defines it", () => {
+    expect(fingeringOf("Cm9/Bb")).toBeUndefined();
   });
 
   test("gives every chord a fingering that plays it", () => {
@@ -48,6 +53,11 @@ describe("playsChord", () => {
 
   test("is true when every sounding string plays a tone of the chord", () => {
     expect(playsChord({ frets: [-1, 0, 2, 2, 1, 0], fingers: [], barres: [], baseFret: 1 }, am)).toBe(true);
+  });
+
+  test("is false when a tone that defines the chord is missing", () => {
+    const cAdd9 = { frets: [-1, 3, 2, 0, 3, 0], fingers: [], barres: [], baseFret: 1 };
+    expect(playsChord(cAdd9, readChord("C9")!)).toBe(false);
   });
 
   test("is false when a string plays a tone outside the chord", () => {
