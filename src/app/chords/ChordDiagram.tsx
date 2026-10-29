@@ -1,5 +1,5 @@
 import type { Chord } from "../../sheet";
-import { fingeringFor, type Fingering } from "./fingerings";
+import { barresOf, fingeringFor, type Barre, type Fingering } from "./fingerings";
 
 const strings = [0, 1, 2, 3, 4, 5];
 const fretRows = [0, 1, 2, 3, 4];
@@ -37,14 +37,16 @@ function NoDiagram({ written }: { written: string }) {
 }
 
 function Fingers({ fingering }: { fingering: Fingering }) {
+  const barres = barresOf(fingering);
+  const barred = (string: number) => barres.some((barre) => barre.strings.includes(string));
   return (
     <g stroke="currentColor" fill="currentColor">
       <Neck baseFret={fingering.baseFret} />
       {fingering.frets.map((fret, string) => (
-        <StringMark key={string} string={string} fret={fret} finger={fingering.fingers[string]} barred={fingering.barres.includes(fret)} />
+        <StringMark key={string} string={string} fret={fret} finger={fingering.fingers[string]} barred={barred(string)} />
       ))}
-      {fingering.barres.map((fret) => (
-        <Barre key={fret} fret={fret} fingering={fingering} />
+      {barres.map((barre) => (
+        <BarreMark key={`${barre.fret}-${barre.finger}`} barre={barre} />
       ))}
     </g>
   );
@@ -83,14 +85,13 @@ function Muted({ string }: { string: number }) {
   );
 }
 
-function Barre({ fret, fingering }: { fret: number; fingering: Fingering }) {
-  const barred = strings.filter((string) => fingering.frets[string] === fret);
+function BarreMark({ barre: { fret, finger, strings: barred } }: { barre: Barre }) {
   const first = barred[0]!;
   const last = barred[barred.length - 1]!;
   return (
     <>
       <rect x={xOf(first) - 4.5} y={yOf(fret) - 4.5} width={xOf(last) - xOf(first) + 9} height={9} rx={4.5} stroke="none" />
-      <FingerNumber x={(xOf(first) + xOf(last)) / 2} y={yOf(fret)} finger={fingering.fingers[first]} />
+      <FingerNumber x={(xOf(first) + xOf(last)) / 2} y={yOf(fret)} finger={finger} />
     </>
   );
 }

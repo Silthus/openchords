@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { chordsIn, isChord, notationOf, parse, readChord } from ".";
+import { chordsIn, chordTones, isChord, notationOf, parse, readChord } from ".";
 
 describe("readChord", () => {
   test.each([
@@ -86,5 +86,21 @@ describe("chordsIn", () => {
       ["B", 10],
       ["H7", 11],
     ]);
+  });
+});
+
+describe("chordTones", () => {
+  test.each([
+    ["C", [0, 4, 7]],
+    ["Am7", [9, 0, 4, 7]],
+    ["C#aug", [1, 5, 9]],
+    ["Em", [4, 7, 11]],
+    ["Bm7b5", [11, 2, 5, 9]],
+  ])("lists the pitch classes of %s", (written, tones) => {
+    expect(chordTones(readChord(written)!)).toEqual(tones);
+  });
+
+  test("adds the bass of a slash chord", () => {
+    expect(chordTones(readChord("Cmaj7/A")!)).toEqual([0, 4, 7, 11, 9]);
   });
 });
