@@ -37,7 +37,19 @@ describe("Catalog", () => {
     expect(song?.sheets[0]?.chordPro).toContain("There [Am]is a [C]house in [D]New [F]Orleans");
   });
 
-  test("opening a Song again stores nothing twice", async () => {
+  test("opening a Song fills it once, however often it is opened", async () => {
+    const backend = testBackend();
+    const songId = await backend.run((ctx) =>
+      ctx.db.insert("songs", { title: "House of the Rising Sun", artist: "Traditional", builtInId: "house-of-the-rising-sun" }),
+    );
+    expect((await backend.query(api.catalog.index.song, { songId }))?.sheets).toHaveLength(0);
+    await backend.mutation(api.catalog.index.open, { songId });
+    await backend.mutation(api.catalog.index.open, { songId });
+    const song = await backend.query(api.catalog.index.song, { songId });
+    expect(song?.sheets.map((sheet) => sheet.name)).toEqual(["Classic", "Easy shapes", "Bluesy"]);
+  });
+
+  test("opening a seeded Song again stores nothing twice", async () => {
     const backend = await seeded();
     const songId = await risingSunId(backend);
     await backend.mutation(api.catalog.index.open, { songId });
