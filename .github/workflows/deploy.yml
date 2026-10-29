@@ -1,0 +1,21 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx convex deploy --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL
+      - run: bunx static-hosting upload --prod --dist dist
