@@ -1,0 +1,29 @@
+sequenceDiagram
+  autonumber
+  actor Her
+  participant App as App (phone)
+  participant Cat as Catalog
+  participant Src as Sources
+  participant LR as LRCLIB
+  participant AI as AI model
+  Her->>App: touches a search result
+  App->>Cat: prewarm song(songId) on touchstart
+  Her->>App: taps it, /songs/$songId
+  App->>Cat: song(songId), live query
+  Cat-->>App: Song, no sheets, fill idle
+  App->>Cat: open(songId)
+  Cat->>Cat: no fill row yet: insert running, schedule fill
+  Cat->>Src: lyricsFor(song)
+  Src->>LR: GET /api/get, title, artist, album, duration
+  LR-->>Src: record with plain and synced lyrics
+  Src-->>Cat: Lyrics + provenance
+  Cat->>Cat: store Lyrics once per Song
+  Cat-->>App: pushed: words-only sheet, fill running
+  Cat->>Src: chordsFor(song, lyrics)
+  Src->>Src: builtIn: null, ChoCo: null
+  Src->>AI: place chords over these lines
+  AI-->>Src: chords per line and word
+  Src-->>Cat: ChordDraft: chord layer, origin ai, provenance
+  Cat->>Cat: Sheet.compose(lyrics, layer), store Chord sheet "AI draft"
+  Cat-->>App: pushed: Chord sheet, fill done
+  App->>App: Sheet.parse, apply her transpose and capo

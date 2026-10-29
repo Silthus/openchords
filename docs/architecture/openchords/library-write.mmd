@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  actor Her
+  participant App as App (phone)
+  participant Lib as Library
+  participant Dev as device storage
+  participant Acc as Access
+  participant LC as library (Convex)
+  Her->>App: capo +1 on a Song
+  App->>Lib: update(songId, { capo })
+  alt signed out (slice 1)
+    Lib->>Dev: write entry, updatedAt now
+  else signed in (login slice)
+    Lib->>LC: save(entry)
+    LC->>Acc: requireInvited(ctx)
+    Acc-->>LC: userId
+    LC->>LC: upsert by user and Song, newer updatedAt wins
+  end
+  Note over Lib,LC: first sign-in only
+  Lib->>LC: importDevice(all device entries)
+  LC->>LC: merge each by updatedAt, once per user
+  LC-->>Lib: done
+  Lib->>Dev: mark imported

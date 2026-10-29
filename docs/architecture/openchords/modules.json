@@ -1,0 +1,302 @@
+{
+ "rows": [
+  {
+   "modules": [
+    {
+     "id": "her",
+     "name": "Her, on her phone",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "ci",
+     "name": "CI + e2e tests",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "michael",
+     "name": "Michael",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "google",
+     "name": "Google",
+     "external": true,
+     "seam": []
+    }
+   ]
+  },
+  {
+   "modules": [
+    {
+     "id": "app",
+     "name": "App",
+     "note": "phone, UI only",
+     "flex": 1.1,
+     "seam": [
+      "/songs/$songId"
+     ],
+     "chips": [
+      {
+       "text": "song screen"
+      },
+      {
+       "text": "search"
+      },
+      {
+       "text": "Link + prewarm"
+      }
+     ]
+    },
+    {
+     "id": "sheet",
+     "name": "Sheet",
+     "note": "shared kernel",
+     "seam": [
+      "parse",
+      "compose",
+      "transpose"
+     ],
+     "chips": [
+      {
+       "text": "ChordPro"
+      },
+      {
+       "text": "chord names"
+      }
+     ]
+    },
+    {
+     "id": "library",
+     "name": "Library",
+     "note": "context",
+     "flex": 0.8,
+     "seam": [
+      "useLibrary"
+     ],
+     "chips": [
+      {
+       "text": "device"
+      },
+      {
+       "text": "Convex",
+       "followUp": true
+      }
+     ]
+    },
+    {
+     "id": "access",
+     "name": "Access",
+     "note": "generic context",
+     "flex": 0.8,
+     "seam": [
+      "requireInvited"
+     ],
+     "chips": [
+      {
+       "id": "acc-inv",
+       "text": "invites"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "modules": [
+    {
+     "id": "catalog",
+     "name": "Catalog",
+     "note": "core context",
+     "seam": [
+      "search",
+      "song",
+      "open"
+     ],
+     "chips": [
+      {
+       "id": "cat-compose",
+       "text": "compose"
+      },
+      {
+       "text": "fill once"
+      },
+      {
+       "id": "cat-prov",
+       "text": "provenance"
+      },
+      {
+       "text": "Song",
+       "wide": false
+      },
+      {
+       "id": "cat-sheet",
+       "text": "Chord sheet: origin"
+      },
+      {
+       "text": "Lyrics"
+      }
+     ]
+    },
+    {
+     "id": "sources",
+     "name": "Sources",
+     "note": "anti-corruption layer",
+     "flex": 1.3,
+     "seam": [
+      "findSongs",
+      "lyricsFor",
+      "chordsFor"
+     ],
+     "chips": [
+      {
+       "id": "src-built",
+       "text": "builtIn",
+       "wide": true
+      },
+      {
+       "id": "src-mb",
+       "text": "MusicBrainz"
+      },
+      {
+       "id": "src-lrc",
+       "text": "LRCLIB"
+      },
+      {
+       "id": "src-choco",
+       "text": "ChoCo"
+      },
+      {
+       "id": "src-ai",
+       "text": "AI"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "modules": [
+    {
+     "id": "mb",
+     "name": "MusicBrainz",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "lrclib",
+     "name": "LRCLIB",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "choco",
+     "name": "ChoCo",
+     "external": true,
+     "seam": []
+    },
+    {
+     "id": "ai",
+     "name": "AI model",
+     "external": true,
+     "seam": []
+    }
+   ]
+  }
+ ],
+ "wires": [
+  {
+   "from": "her",
+   "to": "app-seam",
+   "label": "taps",
+   "fromAt": 0.6,
+   "toAt": 0.4
+  },
+  {
+   "from": "ci",
+   "to": "access-seam",
+   "label": "TestUser",
+   "fromAt": 0.7,
+   "toAt": 0.2,
+   "labelAt": 0.3
+  },
+  {
+   "from": "michael",
+   "to": "access-seam",
+   "label": "invites:add",
+   "fromAt": 0.7,
+   "toAt": 0.6,
+   "labelAt": 0.3
+  },
+  {
+   "from": "access",
+   "to": "google",
+   "fromSide": "top",
+   "toSide": "bottom",
+   "fromAt": 0.9,
+   "toAt": 0.6
+  },
+  {
+   "from": "app",
+   "to": "sheet-seam",
+   "fromSide": "right",
+   "toSide": "left",
+   "fromAt": 0.15,
+   "toAt": 0.5
+  },
+  {
+   "from": "app",
+   "to": "catalog-seam",
+   "fromAt": 0.2,
+   "toAt": 0.12
+  },
+  {
+   "from": "catalog",
+   "to": "sheet",
+   "fromSide": "top",
+   "toSide": "bottom",
+   "fromAt": 0.85,
+   "toAt": 0.3,
+   "label": "compose",
+   "labelAt": 0.5
+  },
+  {
+   "from": "catalog",
+   "to": "sources-seam",
+   "fromSide": "right",
+   "toSide": "left",
+   "fromAt": 0.2,
+   "toAt": 0.5
+  },
+  {
+   "from": "src-mb",
+   "to": "mb",
+   "fromAt": 0.5
+  },
+  {
+   "from": "src-lrc",
+   "to": "lrclib",
+   "fromAt": 0.5,
+   "label": "app key",
+   "labelAt": 0.6
+  },
+  {
+   "from": "src-choco",
+   "to": "choco",
+   "fromAt": 0.5
+  },
+  {
+   "from": "src-ai",
+   "to": "ai",
+   "fromAt": 0.5
+  },
+  {
+   "from": "library",
+   "to": "catalog-seam",
+   "label": "ids only",
+   "fromAt": 0.3,
+   "toAt": 0.85,
+   "labelAt": 0.45
+  }
+ ]
+}

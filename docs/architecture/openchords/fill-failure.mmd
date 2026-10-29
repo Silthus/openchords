@@ -1,0 +1,24 @@
+sequenceDiagram
+  autonumber
+  participant App as App (phone)
+  participant Cat as Catalog
+  participant Src as Sources
+  participant LR as LRCLIB
+  App->>Cat: open(songId)
+  Cat->>Src: lyricsFor(song)
+  Src->>LR: GET /api/get
+  alt no record within 2 s of the duration
+    LR-->>Src: 404, or only bad matches
+    Src-->>Cat: null
+    Cat->>Cat: lyrics missing, fill done, no Chord sheet
+    Cat-->>App: pushed: "No lyrics for this Song yet"
+  else 429 or 5xx
+    LR-->>Src: error, Retry-After
+    Src-->>Cat: throws SourceUnavailable(retryAfterMs)
+    Cat->>Cat: attempts + 1, schedule retry with backoff
+    Cat->>Cat: after 3 attempts: fill failed, retryAt set
+    Cat-->>App: pushed: "Could not load, try again later"
+    App->>Cat: open(songId) after retryAt
+    Cat->>Cat: reschedules the fill
+  end
+  Note over Cat,Src: a throwing source stops the chain, no fall-through to AI
