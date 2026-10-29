@@ -4,7 +4,7 @@ export const scarboroughFair: BuiltInSong = {
   builtInId: "scarborough-fair",
   sheets: [
     {
-      name: "Built in",
+      name: "Classic",
       chordPro: `{title: Scarborough Fair}
 {artist: Traditional}
 {key: Am}

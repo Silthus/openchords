@@ -4,7 +4,7 @@ export const amazingGrace: BuiltInSong = {
   builtInId: "amazing-grace",
   sheets: [
     {
-      name: "Built in",
+      name: "Classic",
       chordPro: `{title: Amazing Grace}
 {artist: John Newton}
 {key: G}

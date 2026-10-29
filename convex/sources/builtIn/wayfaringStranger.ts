@@ -4,7 +4,7 @@ export const wayfaringStranger: BuiltInSong = {
   builtInId: "wayfaring-stranger",
   sheets: [
     {
-      name: "Built in",
+      name: "Classic",
       chordPro: `{title: Wayfaring Stranger}
 {artist: Traditional}
 {key: Am}

@@ -4,7 +4,7 @@ export const shenandoah: BuiltInSong = {
   builtInId: "shenandoah",
   sheets: [
     {
-      name: "Built in",
+      name: "Classic",
       chordPro: `{title: Shenandoah}
 {artist: Traditional}
 {key: D}

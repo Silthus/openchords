@@ -4,7 +4,7 @@ export const redRiverValley: BuiltInSong = {
   builtInId: "red-river-valley",
   sheets: [
     {
-      name: "Built in",
+      name: "Classic",
       chordPro: `{title: Red River Valley}
 {artist: Traditional}
 {key: G}
