@@ -5,12 +5,13 @@ sequenceDiagram
   participant Src as Sources
   participant LR as LRCLIB
   App->>Cat: open(songId)
-  Cat->>Src: lyricsFor(song)
+  Cat->>Cat: new run: running, attempts 0, startedAt now
+  Cat->>Src: lyricsFor(song), skipped if lyrics ready
   Src->>LR: GET /api/get
   alt no record within 2 s of the duration
     LR-->>Src: 404, or only bad matches
     Src-->>Cat: null
-    Cat->>Cat: lyrics missing, fill done, no Chord sheet
+    Cat->>Cat: lyrics missing, chords none, fill done
     Cat-->>App: pushed: "No lyrics for this Song yet"
   else 429 or 5xx
     LR-->>Src: error, Retry-After
@@ -19,6 +20,10 @@ sequenceDiagram
     Cat->>Cat: after 3 attempts: fill failed, retryAt set
     Cat-->>App: pushed: "Could not load, try again later"
     App->>Cat: open(songId) after retryAt
-    Cat->>Cat: reschedules the fill
+    Cat->>Cat: new run, resumes at the chords step
+  else the action crashes or times out
+    Cat->>Cat: catch-all marks failed, or the row stays running
+    App->>Cat: open(songId) when startedAt is older than 15 min
+    Cat->>Cat: stale run: start a new run
   end
   Note over Cat,Src: a throwing source stops the chain, no fall-through to AI

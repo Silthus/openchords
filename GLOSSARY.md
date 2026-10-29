@@ -5,7 +5,7 @@ An ad-free app for playing songs on the guitar: search a song, read its chords o
 ## Catalog
 
 **Song**:
-A piece of music as people search for it, identified by its title, artist and duration.
+A piece of music as people search for it, identified by its artist and title. Every recording of it, studio, live or remaster, is the same Song.
 _Avoid_: track, recording, tune
 
 **Lyrics**:

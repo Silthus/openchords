@@ -16,7 +16,7 @@ The page itself is [`openchords/modules.html`](openchords/modules.html), generat
 | --- | --- | --- | --- | --- |
 | Catalog | core | Song, Lyrics, Chord sheet, the fill | `search`, `song`, `open` | `convex/catalog/` |
 | Sources | anti-corruption layer | adapters to outside systems | `findSongs`, `lyricsFor`, `chordsFor` | `convex/sources/` |
-| Library | supporting | Library entries for one person | `useLibrary`, `useLibraryEntry` (phone), `library.*` (Convex, login slice) | `src/app/library/`, `convex/library/` |
+| Library | supporting | Library entries for one person | `useLibrary`, `useLibraryEntry` (phone), `library.*` (Convex, login slice) | `src/library/`, `convex/library/` |
 | Access | generic | users, invites | `requireInvited`, `access/invites:add` | `convex/access/` |
 | Sheet | shared kernel | chords, keys, capo, transpose, ChordPro | `parse`, `compose`, `transpose`, `shapes` | `src/sheet/` |
 | App | UI, not a context | routes, screens, prewarm links | routes | `src/app/` |
@@ -26,14 +26,15 @@ The page itself is [`openchords/modules.html`](openchords/modules.html), generat
 - **App → Catalog, Library, Sheet.** It calls their interfaces and holds no domain rules.
 - **Catalog → Sources.** Catalog is downstream. Sources translates every outside model into Catalog's types, so no MusicBrainz, LRCLIB, ChoCo or AI shape crosses the seam.
 - **Catalog → Sheet.** Catalog composes the stored ChordPro with `Sheet.compose`. The phone parses it with `Sheet.parse`. Both sides import the same code.
+- **Sources → Sheet.** Types and validation only: a `ChordDraft` carries a `ChordLayer`, and the AI adapter validates its output against it.
 - **Library → Catalog.** By id only: a Library entry stores a `SongId` and a `ChordSheetId`, and never reads Catalog's tables.
 - **Access → all.** Other contexts see a `UserId` and call `requireInvited`. Nothing else about users leaks.
 
 ### Rules between contexts
 
-1. A context is a folder with one public file (`index.ts`). One lint rule (`no-restricted-imports` on `convex/*/!(index)` and `src/sheet/*/!(index)` from outside) forbids deep imports.
+1. A context is a folder with one public file (`index.ts`). One lint rule (`no-restricted-imports` on `convex/*/!(index)`, `src/sheet/*/!(index)` and `src/library/*/!(index)` from outside) forbids deep imports.
 2. Contexts reference each other by id only and never read another context's tables.
-3. There are no events, no bus and no Convex components. A context calls another's interface directly. Convex's reactive queries cover "tell me when it changed".
+3. There are no events, no bus and no Convex component per context. Library components such as `@convex-dev/static-hosting` and `@convex-dev/rate-limiter` are fine. A context calls another's interface directly. Convex's reactive queries cover "tell me when it changed".
 4. Every piece of stored content (Lyrics, Chord sheet) carries **provenance**: source, record id at the source, licence tag, fetch time.
 
 ### Not doing now
@@ -51,11 +52,14 @@ songs: defineTable({
   artist: v.string(),
   album: v.optional(v.string()),
   durationSec: v.optional(v.number()),
-  externalIds: v.object({ musicbrainz: v.optional(v.string()), builtIn: v.optional(v.string()) }),
+  identityKey: v.string(),                      // normalised "artist|title": one Song per work, not per recording
+  musicbrainzIds: v.array(v.string()),           // every recording MBID merged into this Song
+  builtInId: v.optional(v.string()),
   searchText: v.string(),                       // "title artist", lowercased
+  takenDownAt: v.optional(v.number()),          // set by takedown: open refuses to refill
 })
-  .index("by_musicbrainz", ["externalIds.musicbrainz"])
-  .index("by_builtIn", ["externalIds.builtIn"])
+  .index("by_identity", ["identityKey"])
+  .index("by_builtIn", ["builtInId"])
   .searchIndex("search", { searchField: "searchText" }),
 
 lyrics: defineTable({                            // at most one per Song
@@ -79,15 +83,17 @@ fills: defineTable({                             // one per Song, the fill state
   songId: v.id("songs"),
   state: v.union(v.literal("running"), v.literal("done"), v.literal("failed")),
   lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
-  attempts: v.number(),
+  chords: v.union(v.literal("pending"), v.literal("ready"), v.literal("none")),
+  attempts: v.number(),                          // transient failures in the current run
+  startedAt: v.number(),                         // a running fill older than 15 min is stale
   retryAt: v.optional(v.number()),
   error: v.optional(v.string()),
 }).index("by_song", ["songId"]),
 
 // shared validator
 const provenance = v.object({
-  source: v.union(v.literal("builtIn"), v.literal("musicbrainz"), v.literal("lrclib"), v.literal("choco"), v.literal("ai")),
-  recordId: v.string(),                          // LRCLIB id, ChoCo JAMS path, AI model id + prompt version
+  source: v.union(v.literal("builtIn"), v.literal("musicbrainz"), v.literal("lrclib"), v.literal("choco"), v.literal("ai"), v.literal("person")),
+  recordId: v.string(),                          // LRCLIB id, ChoCo JAMS path, AI model id + prompt version, UserId
   licence: v.string(),                           // "public-domain", "lrclib-api", "cc-by-4.0", "ai-generated"
   fetchedAt: v.number(),
 });
@@ -105,7 +111,6 @@ libraryEntries: defineTable({
 })
   .index("by_user_song", ["userId", "songId"])
   .index("by_user_saved", ["userId", "saved"]),
-libraryImports: defineTable({ userId: v.id("users"), importedAt: v.number() }).index("by_user", ["userId"]),
 
 // convex/access/schema.ts (login slice)
 ...authTables,
@@ -138,7 +143,7 @@ Source: [`openchords/open-song.mmd`](openchords/open-song.mmd).
 Source: [`openchords/library-write.mmd`](openchords/library-write.mmd).
 
 - Slice 1 writes to device storage only (`localStorage` key `openchords.library.v1`).
-- The login slice adds the Convex adapter. On the first sign-in, `importDevice` merges every device entry by `updatedAt`, once per user (`libraryImports`), and the device marks itself imported. A second device that signs in later merges its own entries the same way, because the merge is per entry, not per user.
+- The login slice adds the Convex adapter. When a device signs in and has not imported yet, `importDevice` merges each of its entries by `updatedAt`, and the device marks itself imported in its own storage. The merge is per entry and idempotent, so a second device that signs in later merges its entries the same way, and a repeated import changes nothing.
 
 ### Most important failure: the fill fails
 
@@ -146,10 +151,13 @@ Source: [`openchords/library-write.mmd`](openchords/library-write.mmd).
 
 Source: [`openchords/fill-failure.mmd`](openchords/fill-failure.mmd).
 
-- **No match** (no LRCLIB record within 2 seconds of the Song's duration): `lyrics: "missing"`, the fill is `done` and no Chord sheet is written. The screen says so. AI drafting never runs without lyrics.
-- **Transient error** (429, 5xx, timeout): Sources throws `SourceUnavailable`. Catalog retries with backoff, honouring `Retry-After`, up to 3 attempts. After that the fill is `failed` with a `retryAt`, and the next `open` after `retryAt` reschedules it.
+- **No match** (no LRCLIB record within 2 seconds of the Song's duration): `lyrics: "missing"`, `chords: "none"`, the fill is `done` and no Chord sheet is written. The screen says so. AI drafting never runs without lyrics.
+- **Transient error** (429, 5xx, timeout): Sources throws `SourceUnavailable`. The fill schedules itself again with backoff, honouring `Retry-After`, up to 3 attempts in one run. After that the fill is `failed` with a `retryAt`, and the next `open` after `retryAt` starts a new run with `attempts` reset to 0.
+- **A run resumes, never repeats.** A new run skips `lyricsFor` when `lyrics` is already `ready`, so LRCLIB is still called once per Song, and only the chords step runs again.
 - **A throwing source stops its chain.** If ChoCo is down, Sources does not fall through to the AI. Otherwise an outage would replace good chords with drafts for good.
-- **AI fails or returns chords that do not parse:** the same as a transient error for the chords step. The Lyrics stay stored and the words-only view stays visible.
+- **The AI cannot place chords:** the AI adapter retries once inside Sources, then returns `null`. The fill is `done` with `chords: "none"`: no retry loop, no repeated AI cost, and the words-only view stays with "No chords yet". A new model or prompt version can refill these Songs later on purpose.
+- **The fill crashes** (a bug, the action time limit, a redeploy mid-call): the fill action wraps `fillSong` in a catch-all that marks the row `failed` with the error and `retryAt` one hour later. Convex never retries a scheduled action, so a crash that skips the catch, such as a timeout, leaves the row `running`. `open` treats a `running` row whose `startedAt` is older than 15 minutes as stale and starts a new run, so no Song spins forever.
+- **Taken down:** a Song with `takenDownAt` never refills, and `song` returns it without Lyrics or Chord sheets.
 
 ## Rung 4: contracts
 
@@ -172,6 +180,7 @@ export type ParsedSheet = { meta: SheetMeta; sections: ParsedSection[]; chordsUs
 
 export function compose(lyrics: readonly string[], layer: ChordLayer | null, meta: SheetMeta): ChordPro;
 export function parse(sheet: ChordPro): ParsedSheet;
+export function transpose(chord: Chord, semitones: number): Chord;
 export function shapes(sheet: ParsedSheet, view: { transpose: number; capo: number }): ParsedSheet;
 export function easierCapo(sheet: ParsedSheet): number | null;   // capo 0..7, fewest barre chords
 ```
@@ -186,7 +195,9 @@ export function easierCapo(sheet: ParsedSheet): number | null;   // capo 0..7, f
 export type Provenance = { source: SourceName; recordId: string; licence: string; fetchedAt: number };
 export type SongHit = {
   title: string; artist: string; album?: string; durationSec?: number;
-  externalIds: { musicbrainz?: string; builtIn?: string };
+  identityKey: string;                     // normalised "artist|title"
+  musicbrainzIds: string[];                // every recording of this work in the answer
+  builtInId?: string;
 };
 export type Lyrics = { lines: string[]; synced?: Array<{ timeMs: number; line: number }>; provenance: Provenance };
 export type ChordDraft = { layer: ChordLayer; origin: "builtIn" | "choco" | "ai"; provenance: Provenance };
@@ -202,18 +213,20 @@ export interface Sources {
 export function sourcesFor(env: SourcesEnv): Sources;   // adapters chosen by OPENCHORDS_SOURCES
 ```
 
-- **Order.** `findSongs` tries builtIn, then MusicBrainz, and merges and dedupes by external id. `lyricsFor` tries builtIn, then LRCLIB. `chordsFor` tries builtIn, then ChoCo, then AI. For lyrics and chords, the first non-null answer wins.
-- **Configuration.** `OPENCHORDS_SOURCES` lists the enabled adapters, for example `builtIn` for slice 1 and previews, or `builtIn,musicbrainz,lrclib,choco,ai` later, and `fake` in tests. `LRCLIB_APP_ID` and `LRCLIB_API_KEY` live only in Convex environment variables, set with `convex env default set` per deployment type.
+- **Order.** `findSongs` tries builtIn, then MusicBrainz. The MusicBrainz adapter folds recordings of the same work (same normalised artist and title) into one hit, keeps every recording MBID, and takes the duration that most recordings share, so a remaster or a live take never becomes a second Song. `lyricsFor` tries builtIn, then LRCLIB. `chordsFor` tries builtIn, then ChoCo, then AI. For lyrics and chords, the first non-null answer wins.
+- **Configuration.** `OPENCHORDS_SOURCES` lists the enabled adapters: `builtIn` for slice 1 and for every preview, `builtIn,musicbrainz,lrclib,choco,ai` on dev and production once real songs land, and `fake` in tests.
+- **Outside sources require invites.** `sourcesFor` throws at load when any outside adapter (`musicbrainz`, `lrclib`, `choco`, `ai`) is enabled and `OPENCHORDS_INVITES` is not `on`. So the real-songs slice cannot ship before the login slice, and nobody on a public URL can trigger LRCLIB, MusicBrainz or AI calls.
+- **Secrets.** `LRCLIB_APP_ID`, `LRCLIB_API_KEY` and the AI credentials live only in Convex environment variables on the dev and production deployments, never as preview defaults, never in the repo or CI logs.
 - **Invariants.**
   - No outside model crosses the seam.
   - Every answer carries provenance.
   - `null` means "this source has nothing". A throw means "try later", and stops the chain.
   - LRCLIB matching picks by title, artist and duration within 2 seconds, never the first hit.
   - The AI adapter receives only the lines it must place chords over, and its output is validated against `ChordLayer` before it returns.
-- **Error modes.** `SourceUnavailable(retryAfterMs)` for 429, 5xx, timeouts and an AI output that fails validation. Anything else is a bug and throws as-is.
+- **Error modes.** `SourceUnavailable(retryAfterMs)` for 429, 5xx and timeouts. An AI output that still fails validation after one retry is `null`, not an error. Anything else is a bug and throws as-is, and the fill's catch-all records it.
 - **Performance.**
   - MusicBrainz: at most 1 request per second app-wide, through the `@convex-dev/rate-limiter` component. When the limit is hit, `findSongs` returns builtIn hits only, so search never waits.
-  - LRCLIB: one request per Song, ever, within the app's allowance of about 6,000 per minute.
+  - LRCLIB: one request per Song, ever. A registered server-side app sends `Lrclib-App-Id` and `Lrclib-Api-Key` and gets an app-wide allowance of about 6,000 requests per minute ([LRCLIB docs, "Client identification"](https://lrclib.net/docs.md)), far above the anonymous 90 per minute per IP.
   - AI: 5 to 30 seconds per Song.
 
 ### Catalog (core context), `convex/catalog/index.ts`
@@ -233,26 +246,32 @@ export const song = query({
       name: v.string(), origin: originValidator, chordPro: v.string(),
     })),
     lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
+    chords: v.union(v.literal("pending"), v.literal("ready"), v.literal("none")),
     fill: v.union(v.literal("idle"), v.literal("running"), v.literal("done"), v.literal("failed")),
     retryAt: v.optional(v.number()),
   })),
 });
 
 export const open = mutation({ args: { songId: v.id("songs") }, returns: v.null() });
+
+// convex/catalog/takedown.ts, run by hand: bunx convex run catalog/takedown:song
+export const song = internalMutation({ args: { songId: v.id("songs") }, returns: v.null() });
 ```
 
-- **`search`** queries Catalog's own `search` index first, then `Sources.findSongs`. It upserts each new hit into `songs` by external id, so every result has a `SongId` that a link can prewarm.
+- **`search`** queries Catalog's own `search` index first, then `Sources.findSongs`. It upserts each hit into `songs` by `identityKey`, adding new recording MBIDs to `musicbrainzIds`, so every result has a `SongId` that a link can prewarm and each work is one Song.
 - **`song`** never calls Sources and never writes. It returns stored Chord sheets in creation order. When Lyrics are ready but no Chord sheet exists yet, it returns one words-only view composed on the fly.
-- **`open`** is idempotent. It inserts a `fills` row and schedules `internal.catalog.fill` when no row exists, or when the row is `failed` and `retryAt` has passed. Otherwise it does nothing.
-- **The fill** (`internal.catalog.fill`, an action) runs `lyricsFor`, stores Lyrics, runs `chordsFor`, composes with `Sheet.compose` and stores the Chord sheet. Its logic is `fillSong(ctx, songId, sources)`, and the action passes `sourcesFor(env)`.
+- **`open`** is idempotent. It starts a run (`state: "running"`, `attempts: 0`, `startedAt: now`) and schedules `internal.catalog.fill` in three cases: no row exists, the row is `failed` and `retryAt` has passed, or the row is `running` with `startedAt` older than 15 minutes. Otherwise, and always for a taken-down Song, it does nothing.
+- **The fill** (`internal.catalog.fill`, an action) skips `lyricsFor` when `lyrics` is `ready`. Otherwise it runs `lyricsFor` and stores the Lyrics. Then it runs `chordsFor`, composes with `Sheet.compose` and stores the Chord sheet. Every step writes through an internal mutation that first checks the run's `startedAt`, so a stale run that wakes up late cannot overwrite a newer one. Its logic is `fillSong(ctx, songId, sources)`, and the action passes `sourcesFor(env)`. A catch-all around it records any throw as `failed`.
+- **Takedown** deletes the Song's Lyrics, every Chord sheet and the fill row, and sets `takenDownAt`, because every stored ChordPro also contains the words. Library entries that point at a deleted Chord sheet fall back by rule, and phones drop their offline copy at the next sync.
 - **Invariants.**
   - At most one Lyrics record per Song.
   - Chord sheets are immutable: a fix becomes a new Chord sheet with `origin: "person"`, in the fix-a-chord slice.
   - Only Catalog writes `songs`, `lyrics`, `chordSheets` and `fills`.
+  - One Song per work: `identityKey` is unique.
 - **Error modes.** `song` returns `null` for an unknown id. `open` on an unknown id throws `ConvexError({ code: "NOT_FOUND" })`. From the login slice on, all three call `requireInvited` first.
 - **Performance.** `song` reads 3 indexed documents plus the Chord sheets, and is cheap enough to prewarm on every hover or touch. `search` costs one index query plus at most one MusicBrainz call.
 
-### Library, `src/app/library/` and `convex/library/`
+### Library, `src/library/` and `convex/library/`
 
 ```ts
 export type LibraryEntry = {
@@ -266,10 +285,10 @@ export function useLibrary(): { saved: LibraryEntry[] };
 export const entries = query({ returns: v.array(libraryEntry) });
 export const save = mutation({ args: { entry: libraryEntry }, returns: v.null() });
 export const importDevice = mutation({ args: { entries: v.array(libraryEntry) }, returns: v.null() });
-export function mergeEntries(a: LibraryEntry, b: LibraryEntry): LibraryEntry;   // pure, newer updatedAt wins
+export function mergeEntries(a: LibraryEntry, b: LibraryEntry): LibraryEntry;   // pure, in src/library/, imported by convex/library/
 ```
 
-- **Invariants.** One entry per person and Song. `updatedAt` comes from the writing device's clock, and the newer value wins. A `chordSheetId` that no longer exists falls back to the Song's first Chord sheet. Text size and theme are app-wide settings, not Library entries.
+- **Invariants.** One entry per person and Song. `updatedAt` comes from the writing device's clock, and the newer value wins. `importDevice` is idempotent and runs once per device, not once per person. A `chordSheetId` that no longer exists falls back to the Song's first Chord sheet. Text size and theme are app-wide settings, not Library entries.
 - **Error modes.** The device adapter never throws: when storage is full or blocked, it keeps the entry in memory for the session. The Convex adapter queues writes while offline, as the Convex client already does.
 - **Performance.** Every write is local first. A transpose tap never waits for the network.
 
@@ -284,8 +303,8 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
 ```
 
 - **Sign-in.** Convex Auth with Google. `afterUserCreatedOrUpdated` throws `NOT_INVITED` when the verified, lowercased email has no invite, so no session is created.
-- **Every function.** From the login slice on, every public Catalog and Library function calls `requireInvited` first. A guard test enumerates the public functions and fails when one skips it. Slice 1 runs open: it holds only public-domain songs.
-- **TestUser.** A `ConvexCredentials` provider (`id: "test-user"`), registered only when `OPENCHORDS_ALLOW_TEST_SIGNIN=1`. The module throws at load when that flag is set on the production deployment. The flag is `1` for dev and previews and absent for production (ADR-0004).
+- **Every function.** When `OPENCHORDS_INVITES=on`, every public Catalog and Library function calls `requireInvited` first. A guard test enumerates the public functions and fails when one skips it. The login slice sets the flag on every deployment. Slice 1 runs without it, holding only public-domain songs, and Sources refuses outside adapters while it is off.
+- **TestUser.** A `ConvexCredentials` provider (`id: "test-user"`), registered only when `OPENCHORDS_ALLOW_TEST_SIGNIN=1`. `OPENCHORDS_ENV` is `production` on the production deployment only, and the auth module throws at load when both are set, as Lonir's `auth/provider.ts:10` does. Test emails end in `@test.openchords.invalid`, and the invite check accepts that domain only while TestUser is registered, so tests need no seeded invites (ADR-0004).
 - **Uninvited visitor on a shared link.** Signed out: a sign-in screen that keeps the target path. Signed in but not invited: "OpenChords is invite-only. Ask the person who shared this link."
 
 ### Routes and preloading, `src/app/routes/`
@@ -297,7 +316,9 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
 | `/songs/$songId/sheets/$chordSheetId` | that exact Chord sheet, for sharing a version | `catalog.song` |
 
 - **Pattern.** TanStack Router file routes. Every link goes through one `Link` wrapper (Lonir `packages/data/src/router/Link.tsx`), with `preload="intent"` for the code chunk and `prewarmQuery` for data, through a `*.prewarm.ts` file beside each route.
-- **Change from Lonir.** `onTouchStart` prewarms immediately, with no 120 ms debounce, because a tap follows within about 100 ms on a phone. Mouse and focus keep Lonir's 120 ms debounce, 3 s dedupe and 8 s hold.
+- **Changes from Lonir.**
+  - `onTouchStart` prewarms immediately, with no 120 ms debounce, because a tap follows within about 100 ms on a phone. Mouse and focus keep Lonir's 120 ms debounce, 3 s dedupe and 8 s hold.
+  - Lonir only prewarms when signed in (`use-route-prewarm-intent.ts:81`). Here `isEnabled` is always true in slice 1, and follows `isAuthenticated` once `OPENCHORDS_INVITES` is on.
 - **Lint.** The rule `no-tanstack-link-import` keeps every link on the wrapper.
 
 ### Offline (shape only, built later)
@@ -309,7 +330,7 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
 
 ### Previews and tests
 
-- **Preview per PR.** Every non-draft PR deploys a Convex preview `pr-<n>` with `CONVEX_PREVIEW_DEPLOY_KEY`.
+- **Preview per PR.** Every PR, drafts included, deploys a Convex preview `pr-<n>` with `CONVEX_PREVIEW_DEPLOY_KEY`, because PRs stay drafts until Michael reviews them and she co-designs before that. Previews run `OPENCHORDS_SOURCES=builtIn` and hold no outside-source secrets.
   1. `bunx convex deploy --preview-name pr-<n> --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL`.
   2. Set `SITE_URL` to the preview's `.convex.site` origin.
   3. Upload static hosting with Lonir's admin-credential swap (`packages/backend/scripts/deploy.ts:815-850`), because the upload tool cannot target a preview by name.
@@ -331,8 +352,9 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
 ### Repo layout
 
 ```
-src/app/          routes, song screen, search, Library UI and its device adapter
+src/app/          routes, song screen, search, Library UI
 src/sheet/        shared kernel, imported by src/app and convex/
+src/library/      Library context on the phone: hooks, device adapter, mergeEntries (imported by convex/library/)
 convex/catalog/   index.ts (public), fill.ts, schema.ts
 convex/sources/   index.ts (public), builtIn/, musicbrainz/, lrclib/, choco/, ai/
 convex/library/   index.ts (public), schema.ts (login slice)
@@ -358,7 +380,7 @@ Every decision below was accepted by Michael on 2026-10-29: either his own answe
 - 👍 **Sources interface.** `findSongs`, `lyricsFor` and `chordsFor`, first answer wins, adapters per deployment, fakes in tests. Slice 1 runs builtIn only.
 - 👍 **Catalog interface.** `search`, `song` (reactive) and `open` (idempotent fill).
 - 👍 **Catalog composes ChordPro.** Chord sources return a chord layer. Order: builtIn, then ChoCo, then AI ("AI draft").
-- 👍 **Library before login.** On the device, then Convex, with a one-time merge in which the newer entry wins.
+- 👍 **Library before login.** On the device, then Convex, with a per-device merge in which the newer entry wins.
 - 👍 **Invites** with `bunx convex run`, checked at sign-in and in every function. Slice 1 runs open.
 - 👍 **Previews and tests the Lonir way**, on every PR, with e2e.tester.army and a gated TestUser.
 - 👍 **One Bun package**, with folders that follow the contexts.
@@ -370,7 +392,7 @@ Every decision below was accepted by Michael on 2026-10-29: either his own answe
 
 | Follow-up | Trigger | Strength |
 | --- | --- | --- |
-| Library's Convex adapter and the one-time import | the login slice | Strong |
+| Library's Convex adapter and the per-device import | the login slice, which must ship before the real-songs slice | Strong |
 | `basedOn` and the fix-a-chord flow | the fix-a-chord slice | Strong |
 | Offline module | after the real-songs slice | Worth exploring |
 | Domain events between contexts | a second context must react to a change that a reactive query cannot cover | Speculative |

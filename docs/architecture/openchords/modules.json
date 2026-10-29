@@ -296,7 +296,16 @@
    "label": "ids only",
    "fromAt": 0.3,
    "toAt": 0.85,
-   "labelAt": 0.45
+   "labelAt": 0.3
+  },
+  {
+   "from": "sources",
+   "to": "sheet",
+   "fromSide": "top",
+   "toSide": "bottom",
+   "fromAt": 0.08,
+   "toAt": 0.8,
+   "labelAt": 0.5
   }
  ]
 }

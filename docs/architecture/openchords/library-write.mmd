@@ -16,8 +16,8 @@ sequenceDiagram
     Acc-->>LC: userId
     LC->>LC: upsert by user and Song, newer updatedAt wins
   end
-  Note over Lib,LC: first sign-in only
+  Note over Lib,LC: first sign-in on this device
   Lib->>LC: importDevice(all device entries)
-  LC->>LC: merge each by updatedAt, once per user
+  LC->>LC: merge each by updatedAt, idempotent
   LC-->>Lib: done
   Lib->>Dev: mark imported
