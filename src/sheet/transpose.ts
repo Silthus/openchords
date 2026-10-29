@@ -1,5 +1,5 @@
 import type { ParsedSheet, SheetMeta } from ".";
-import { notationOf, readChord, readName, writtenChordsOf, type Chord, type Notation } from "./chords";
+import { readChord, readName, writtenChordsOf, type Chord, type Notation } from "./chords";
 
 type Spelling = "sharps" | "flats";
 
@@ -19,12 +19,12 @@ const flatMinorKeys = flatMajorKeys.map((tonic) => (tonic + 9) % 12);
 
 export function transpose(sheet: ParsedSheet, semitones: number): ParsedSheet {
   if (semitones % 12 === 0) return sheet;
-  const written = writtenChordsOf(sheet);
-  const notation = notationOf(written);
-  const tonic = readChord(sheet.meta.key ?? written[0] ?? "", notation);
+  const { notation } = sheet;
+  const tonic = readChord(sheet.meta.key ?? writtenChordsOf(sheet)[0] ?? "", notation);
   const names = noteNames[notation][spellingOf(tonic, semitones)];
   const move = (chord: string) => moveChord(chord, semitones, notation, names);
   return {
+    ...sheet,
     meta: movedMeta(sheet.meta, notation, move),
     sections: sheet.sections.map((section) => ({
       ...section,

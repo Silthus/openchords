@@ -1,3 +1,5 @@
+import { notationOf, writtenChordsOf, type Notation } from "./chords";
+
 export { chordSuffixes, chordsIn, chordTones, essentialTones, isChord, notationOf, readChord, type Chord, type Notation } from "./chords";
 export { transpose } from "./transpose";
 
@@ -5,7 +7,7 @@ export type SheetMeta = { title: string; artist: string; key?: string; capo: num
 export type Word = { text: string; chords: string[] };
 export type SheetLine = { words: Word[] };
 export type SheetSection = { label: string; lines: SheetLine[] };
-export type ParsedSheet = { meta: SheetMeta; sections: SheetSection[] };
+export type ParsedSheet = { meta: SheetMeta; notation: Notation; sections: SheetSection[] };
 
 export type ChordLayer = {
   key?: string;
@@ -20,14 +22,14 @@ const directivePattern = /^\{(\w+):\s*(.*?)\s*\}$/;
 const chordPattern = /\[([^\]]*)\]/g;
 
 export function parse(chordPro: string): ParsedSheet {
-  const sheet: ParsedSheet = { meta: { title: "", artist: "", capo: 0 }, sections: [] };
+  const sheet: ParsedSheet = { meta: { title: "", artist: "", capo: 0 }, notation: "international", sections: [] };
   for (const line of chordPro.split("\n").map((raw) => raw.trim())) {
     if (line === "") continue;
     const directive = directivePattern.exec(line);
     if (directive) applyDirective(sheet, directive[1]!, directive[2]!);
     else currentSection(sheet).lines.push(parseLyricLine(line));
   }
-  return sheet;
+  return { ...sheet, notation: notationOf(writtenChordsOf(sheet)) };
 }
 
 function applyDirective(sheet: ParsedSheet, name: string, value: string) {

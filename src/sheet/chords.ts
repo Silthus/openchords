@@ -88,9 +88,7 @@ export function essentialTones({ root, suffix }: Chord): number[] {
 }
 
 export function chordsIn(sheet: ParsedSheet): Chord[] {
-  const written = writtenChordsOf(sheet);
-  const notation = notationOf(written);
-  return written.flatMap((text) => readChord(text, notation) ?? []);
+  return writtenChordsOf(sheet).flatMap((text) => readChord(text, sheet.notation) ?? []);
 }
 
 export function writtenChordsOf(sheet: ParsedSheet) {

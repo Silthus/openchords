@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { parse, transpose, type ParsedSheet } from ".";
+import { chordsIn, parse, transpose, type ParsedSheet } from ".";
 
 function sheetIn(key: string | undefined, chords: string) {
   const keyLine = key === undefined ? "" : `{key: ${key}}\n`;
@@ -42,6 +42,12 @@ describe("transpose", () => {
     const shown = transpose(sheetIn(key, chords), semitones);
     expect(shown.meta.key).toBe(shownKey);
     expect(chordsOf(shown)).toBe(shownChords);
+  });
+
+  test("keeps reading a German sheet as German when its moved chords no longer show it", () => {
+    const shown = transpose(sheetIn("Fis", "Fis H Cis"), -1);
+    expect(chordsOf(shown)).toBe("F B C");
+    expect(chordsIn(shown).map((chord) => chord.root)).toEqual([5, 10, 0]);
   });
 
   test("spells by the first chord when the sheet names no key", () => {
