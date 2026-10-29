@@ -1,16 +1,18 @@
 import { chordTones, essentialTones, type Chord } from "../../sheet";
 import guitar from "./chords-db/guitar.json";
+import { handWritten } from "./handWritten";
 
 export type Fingering = { frets: number[]; fingers: number[]; barres: number[]; baseFret: number };
 export type Barre = { fret: number; finger: number; strings: number[] };
 
-const table: Record<string, Record<string, Fingering>> = guitar;
+const chordsDb: Record<string, Record<string, Fingering>> = guitar;
 const sharpNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const openStrings = [4, 9, 2, 7, 11, 4];
 
 export function fingeringFor(chord: Chord): Fingering | undefined {
-  const bass = chord.bass === undefined ? "" : `/${sharpNames[chord.bass]}`;
-  return table[sharpNames[chord.root]!]?.[chord.suffix + bass];
+  const root = sharpNames[chord.root]!;
+  const name = chord.suffix + (chord.bass === undefined ? "" : `/${sharpNames[chord.bass]}`);
+  return handWritten[root]?.[name] ?? chordsDb[root]?.[name];
 }
 
 export function playsChord(fingering: Fingering, chord: Chord): boolean {
