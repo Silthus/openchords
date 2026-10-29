@@ -1,5 +1,5 @@
 import type { Chord } from "../../sheet";
-import { fingeringFor, useFingeringTable, type Fingering } from "./fingerings";
+import { fingeringFor, type Fingering } from "./fingerings";
 
 const strings = [0, 1, 2, 3, 4, 5];
 const fretRows = [0, 1, 2, 3, 4];
@@ -15,15 +15,14 @@ const xOf = (string: number) => left + string * stringGap;
 const yOf = (fret: number) => top + (fret - 0.5) * fretHeight;
 
 export function ChordDiagram({ chord }: { chord: Chord }) {
-  const table = useFingeringTable();
-  const fingering = table && fingeringFor(table, chord);
-  if (table && !fingering) return <NoDiagram written={chord.written} />;
+  const fingering = fingeringFor(chord);
+  if (!fingering) return <NoDiagram written={chord.written} />;
   return (
     <svg viewBox={`0 0 ${right + 8} ${bottom + 6}`} role="img" aria-label={`${chord.written} chord diagram`} className="w-full">
       <text x={center} y={10} textAnchor="middle" fontSize={11} fontWeight="bold" fill="currentColor">
         {chord.written}
       </text>
-      {fingering && <Fingers fingering={fingering} />}
+      <Fingers fingering={fingering} />
     </svg>
   );
 }

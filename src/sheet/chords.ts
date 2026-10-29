@@ -33,13 +33,7 @@ const spellings: Array<[RegExp, string]> = [
 ];
 
 export function readChord(written: string, notation: Notation = "international"): Chord | null {
-  const [main = "", bassName, ...extra] = written.split("/");
-  if (extra.length > 0) return null;
-  const chord = readName(main, notation);
-  if (!chord) return null;
-  if (bassName === undefined) return { written, root: chord.root, suffix: chord.suffix };
-  const bass = readName(bassName, notation);
-  return bass?.suffix === "" ? { written, root: chord.root, suffix: chord.suffix, bass: bass.root } : null;
+  return read(written, notation)?.chord ?? null;
 }
 
 export function isChord(text: string): boolean {
@@ -47,7 +41,7 @@ export function isChord(text: string): boolean {
 }
 
 export function notationOf(writtenChords: readonly string[]): Notation {
-  return writtenChords.some((written) => readName(written.split("/")[0] ?? "", "german")?.german) ? "german" : "international";
+  return writtenChords.some((written) => read(written, "german")?.german) ? "german" : "international";
 }
 
 export function chordsIn(sheet: ParsedSheet): Chord[] {
@@ -59,6 +53,18 @@ export function chordsIn(sheet: ParsedSheet): Chord[] {
 function writtenChordsOf(sheet: ParsedSheet) {
   const words = sheet.sections.flatMap((section) => section.lines.flatMap((line) => line.words));
   return [...new Set(words.flatMap((word) => word.chords))];
+}
+
+function read(written: string, notation: Notation) {
+  const [main = "", bassName, ...extra] = written.split("/");
+  if (extra.length > 0) return null;
+  const name = readName(main, notation);
+  if (!name) return null;
+  const chord = { written, root: name.root, suffix: name.suffix };
+  if (bassName === undefined) return { chord, german: name.german };
+  const bass = readName(bassName, notation);
+  if (bass?.suffix !== "") return null;
+  return { chord: { ...chord, bass: bass.root }, german: name.german || bass.german };
 }
 
 function readName(text: string, notation: Notation) {

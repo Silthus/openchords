@@ -1,5 +1,5 @@
 import type { Chord } from "../../sheet";
-import { ChordDiagram } from "./ChordDiagram";
+import { LazyChordDiagram } from "./LazyChordDiagram";
 
 export function ChordsInThisSong({ chords, onPick }: { chords: Chord[]; onPick: (chord: Chord) => void }) {
   return (
@@ -11,7 +11,7 @@ export function ChordsInThisSong({ chords, onPick }: { chords: Chord[]; onPick: 
         {chords.map((chord) => (
           <li key={chord.written}>
             <button type="button" onClick={() => onPick(chord)} className="w-full">
-              <ChordDiagram chord={chord} />
+              <LazyChordDiagram chord={chord} />
             </button>
           </li>
         ))}

@@ -66,6 +66,11 @@ describe("notationOf", () => {
     expect(notationOf(["Es", "B"])).toBe("german");
   });
 
+  test("is German when a slash chord's bass is German", () => {
+    expect(notationOf(["B", "C/H"])).toBe("german");
+    expect(notationOf(["C/Fis"])).toBe("german");
+  });
+
   test("is international otherwise", () => {
     expect(notationOf(["Am", "Bb", "F#"])).toBe("international");
     expect(notationOf(["B", "Em"])).toBe("international");

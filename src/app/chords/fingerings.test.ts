@@ -1,12 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { readChord, type Notation } from "../../sheet";
-import { fingeringFor, type FingeringTable } from "./fingerings";
-import guitar from "./chords-db/guitar.json";
-
-const table = guitar as FingeringTable;
+import { fingeringFor } from "./fingerings";
 
 function fingeringOf(written: string, notation?: Notation) {
-  return fingeringFor(table, readChord(written, notation)!);
+  return fingeringFor(readChord(written, notation)!);
 }
 
 describe("fingeringFor", () => {
