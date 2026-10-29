@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useState } from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
+import { newVersionConsent } from "./newVersionConsent";
 
 export function NewVersionBanner() {
   const { ready, reload } = useNewVersion();
@@ -17,23 +18,12 @@ export function NewVersionBanner() {
 }
 
 function useNewVersion() {
-  const reloadAsked = useRef(false);
-  const takenOverElsewhere = useRef(false);
+  const [consent] = useState(() =>
+    newVersionConsent({ reload: () => window.location.reload(), takeNewVersion: () => void updateServiceWorker() }),
+  );
   const {
     needRefresh: [ready],
     updateServiceWorker,
-  } = useRegisterSW({
-    onNeedReload() {
-      if (reloadAsked.current) window.location.reload();
-      else takenOverElsewhere.current = true;
-    },
-  });
-  return {
-    ready,
-    reload() {
-      reloadAsked.current = true;
-      if (takenOverElsewhere.current) window.location.reload();
-      else void updateServiceWorker();
-    },
-  };
+  } = useRegisterSW({ onNeedReload: () => consent.whenTakenOver() });
+  return { ready, reload: consent.reload };
 }
