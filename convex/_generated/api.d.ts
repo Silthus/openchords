@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as access_google from "../access/google.js";
 import type * as access_index from "../access/index.js";
 import type * as access_invited from "../access/invited.js";
 import type * as access_invites from "../access/invites.js";
@@ -32,6 +33,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "access/google": typeof access_google;
   "access/index": typeof access_index;
   "access/invited": typeof access_invited;
   "access/invites": typeof access_invites;

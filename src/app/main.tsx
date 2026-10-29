@@ -4,11 +4,11 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
 import { routeTree } from "./routeTree.gen";
-import { tokenStorage } from "./signIn";
+import { ReadingRefused, tokenStorage } from "./signIn";
 import "./index.css";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, defaultErrorComponent: ReadingRefused });
 
 declare module "@tanstack/react-router" {
   interface Register {

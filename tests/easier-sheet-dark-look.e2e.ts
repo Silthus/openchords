@@ -1,9 +1,10 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
 import { looksDark } from "./looks";
+import { openAsReader } from "./reader";
 
 test("She picks a Chord sheet, a look and a text size", async ({ agent, app, browser, screen }) => {
-  await app.open("/");
+  await openAsReader(app, screen, "/");
   await agent.act("Open House of the Rising Sun and open the settings sheet");
   const sheet = screen.getByRole("dialog", "Settings");
   await expect(sheet.getByRole("link")).toHaveCount(3);

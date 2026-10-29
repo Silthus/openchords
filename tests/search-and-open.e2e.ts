@@ -1,8 +1,9 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openAsReader } from "./reader";
 
 test("She finds a built-in Song and opens it at its own link", async ({ agent, app, browser, screen }) => {
-  await app.open("/");
+  await openAsReader(app, screen, "/");
   await agent.waitFor("the start screen lists the built-in Songs");
   await expect(screen.getByRole("heading", "Built-in Songs")).toBeVisible();
   await expect(screen.getByRole("link").filter({ hasText: "House of the Rising Sun" })).toContainText("Traditional");

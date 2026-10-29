@@ -1,11 +1,12 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
 import { openRisingSun, pixelsScrolledIn } from "./risingSun";
+import { openAsReader } from "./reader";
 
 type WakeLockLog = { held: number };
 
 test("She plays a Song, pauses it with a tap on the lyrics, and it stops at the end", async ({ app, browser, screen }) => {
-  await app.open("/?q=rising");
+  await openAsReader(app, screen, "/?q=rising");
   await screen.getByRole("link").filter({ hasText: "House of the Rising Sun" }).click();
   await browser.evaluate(recordWakeLocks);
   const play = screen.getByRole("button", "Play");

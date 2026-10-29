@@ -1,8 +1,9 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openAsReader } from "./reader";
 
 test("The list stays on screen while a search answers", async ({ app, browser, screen }) => {
-  await app.open("/");
+  await openAsReader(app, screen, "/");
   await expect(screen.getByRole("link").filter({ hasText: "Shenandoah" })).toBeVisible();
 
   expect(await browser.evaluate(framesWithNoSongsAfterTyping, "Sh")).toBe(0);
