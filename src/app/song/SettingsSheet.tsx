@@ -1,26 +1,28 @@
-import { parse } from "../../sheet";
+import { parse, type View } from "../../sheet";
 import { textSizes, useLook, useTextSize, type Look } from "../deviceSettings";
 import { useModalDialog } from "../useModalDialog";
-import { describeChordSheet } from "./describeChordSheet";
+import { describeCapo, describeChordSheet } from "./describeChordSheet";
 import { SongLink } from "./SongLink";
 
 export type ChordSheetChoice = { chordSheetId: string; name: string; origin: "builtIn"; chordPro: string };
 export const speeds = { slowest: 1, fastest: 10 };
 export const transpositions = { lowest: -11, highest: 11 };
+export const capos = { none: 0, highest: 11 };
 
 type SettingsSheetProps = {
   songId: string;
   sheets: ChordSheetChoice[];
   chosenId: string;
   shownKey: string | undefined;
-  transposition: number;
-  onTranspose: (transposition: number) => void;
+  view: View;
+  easierCapo: number | null;
+  onView: (view: View) => void;
   speed: number;
   onSpeed: (speed: number) => void;
   onClose: () => void;
 };
 
-export function SettingsSheet({ songId, sheets, chosenId, shownKey, transposition, onTranspose, speed, onSpeed, onClose }: SettingsSheetProps) {
+export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easierCapo, onView, speed, onSpeed, onClose }: SettingsSheetProps) {
   const dialog = useModalDialog();
   const [textSize, setTextSize] = useTextSize();
   const close = () => dialog.current?.close();
@@ -40,12 +42,25 @@ export function SettingsSheet({ songId, sheets, chosenId, shownKey, transpositio
           <LookSwitch />
           <Stepper
             label="Key"
-            value={shownKey ?? signed(transposition)}
+            value={shownKey ?? signed(view.transpose)}
             hint="Moves the whole song higher or lower to suit your voice."
-            step={(by) => onTranspose(transposition + by)}
-            lowest={transposition <= transpositions.lowest}
-            highest={transposition >= transpositions.highest}
+            step={(by) => onView({ ...view, transpose: view.transpose + by })}
+            lowest={view.transpose <= transpositions.lowest}
+            highest={view.transpose >= transpositions.highest}
           />
+          <Stepper
+            label="Capo"
+            value={describeCapo(view.capo)}
+            hint="A clamp across the neck: same key, easier finger shapes."
+            step={(by) => onView({ ...view, capo: view.capo + by })}
+            lowest={view.capo <= capos.none}
+            highest={view.capo >= capos.highest}
+          />
+          {easierCapo !== null && (
+            <button type="button" onClick={() => onView({ ...view, capo: easierCapo })} className="mb-3 w-full rounded-xl bg-orange-500 py-2 font-semibold text-white">
+              Make it easier: {describeCapo(easierCapo).toLowerCase()}
+            </button>
+          )}
           <Stepper label="Scroll speed" value={String(speed)} hint="How fast the lyrics move while playing." step={(by) => onSpeed(speed + by)} lowest={speed <= speeds.slowest} highest={speed >= speeds.fastest} />
           <Stepper
             label="Text size"
@@ -130,7 +145,7 @@ function Stepper({ label, value, hint, step, lowest, highest }: StepperProps) {
           <StepButton label={`${label} −`} disabled={lowest} onClick={() => step(-1)}>
             −
           </StepButton>
-          <span className="w-16 text-center text-lg font-bold">{value}</span>
+          <span className="w-28 text-center text-lg font-bold">{value}</span>
           <StepButton label={`${label} +`} disabled={highest} onClick={() => step(1)}>
             +
           </StepButton>
