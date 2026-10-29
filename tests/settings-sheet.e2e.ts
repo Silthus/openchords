@@ -35,7 +35,7 @@ test("She sets up the Song in one settings sheet, and her look stays on this dev
 
   await screen.getByRole("button", "Settings").click();
   await sheet.getByRole("button", /Light$/).click();
-  await browser.evaluate(tapAboveTheSheet);
+  await screen.tapAt({ x: 10, y: 10 });
   await expect(sheet).toBeHidden();
   expect(await browser.evaluate(looksDark)).toBe(false);
 });
@@ -46,12 +46,4 @@ function lyricsFontSize() {
 
 function looksDark() {
   return document.documentElement.classList.contains("dark") && getComputedStyle(document.body).backgroundColor !== "rgb(255, 255, 255)";
-}
-
-function tapAboveTheSheet() {
-  const dialog = document.querySelector("dialog")!;
-  const top = dialog.querySelector("div")!.getBoundingClientRect().top;
-  const below = document.elementFromPoint(10, top / 2)!;
-  below.dispatchEvent(new MouseEvent("click", { bubbles: true, clientX: 10, clientY: top / 2 }));
-  return top;
 }
