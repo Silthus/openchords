@@ -16,7 +16,7 @@ test("She plays a Song with auto-scroll at her speed", async ({ agent, app, brow
   await agent.act("Tap the lyrics");
   await expect(screen.getByRole("button", "Play")).toBeVisible();
   await expect(screen.getByText("Tap the lyrics to pause")).toBeHidden();
-  await agent.assert("the big round button shows the play symbol and the message Tap the lyrics to pause is gone", { vision: true });
+  await agent.assert("the big round button shows the play symbol", { vision: true });
   await app.screenshot("A tap on the lyrics pauses");
 
   await agent.act("Open the settings sheet and press Scroll speed + twice, then Done");
