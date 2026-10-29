@@ -15,6 +15,6 @@ test("She finds a built-in Song and opens it at its own link", async ({ agent, a
   await agent.act("Open House of the Rising Sun from the results");
   await agent.waitFor("the Song's title is shown");
   await expect(browser).toHaveURL(/\/songs\/[a-z0-9]+$/);
-  await agent.assert("chords sit over the words");
+  await agent.assert("chords sit over the words", { vision: true });
   await app.screenshot("The Song opens at its own link with chords over the words");
 });
