@@ -2,10 +2,13 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { capoSuggestion, parseLine, shapeFor, song, soundingKey, type ChordSheet, type PlayState } from "./song";
 
+export type Theme = "light" | "dark";
+
 export type SongScreenState = PlayState & {
   speed: number;
   playing: boolean;
   textSize: number;
+  theme: Theme;
   suggestedCapo?: number;
   key: string;
   shape: (chord: string) => string;
@@ -15,6 +18,7 @@ export type SongScreenState = PlayState & {
   setSpeed: (value: number) => void;
   setPlaying: (value: boolean) => void;
   setTextSize: (value: number) => void;
+  setTheme: (value: Theme) => void;
 };
 
 export function useSongScreenState(): SongScreenState {
@@ -24,6 +28,7 @@ export function useSongScreenState(): SongScreenState {
   const [speed, setSpeed] = useState(4);
   const [playing, setPlaying] = useState(false);
   const [textSize, setTextSize] = useState(1);
+  const [theme, setTheme] = useState<Theme>("light");
   const play: PlayState = { sheet, transpose, capo };
 
   const pickSheet = (id: string) => {
@@ -38,6 +43,7 @@ export function useSongScreenState(): SongScreenState {
     speed,
     playing,
     textSize,
+    theme,
     suggestedCapo: capoSuggestion(play),
     key: soundingKey(play),
     shape: (chord) => shapeFor(chord, play),
@@ -47,6 +53,7 @@ export function useSongScreenState(): SongScreenState {
     setSpeed: (v) => setSpeed(Math.max(1, Math.min(10, v))),
     setPlaying,
     setTextSize: (v) => setTextSize(Math.max(0.8, Math.min(1.8, Math.round(v * 10) / 10))),
+    setTheme,
   };
 }
 

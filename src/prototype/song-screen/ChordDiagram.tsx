@@ -32,7 +32,7 @@ function toSvguitar(position: Position) {
   return { fingers, barres, position: position.baseFret };
 }
 
-type Props = { chord: string; variation?: number; size?: number; dark?: boolean; title?: boolean };
+type Props = { chord: string; variation?: number; size?: number | string; dark?: boolean; title?: boolean };
 
 export function ChordDiagram({ chord, variation = 0, size = 160, dark = false, title = true }: Props) {
   const ref = useRef<HTMLDivElement>(null);

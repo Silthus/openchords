@@ -30,7 +30,7 @@ export function SongScreenPrototype() {
     setVariant(key);
   };
 
-  const summary = `sheet=${state.sheet.id} key=${state.key} transpose=${state.transpose} capo=${state.capo} speed=${state.speed} ${state.playing ? "playing" : "paused"} text=${state.textSize}x`;
+  const summary = `sheet=${state.sheet.id} key=${state.key} transpose=${state.transpose} capo=${state.capo} speed=${state.speed} ${state.playing ? "playing" : "paused"} text=${state.textSize}x theme=${state.theme}`;
 
   return (
     <div style={{ ["--proto-bar" as string]: SHOW_SWITCHER ? "56px" : "0px" }} className="h-full">
