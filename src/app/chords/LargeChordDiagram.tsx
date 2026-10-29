@@ -1,18 +1,29 @@
+import { useEffect, useRef } from "react";
 import type { Chord } from "../../sheet";
 import { LazyChordDiagram } from "./LazyChordDiagram";
 
 export function LargeChordDiagram({ chord, onClose }: { chord: Chord; onClose: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (!dialog.current?.open) dialog.current?.showModal();
+  }, []);
   return (
-    <div
-      role="dialog"
+    <dialog
+      ref={dialog}
       aria-label={`${chord.written} large`}
-      onClick={onClose}
-      className="fixed inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-white/95 px-16"
+      onClose={onClose}
+      className="m-0 size-full max-h-none max-w-none bg-white/95 text-inherit backdrop:bg-transparent"
     >
-      <div className="w-full max-w-xs">
-        <LazyChordDiagram chord={chord} />
-      </div>
-      <p className="text-base text-stone-500">Tap to close.</p>
-    </div>
+      <button
+        type="button"
+        onClick={() => dialog.current?.close()}
+        className="flex size-full flex-col items-center justify-center gap-4 px-16"
+      >
+        <span className="block w-full max-w-xs">
+          <LazyChordDiagram chord={chord} />
+        </span>
+        <span className="text-base text-stone-500">Tap to close.</span>
+      </button>
+    </dialog>
   );
 }
