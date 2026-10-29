@@ -6,20 +6,21 @@ import { api } from "../../../convex/_generated/api";
 type SongLinkProps = {
   songId: string;
   chordSheetId?: string;
-  replace?: boolean;
+  inPlace?: boolean;
   current?: boolean;
   className?: string;
   children: ReactNode;
 };
 
-export function SongLink({ songId, chordSheetId, replace, current, className, children }: SongLinkProps) {
+export function SongLink({ songId, chordSheetId, inPlace, current, className, children }: SongLinkProps) {
   const convex = useConvex();
   const prewarm = () => convex.prewarmQuery({ query: api.catalog.index.song, args: { songId } });
   return (
     <Link
       to={chordSheetId === undefined ? "/songs/$songId" : "/songs/$songId/sheets/$chordSheetId"}
       params={{ songId, chordSheetId }}
-      replace={replace}
+      replace={inPlace}
+      resetScroll={!inPlace}
       preload="intent"
       onTouchStart={prewarm}
       onMouseEnter={prewarm}

@@ -1,5 +1,6 @@
 import { test } from "@e2e-dev/web";
-import { expect, type App, type Screen } from "e2e";
+import { expect } from "e2e";
+import { openRisingSun, pixelsScrolledIn } from "./risingSun";
 
 type WakeLockLog = { held: number };
 
@@ -55,12 +56,6 @@ test("After the page stalls, the Song moves on from where it was", async ({ app,
   await expect(screen.getByRole("button", "Pause")).toBeVisible();
 });
 
-async function openRisingSun(app: App, screen: Screen) {
-  await app.open("/?q=rising");
-  await screen.getByRole("link").filter({ hasText: "House of the Rising Sun" }).click();
-  await expect(screen.getByText("End of song")).toBeVisible();
-}
-
 function scrollBy(pixels: number) {
   window.scrollTo(0, window.scrollY + pixels);
   return window.scrollY;
@@ -94,11 +89,6 @@ function recordWakeLocks() {
 
 function heldWakeLocks() {
   return (window as unknown as { wakeLockLog: WakeLockLog }).wakeLockLog.held;
-}
-
-function pixelsScrolledIn(milliseconds: number) {
-  const start = window.scrollY;
-  return new Promise<number>((resolve) => setTimeout(() => resolve(Math.round(window.scrollY - start)), milliseconds));
 }
 
 async function pixelsLeftWhenPlayStopsFrom(pixelsAboveTheEnd: number) {

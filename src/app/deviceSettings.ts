@@ -7,6 +7,7 @@ export const textSizes = { smallest: 80, standard: 100, largest: 180, step: 10 }
 const lookKey = "openchords.look";
 const textSizeKey = "openchords.textSize";
 const listeners = new Set<() => void>();
+const forThisVisit = new Map<string, string>();
 
 export function useLook(): [Look, (look: Look) => void] {
   const look = useStored(lookKey) === "dark" ? "dark" : "light";
@@ -27,7 +28,15 @@ export function useTextSize(): [number, (size: number) => void] {
 }
 
 function useStored(key: string) {
-  return useSyncExternalStore(subscribe, () => localStorage.getItem(key));
+  return useSyncExternalStore(subscribe, () => read(key));
+}
+
+function read(key: string) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return forThisVisit.get(key) ?? null;
+  }
 }
 
 function subscribe(listener: () => void) {
@@ -36,6 +45,16 @@ function subscribe(listener: () => void) {
 }
 
 function store(key: string, value: string) {
-  localStorage.setItem(key, value);
+  forThisVisit.set(key, value);
+  saveOnTheDevice(key, value);
   for (const listener of listeners) listener();
+}
+
+function saveOnTheDevice(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
 }

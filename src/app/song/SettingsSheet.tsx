@@ -62,7 +62,7 @@ function ChordSheetCards({ songId, sheets, chosenId }: { songId: string; sheets:
             <SongLink
               songId={songId}
               chordSheetId={sheet.chordSheetId}
-              replace
+              inPlace
               current={chosen}
               className={`block rounded-xl border p-3 ${chosen ? "border-accent bg-accent/10" : "border-line"}`}
             >

@@ -1,5 +1,6 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openRisingSun, pixelsScrolledIn, scrollPosition } from "./risingSun";
 
 test("She sets up the Song in one settings sheet, and her look stays on this device", async ({ app, browser, screen }) => {
   await app.open("/?q=rising");
@@ -39,6 +40,46 @@ test("She sets up the Song in one settings sheet, and her look stays on this dev
   await expect(sheet).toBeHidden();
   expect(await browser.evaluate(looksDark)).toBe(false);
 });
+
+test("The Song scrolls at the speed she sets, also while it plays", async ({ app, browser, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Play").click();
+  const atSpeed3 = await browser.evaluate(pixelsScrolledIn, 2000);
+  await screen.getByRole("button", "Settings").click();
+  for (let speed = 3; speed < 6; speed++) await screen.getByRole("button", "Scroll speed +").click();
+  await screen.getByRole("button", "Done").click();
+  const atSpeed6 = await browser.evaluate(pixelsScrolledIn, 2000);
+  expect(atSpeed6).toBeGreaterThan(atSpeed3 * 1.6);
+  expect(atSpeed6).toBeLessThan(atSpeed3 * 2.4);
+});
+
+test("Picking another Chord sheet while it plays keeps her place in the Song", async ({ app, browser, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Play").click();
+  await expect.poll(() => browser.evaluate(scrollPosition)).toBeGreaterThan(60);
+  await screen.getByRole("button", "Settings").click();
+  await screen.getByRole("dialog", "Settings").getByRole("link", /^Easy shapes/).click();
+  await screen.getByRole("button", "Done").click();
+  expect(await browser.evaluate(scrollPosition)).toBeGreaterThan(60);
+  expect(await browser.evaluate(pixelsScrolledIn, 1000)).toBeGreaterThan(10);
+});
+
+test("Without device storage, the app still works and her look holds for the visit", async ({ app, browser, screen }) => {
+  await browser.addInitScript(denyStorage, null);
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Settings").click();
+  await screen.getByRole("button", /Dark$/).click();
+  await screen.getByRole("button", "Done").click();
+  expect(await browser.evaluate(looksDark)).toBe(true);
+});
+
+function denyStorage() {
+  Object.defineProperty(window, "localStorage", {
+    get() {
+      throw new DOMException("Storage is denied.", "SecurityError");
+    },
+  });
+}
 
 function lyricsFontSize() {
   return parseFloat(getComputedStyle(document.querySelector("[data-lyrics]")!).fontSize);
