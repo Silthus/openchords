@@ -33,7 +33,7 @@ The page itself is [`openchords/modules.html`](openchords/modules.html), generat
 ### Rules between contexts
 
 1. A context is a folder with one public file (`index.ts`). One lint rule (`no-restricted-imports` on `convex/*/!(index)`, `src/sheet/*/!(index)` and `src/library/*/!(index)` from outside) forbids deep imports.
-2. Contexts reference each other by id only and never read another context's tables.
+2. Contexts reference each other by id only in anything they **store**, and never read or write another context's tables. Calls between contexts pass plain value objects (`SongHit`, `Lyrics`, `ChordDraft`, `ChordLayer`), which are the interface, not a leak. Two checks enforce this: the lint rule for imports, and a guard test that fails when a context folder calls `ctx.db` on a table another context owns.
 3. There are no events, no bus and no Convex component per context. Library components such as `@convex-dev/static-hosting` and `@convex-dev/rate-limiter` are fine. A context calls another's interface directly. Convex's reactive queries cover "tell me when it changed".
 4. Every piece of stored content (Lyrics, Chord sheet) carries **provenance**: source, record id at the source, licence tag, fetch time.
 
@@ -183,10 +183,11 @@ export function parse(sheet: ChordPro): ParsedSheet;
 export function transpose(chord: Chord, semitones: number): Chord;
 export function shapes(sheet: ParsedSheet, view: { transpose: number; capo: number }): ParsedSheet;
 export function easierCapo(sheet: ParsedSheet): number | null;   // capo 0..7, fewest barre chords
+export function isChord(text: string, notation: Notation): boolean;   // strict: the draft validator
 ```
 
 - **Invariants.** Every function is pure, with no Convex, DOM or network imports, and runs the same on server and phone. `parse(compose(l, layer, m))` returns every lyric line of `l` in order. Chords keep their written text, so German `H` stays `H`. `transpose` rewrites only the root and the bass.
-- **Error modes.** `parse` never throws: an unknown bracket becomes an annotation. `compose` throws `InvalidChordLayer` when a placement points past a line's words or past the lyrics, and Catalog treats that as a failed chord draft.
+- **Error modes.** `parse` never throws: an unknown bracket becomes an annotation. That tolerance is for display only. Sources validates every chord in a draft with the strict `isChord`, so a made-up chord such as `banana` rejects the draft instead of becoming an annotation. `compose` throws `InvalidChordLayer` when a placement points past a line's words or past the lyrics, and Catalog treats that as a failed chord draft.
 - **Performance.** Linear in sheet size. A typical Song of 60 lines parses in under 1 ms on a phone.
 
 ### Sources (anti-corruption layer), `convex/sources/index.ts`
@@ -223,9 +224,10 @@ export function sourcesFor(env: SourcesEnv): Sources;   // adapters chosen by OP
   - `null` means "this source has nothing". A throw means "try later", and stops the chain.
   - LRCLIB matching picks by title, artist and duration within 2 seconds, never the first hit.
   - The AI adapter receives only the lines it must place chords over, and its output is validated against `ChordLayer` before it returns.
+  - **ChoCo aligns only when it can.** ChoCo times its chords in seconds or in bars and beats, and LRCLIB's plain lyrics have no times. The ChoCo adapter answers only when the Lyrics have `synced` line times and the ChoCo annotation is timed to the same recording's audio (duration within 2 seconds). It places each chord on the line whose time window holds it, at the word its time share points to. Otherwise it returns `null` and the AI drafts instead. The accuracy experiment checks these placements before the real-songs slice turns ChoCo on.
 - **Error modes.** `SourceUnavailable(retryAfterMs)` for 429, 5xx and timeouts. An AI output that still fails validation after one retry is `null`, not an error. Anything else is a bug and throws as-is, and the fill's catch-all records it.
 - **Performance.**
-  - MusicBrainz: at most 1 request per second app-wide, through the `@convex-dev/rate-limiter` component. When the limit is hit, `findSongs` returns builtIn hits only, so search never waits.
+  - MusicBrainz: at most 1 request per second app-wide, through the `@convex-dev/rate-limiter` component. When the limit is hit, `findSongs` returns the hits it has and says so, Catalog's `search` returns `complete: false` with `retryAt`, and App repeats the latest query once at `retryAt`. Search never waits, and an empty page never pretends to be the full answer.
   - LRCLIB: one request per Song, ever. A registered server-side app sends `Lrclib-App-Id` and `Lrclib-Api-Key` and gets an app-wide allowance of about 6,000 requests per minute ([LRCLIB docs, "Client identification"](https://lrclib.net/docs.md)), far above the anonymous 90 per minute per IP.
   - AI: 5 to 30 seconds per Song.
 
@@ -234,7 +236,11 @@ export function sourcesFor(env: SourcesEnv): Sources;   // adapters chosen by OP
 ```ts
 export const search = action({
   args: { query: v.string() },                      // 2..100 chars
-  returns: v.array(songSummary),                    // { songId, title, artist, durationSec, hasSheets }
+  returns: v.object({
+    songs: v.array(songSummary),                    // { songId, title, artist, durationSec, hasSheets }
+    complete: v.boolean(),                          // false: MusicBrainz was skipped by the rate limit
+    retryAt: v.optional(v.number()),
+  }),
 });
 
 export const song = query({
@@ -244,7 +250,9 @@ export const song = query({
     sheets: v.array(v.object({
       chordSheetId: v.union(v.id("chordSheets"), v.null()),  // null: the words-only view
       name: v.string(), origin: originValidator, chordPro: v.string(),
+      provenance: v.union(provenance, v.null()),
     })),
+    lyricsProvenance: v.union(provenance, v.null()),
     lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
     chords: v.union(v.literal("pending"), v.literal("ready"), v.literal("none")),
     fill: v.union(v.literal("idle"), v.literal("running"), v.literal("done"), v.literal("failed")),
@@ -260,8 +268,8 @@ export const song = internalMutation({ args: { songId: v.id("songs") }, returns:
 
 - **`search`** queries Catalog's own `search` index first, then `Sources.findSongs`. It upserts each hit into `songs` by `identityKey`, adding new recording MBIDs to `musicbrainzIds`, so every result has a `SongId` that a link can prewarm and each work is one Song.
 - **`song`** never calls Sources and never writes. It returns stored Chord sheets in creation order. When Lyrics are ready but no Chord sheet exists yet, it returns one words-only view composed on the fly.
-- **`open`** is idempotent. It starts a run (`state: "running"`, `attempts: 0`, `startedAt: now`) and schedules `internal.catalog.fill` in three cases: no row exists, the row is `failed` and `retryAt` has passed, or the row is `running` with `startedAt` older than 15 minutes. Otherwise, and always for a taken-down Song, it does nothing.
-- **The fill** (`internal.catalog.fill`, an action) skips `lyricsFor` when `lyrics` is `ready`. Otherwise it runs `lyricsFor` and stores the Lyrics. Then it runs `chordsFor`, composes with `Sheet.compose` and stores the Chord sheet. Every step writes through an internal mutation that first checks the run's `startedAt`, so a stale run that wakes up late cannot overwrite a newer one. Its logic is `fillSong(ctx, songId, sources)`, and the action passes `sourcesFor(env)`. A catch-all around it records any throw as `failed`.
+- **`open`** is idempotent. It starts a run (`state: "running"`, `attempts: 0`, `startedAt: now`) by inserting the `fills` row when none exists and patching the existing row otherwise, so a Song never has two, and schedules `internal.catalog.fill` in three cases: no row exists, the row is `failed` and `retryAt` has passed, or the row is `running` with `startedAt` older than 15 minutes. Otherwise, and always for a taken-down Song, it does nothing.
+- **The fill** (`internal.catalog.fill`, an action) skips `lyricsFor` when `lyrics` is `ready`. Otherwise it runs `lyricsFor` and stores the Lyrics. Then it runs `chordsFor` with the stored Lyrics record, composes against that exact record with `Sheet.compose`, and stores the Chord sheet and marks the fill `done` in one mutation. When every chord source returns `null`, the fill ends `done` with `chords: "none"` and no Chord sheet: the terminal words-only view, which `song` tells apart from `chords: "pending"`. Every step writes through an internal mutation that first checks the run's `startedAt`, so a stale run that wakes up late cannot overwrite a newer one. Its logic is `fillSong(ctx, songId, sources)`, and the action passes `sourcesFor(env)`. A catch-all around it records any throw as `failed`.
 - **Takedown** deletes the Song's Lyrics, every Chord sheet and the fill row, and sets `takenDownAt`, because every stored ChordPro also contains the words. Library entries that point at a deleted Chord sheet fall back by rule, and phones drop their offline copy at the next sync.
 - **Invariants.**
   - At most one Lyrics record per Song.
@@ -288,7 +296,7 @@ export const importDevice = mutation({ args: { entries: v.array(libraryEntry) },
 export function mergeEntries(a: LibraryEntry, b: LibraryEntry): LibraryEntry;   // pure, in src/library/, imported by convex/library/
 ```
 
-- **Invariants.** One entry per person and Song. `updatedAt` comes from the writing device's clock, and the newer value wins. `importDevice` is idempotent and runs once per device, not once per person. A `chordSheetId` that no longer exists falls back to the Song's first Chord sheet. Text size and theme are app-wide settings, not Library entries.
+- **Invariants.** One entry per person and Song, and the newer `updatedAt` wins. On the device, `updatedAt` comes from the device clock. Every Convex write stamps the server's time, and `importDevice` clamps any device time later than the server's now to now, so a phone with a fast clock cannot freeze an entry. `importDevice` is idempotent and runs once per device, not once per person. A `chordSheetId` that no longer exists falls back to the Song's first Chord sheet. Text size and theme are app-wide settings, not Library entries.
 - **Error modes.** The device adapter never throws: when storage is full or blocked, it keeps the entry in memory for the session. The Convex adapter queues writes while offline, as the Convex client already does.
 - **Performance.** Every write is local first. A transpose tap never waits for the network.
 
@@ -326,7 +334,8 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
 - **Precache:** the app shell with `vite-plugin-pwa` in `prompt` mode. `navigateFallbackDenylist: [/^\/api\//, /^\/\.well-known\//]` keeps Convex Auth's routes off the shell.
 - **Kept readable offline:** every saved Library Song, plus the last 20 opened Songs.
 - **How:** App writes each `catalog.song` result, which is self-contained, to IndexedDB after it renders, and the route reads IndexedDB when the Convex client is offline. The service worker never caches Convex data.
-- **Provenance travels with the cached copy,** so a takedown also clears the copies on the phone at the next sync.
+- **Provenance travels with the cached copy,** because `song` returns it.
+- **Removed content leaves the phone.** On reconnect, App subscribes `catalog.song` for every cached Song id, and evicts a copy when the answer is `null` or has no Lyrics. That also covers Songs she has not opened since the takedown.
 
 ### Previews and tests
 
@@ -336,7 +345,7 @@ export const add = internalMutation({ args: { email: v.string() }, returns: v.nu
   3. Upload static hosting with Lonir's admin-credential swap (`packages/backend/scripts/deploy.ts:815-850`), because the upload tool cannot target a preview by name.
   4. Seed the builtIn Songs with `--preview-run`.
   5. Post a sticky PR comment with the `.convex.site` link for her phone.
-- **End-to-end tests** run with e2e.tester.army against that preview on every PR, using Michael's ChatGPT login (`e2e login openai --device`), never an API key. They sign in with `TestUser` from the login slice on.
+- **End-to-end tests** run with e2e.tester.army against that preview on every PR, as a job that depends on the deploy job of the same commit, using Michael's ChatGPT login (`e2e login openai --device`), never an API key. They sign in with `TestUser` from the login slice on.
 - **Production** deploys on merge to `main` with a production deploy key.
 
 | Seam | Test | Tool |
