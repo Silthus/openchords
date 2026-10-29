@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { chordSuffixes, readChord, type Chord, type Notation } from "../../sheet";
+import { builtIns, chordsFor, lyricsFor } from "../../../convex/sources";
+import { chordSuffixes, chordsIn, compose, parse, readChord, transpose, type Chord, type Notation } from "../../sheet";
 import { barresOf, fingeringFor, playsChord } from "./fingerings";
 
 function fingeringOf(written: string, notation?: Notation) {
@@ -36,8 +37,14 @@ describe("fingeringFor", () => {
     expect(fingeringOf("C9")).toMatchObject({ frets: [3, 3, 2, 3, 3, 3], baseFret: 1 });
   });
 
-  test("has nothing for a chord whose every chords-db position misses a tone that defines it", () => {
-    expect(fingeringOf("Cm9/Bb")).toBeUndefined();
+  test("draws the chords that chords-db fingers wrong", () => {
+    const chordsDbFingersWrong = ["C#11", "Emadd9", "Cm9/Bb", "C#m9/B", "Dm9/C", "D#m9/C#", "Em9/D", "Fm9/Eb", "Gm9/F", "G#m9/F#", "Am9/G", "A#m9/G#", "Bm9/A"];
+    expect(chordsDbFingersWrong.filter((written) => !fingeringOf(written))).toEqual([]);
+  });
+
+  test("draws every chord of the built-in Songs in every key", async () => {
+    const undrawn = (await builtInChordsInEveryKey()).filter((chord) => !fingeringFor(chord));
+    expect(undrawn.map((chord) => chord.written)).toEqual([]);
   });
 
   test("gives every chord a fingering that plays it", () => {
@@ -96,4 +103,15 @@ function* everyChord(): Generator<Chord> {
       for (let bass = 0; bass < 12; bass++) yield { written: "", root, suffix, bass };
     }
   }
+}
+
+async function builtInChordsInEveryKey(): Promise<Chord[]> {
+  const sheets = await Promise.all(builtIns.map(builtInSheets));
+  return sheets.flat().flatMap((sheet) => Array.from({ length: 12 }, (_, semitones) => chordsIn(transpose(sheet, semitones))).flat());
+}
+
+async function builtInSheets(song: (typeof builtIns)[number]) {
+  const lyrics = (await lyricsFor(song))!;
+  const drafts = await chordsFor(song, lyrics);
+  return drafts.map((draft) => parse(compose(lyrics.lines, draft.layer, song)));
 }
