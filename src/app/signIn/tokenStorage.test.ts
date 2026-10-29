@@ -1,0 +1,48 @@
+import { describe, expect, test } from "bun:test";
+import { tokenStorageFrom } from "./tokenStorage";
+
+function aDeviceStorage(): Storage {
+  const items = new Map<string, string>();
+  return {
+    get length() {
+      return items.size;
+    },
+    clear: () => items.clear(),
+    key: (index) => [...items.keys()][index] ?? null,
+    getItem: (key) => items.get(key) ?? null,
+    setItem: (key, value) => void items.set(key, value),
+    removeItem: (key) => void items.delete(key),
+  };
+}
+
+function aFullDeviceStorage(): Storage {
+  return {
+    ...aDeviceStorage(),
+    setItem: () => {
+      throw new DOMException("Storage is full.", "QuotaExceededError");
+    },
+  };
+}
+
+function aDeniedDeviceStorage(): Storage {
+  throw new DOMException("Storage is denied.", "SecurityError");
+}
+
+describe("sign-in tokens are kept", () => {
+  test("on the device itself when it saves, so other tabs see the sign-in", () => {
+    const device = aDeviceStorage();
+    expect(tokenStorageFrom(() => device)).toBe(device);
+    expect(device.length).toBe(0);
+  });
+
+  test.each([
+    ["full", aFullDeviceStorage],
+    ["denied", aDeniedDeviceStorage],
+  ])("for the visit when device storage is %s", (_, device) => {
+    const tokens = tokenStorageFrom(device);
+    tokens.setItem("jwt", "token");
+    expect(tokens.getItem("jwt")).toBe("token");
+    tokens.removeItem("jwt");
+    expect(tokens.getItem("jwt")).toBeUndefined();
+  });
+});
