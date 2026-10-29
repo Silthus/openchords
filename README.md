@@ -13,6 +13,8 @@ bun run dev         # the app on http://localhost:5173
 bun run gate:lane   # typecheck, lint and tests, as CI runs them
 ```
 
+Chord diagrams draw the first fingering of each chord from [chords-db](https://github.com/tombatossals/chords-db) at `df06fa7` (MIT, notice in `src/app/chords/chords-db/LICENSE`). `bun run scripts/vendor-chords-db.ts` vendors it again.
+
 Every push to `main` deploys to production and uploads the app to Convex static hosting. Every pull request from this repo, drafts included, deploys its own Convex preview `pr-<number>` and comments its link.
 
 ## Walks
