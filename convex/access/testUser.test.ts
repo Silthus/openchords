@@ -18,9 +18,9 @@ afterEach(() => {
   delete process.env.OPENCHORDS_ENV;
 });
 
-function personSignedIn(token: string | undefined) {
-  if (token === undefined) return undefined;
-  const { sub } = JSON.parse(atob(token.split(".")[1]!));
+function personSignedIn({ tokens }: { tokens?: { token: string } | null }) {
+  expect(tokens?.token).toBeString();
+  const { sub } = JSON.parse(atob(tokens!.token.split(".")[1]!));
   return String(sub).split("|")[0];
 }
 
@@ -35,7 +35,7 @@ describe("the TestUser", () => {
     const backend = await testBackendWith(testSignInAllowed);
     const first = await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
     const again = await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
-    expect(personSignedIn(again.tokens?.token)).toBe(personSignedIn(first.tokens?.token));
+    expect(personSignedIn(again)).toBe(personSignedIn(first));
   });
 
   test("signs in only with an email of the test domain", async () => {
