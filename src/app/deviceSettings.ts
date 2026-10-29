@@ -28,14 +28,14 @@ export function useTextSize(): [number, (size: number) => void] {
 }
 
 function useStored(key: string) {
-  return useSyncExternalStore(subscribe, () => read(key));
+  return useSyncExternalStore(subscribe, () => forThisVisit.get(key) ?? readFromTheDevice(key));
 }
 
-function read(key: string) {
+function readFromTheDevice(key: string) {
   try {
     return localStorage.getItem(key);
   } catch {
-    return forThisVisit.get(key) ?? null;
+    return null;
   }
 }
 

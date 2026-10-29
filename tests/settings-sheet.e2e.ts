@@ -1,5 +1,5 @@
 import { test } from "@e2e-dev/web";
-import { expect } from "e2e";
+import { expect, type Screen } from "e2e";
 import { openRisingSun, pixelsScrolledIn, scrollPosition } from "./risingSun";
 
 test("She sets up the Song in one settings sheet, and her look stays on this device", async ({ app, browser, screen }) => {
@@ -67,11 +67,22 @@ test("Picking another Chord sheet while it plays keeps her place in the Song", a
 test("Without device storage, the app still works and her look holds for the visit", async ({ app, browser, screen }) => {
   await browser.addInitScript(denyStorage, null);
   await openRisingSun(app, screen);
+  await pickTheDarkLook(screen);
+  expect(await browser.evaluate(looksDark)).toBe(true);
+});
+
+test("With full device storage, her look still holds for the visit", async ({ app, browser, screen }) => {
+  await browser.addInitScript(fillStorage, null);
+  await openRisingSun(app, screen);
+  await pickTheDarkLook(screen);
+  expect(await browser.evaluate(looksDark)).toBe(true);
+});
+
+async function pickTheDarkLook(screen: Screen) {
   await screen.getByRole("button", "Settings").click();
   await screen.getByRole("button", /Dark$/).click();
   await screen.getByRole("button", "Done").click();
-  expect(await browser.evaluate(looksDark)).toBe(true);
-});
+}
 
 function denyStorage() {
   Object.defineProperty(window, "localStorage", {
@@ -79,6 +90,12 @@ function denyStorage() {
       throw new DOMException("Storage is denied.", "SecurityError");
     },
   });
+}
+
+function fillStorage() {
+  Storage.prototype.setItem = () => {
+    throw new DOMException("Storage is full.", "QuotaExceededError");
+  };
 }
 
 function lyricsFontSize() {
