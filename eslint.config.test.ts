@@ -15,6 +15,8 @@ describe("a context is reached only through its public file", () => {
     ["convex/library/index.ts", "../catalog/schema"],
     ["convex/catalog/index.ts", "../sources/builtIn/songs"],
     ["convex/catalog/fill.ts", "../../src/sheet/compose"],
+    ["convex/http.ts", "./library/schema"],
+    ["src/app/main.tsx", "../sheet/parse.ts"],
   ])("%s may not import %s", async (importer, specifier) => {
     expect(await deepImportErrors(importer, specifier)).toHaveLength(1);
   });
@@ -22,6 +24,8 @@ describe("a context is reached only through its public file", () => {
   test.each([
     ["src/app/routes/index.tsx", "../../sheet"],
     ["src/app/routes/index.tsx", "../../sheet/index"],
+    ["src/app/routes/index.tsx", "../../sheet/index.ts"],
+    ["convex/schema.ts", "./catalog"],
     ["src/app/routes/index.tsx", "../../../convex/_generated/api"],
     ["convex/catalog/index.ts", "../sources"],
     ["convex/catalog/index.ts", "../_generated/server"],

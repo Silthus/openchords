@@ -10,7 +10,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true,
     "types": ["vite/client", "bun"]
   },
   "include": ["src", "convex", "*.ts"]

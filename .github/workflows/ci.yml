@@ -16,3 +16,19 @@ jobs:
       - run: bun run lint
       - run: bun test
       - run: bun run build
+
+  deploy-production:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: lane-gate
+    runs-on: ubuntu-latest
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    env:
+      CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx convex deploy --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL
+      - run: bunx static-hosting upload --prod --dist dist
