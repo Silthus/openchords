@@ -17,6 +17,17 @@ Chord diagrams draw the first fingering of each chord from [chords-db](https://g
 
 Every push to `main` deploys to production and uploads the app to Convex static hosting. Every pull request from this repo, drafts included, deploys its own Convex preview `pr-<number>` and comments its link.
 
+## Sign-in
+
+People sign in with Google, and only invited emails get in. Invite someone with:
+
+```sh
+bunx convex run access/invites:add '{"email": "her@example.com"}'          # dev
+bunx convex run --prod access/invites:add '{"email": "her@example.com"}'   # production
+```
+
+To take an invite back, delete its row from the `invites` table in the Convex dashboard.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.
