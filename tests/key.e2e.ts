@@ -12,6 +12,7 @@ test("Key + moves the whole Song higher, for every Chord sheet she picks", async
   await sheet.getByRole("button", "Key +").click();
   await sheet.getByRole("button", "Key +").click();
   await expect(sheet.getByText("Bm")).toBeVisible();
+  await app.screenshot("Key + twice moves the Song from Am to Bm");
   await sheet.getByRole("button", "Done").click();
 
   await expect(screen.getByText("Traditional · Classic · Key Bm · No capo")).toBeVisible();
@@ -20,6 +21,7 @@ test("Key + moves the whole Song higher, for every Chord sheet she picks", async
   for (const chord of ["Bm", "D", "E", "G", "F#"]) {
     await expect(chordsInThisSong.getByRole("img", `${chord} chord diagram`)).toBeVisible();
   }
+  await app.screenshot("The header line, the diagrams and the lyrics show the Song in Bm");
 
   await screen.getByRole("button", "Settings").click();
   await sheet.getByRole("link", /^Easy shapes/).click();
