@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SongsSongIdIndexRouteImport } from './routes/songs.$songId.index'
+import { Route as SongsSongIdRouteImport } from './routes/songs.$songId'
 import { Route as SongsSongIdSheetsChordSheetIdRouteImport } from './routes/songs.$songId.sheets.$chordSheetId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,47 +18,46 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SongsSongIdIndexRoute = SongsSongIdIndexRouteImport.update({
-  id: '/songs/$songId/',
-  path: '/songs/$songId/',
+const SongsSongIdRoute = SongsSongIdRouteImport.update({
+  id: '/songs/$songId',
+  path: '/songs/$songId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SongsSongIdSheetsChordSheetIdRoute =
   SongsSongIdSheetsChordSheetIdRouteImport.update({
-    id: '/songs/$songId/sheets/$chordSheetId',
-    path: '/songs/$songId/sheets/$chordSheetId',
-    getParentRoute: () => rootRouteImport,
+    id: '/sheets/$chordSheetId',
+    path: '/sheets/$chordSheetId',
+    getParentRoute: () => SongsSongIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/songs/$songId/': typeof SongsSongIdIndexRoute
+  '/songs/$songId': typeof SongsSongIdRouteWithChildren
   '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/songs/$songId': typeof SongsSongIdIndexRoute
+  '/songs/$songId': typeof SongsSongIdRouteWithChildren
   '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/songs/$songId/': typeof SongsSongIdIndexRoute
+  '/songs/$songId': typeof SongsSongIdRouteWithChildren
   '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/songs/$songId/' | '/songs/$songId/sheets/$chordSheetId'
+  fullPaths: '/' | '/songs/$songId' | '/songs/$songId/sheets/$chordSheetId'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/songs/$songId' | '/songs/$songId/sheets/$chordSheetId'
   id:
-    '__root__' | '/' | '/songs/$songId/' | '/songs/$songId/sheets/$chordSheetId'
+    '__root__' | '/' | '/songs/$songId' | '/songs/$songId/sheets/$chordSheetId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SongsSongIdIndexRoute: typeof SongsSongIdIndexRoute
-  SongsSongIdSheetsChordSheetIdRoute: typeof SongsSongIdSheetsChordSheetIdRoute
+  SongsSongIdRoute: typeof SongsSongIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -70,27 +69,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/songs/$songId/': {
-      id: '/songs/$songId/'
+    '/songs/$songId': {
+      id: '/songs/$songId'
       path: '/songs/$songId'
-      fullPath: '/songs/$songId/'
-      preLoaderRoute: typeof SongsSongIdIndexRouteImport
+      fullPath: '/songs/$songId'
+      preLoaderRoute: typeof SongsSongIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/songs/$songId/sheets/$chordSheetId': {
       id: '/songs/$songId/sheets/$chordSheetId'
-      path: '/songs/$songId/sheets/$chordSheetId'
+      path: '/sheets/$chordSheetId'
       fullPath: '/songs/$songId/sheets/$chordSheetId'
       preLoaderRoute: typeof SongsSongIdSheetsChordSheetIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SongsSongIdRoute
     }
   }
 }
 
+interface SongsSongIdRouteChildren {
+  SongsSongIdSheetsChordSheetIdRoute: typeof SongsSongIdSheetsChordSheetIdRoute
+}
+
+const SongsSongIdRouteChildren: SongsSongIdRouteChildren = {
+  SongsSongIdSheetsChordSheetIdRoute: SongsSongIdSheetsChordSheetIdRoute,
+}
+
+const SongsSongIdRouteWithChildren = SongsSongIdRoute._addFileChildren(
+  SongsSongIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SongsSongIdIndexRoute: SongsSongIdIndexRoute,
-  SongsSongIdSheetsChordSheetIdRoute: SongsSongIdSheetsChordSheetIdRoute,
+  SongsSongIdRoute: SongsSongIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

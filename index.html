@@ -6,6 +6,11 @@
     <meta name="description" content="Chords over the words, without the ads." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>OpenChords</title>
+    <script>
+      try {
+        document.documentElement.classList.toggle("dark", localStorage.getItem("openchords.look") === "dark");
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

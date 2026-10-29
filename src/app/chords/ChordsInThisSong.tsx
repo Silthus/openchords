@@ -3,8 +3,8 @@ import { LazyChordDiagram } from "./LazyChordDiagram";
 
 export function ChordsInThisSong({ chords, onPick }: { chords: Chord[]; onPick: (chord: Chord) => void }) {
   return (
-    <section aria-labelledby="chords-in-this-song" className="mt-5 rounded-2xl bg-stone-100 p-3">
-      <h2 id="chords-in-this-song" className="mb-1 text-xs font-bold tracking-wide text-stone-500 uppercase">
+    <section aria-labelledby="chords-in-this-song" className="mt-5 rounded-2xl bg-panel p-3">
+      <h2 id="chords-in-this-song" className="mb-1 text-xs font-bold tracking-wide text-muted uppercase">
         Chords in this song
       </h2>
       <ul className="grid grid-cols-5 gap-1">
@@ -16,7 +16,7 @@ export function ChordsInThisSong({ chords, onPick }: { chords: Chord[]; onPick: 
           </li>
         ))}
       </ul>
-      <p className="mt-1 text-sm text-stone-500">Dots: where your fingers go. Numbers: which finger. O: play the string open. X: skip it.</p>
+      <p className="mt-1 text-sm text-muted">Dots: where your fingers go. Numbers: which finger. O: play the string open. X: skip it.</p>
     </section>
   );
 }
