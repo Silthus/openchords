@@ -28,6 +28,8 @@ bunx convex run --prod access/invites:add '{"email": "her@example.com"}'   # pro
 
 To take an invite back, delete its row from the `invites` table in the Convex dashboard.
 
+Signing in needs device storage, because Convex Auth keeps its sign-in state there across the trip to Google. A browser that denies storage still reads the Songs while invites are off.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.

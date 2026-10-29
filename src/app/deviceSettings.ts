@@ -1,4 +1,5 @@
 import { useEffect, useSyncExternalStore } from "react";
+import { readFromTheDevice, saveOnTheDevice } from "./deviceStorage";
 
 export type Look = "light" | "dark";
 
@@ -34,14 +35,6 @@ function useStored(key: string) {
   return useSyncExternalStore(subscribe, () => forThisVisit.get(key) ?? readFromTheDevice(key));
 }
 
-function readFromTheDevice(key: string) {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
 function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -51,13 +44,4 @@ function store(key: string, value: string) {
   forThisVisit.set(key, value);
   saveOnTheDevice(key, value);
   for (const listener of listeners) listener();
-}
-
-function saveOnTheDevice(key: string, value: string) {
-  try {
-    localStorage.setItem(key, value);
-    return true;
-  } catch {
-    return false;
-  }
 }

@@ -1,20 +1,16 @@
 import type { TokenStorage } from "@convex-dev/auth/react";
+import { readFromTheDevice, removeFromTheDevice, saveOnTheDevice } from "../deviceStorage";
 
-export const tokenStorage: TokenStorage = deviceStorageIfAllowed() ?? storageForThisVisit();
+const tokensForThisVisit = new Map<string, string>();
 
-function deviceStorageIfAllowed() {
-  try {
-    return window.localStorage;
-  } catch {
-    return undefined;
-  }
-}
-
-function storageForThisVisit(): TokenStorage {
-  const tokens = new Map<string, string>();
-  return {
-    getItem: (key) => tokens.get(key),
-    setItem: (key, value) => void tokens.set(key, value),
-    removeItem: (key) => void tokens.delete(key),
-  };
-}
+export const tokenStorage: TokenStorage = {
+  getItem: (key) => tokensForThisVisit.get(key) ?? readFromTheDevice(key),
+  setItem: (key, value) => {
+    if (saveOnTheDevice(key, value)) tokensForThisVisit.delete(key);
+    else tokensForThisVisit.set(key, value);
+  },
+  removeItem: (key) => {
+    tokensForThisVisit.delete(key);
+    removeFromTheDevice(key);
+  },
+};
