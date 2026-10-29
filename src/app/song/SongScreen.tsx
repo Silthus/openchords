@@ -4,6 +4,7 @@ import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { parse, type SheetMeta } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
+import { BackToSearch } from "./BackToSearch";
 import { ChordLyrics } from "./ChordLyrics";
 
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
@@ -14,8 +15,9 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
   const chosen = found.sheets.find((sheet) => sheet.chordSheetId === chordSheetId) ?? found.sheets[0];
   const sheet = chosen && parse(chosen.chordPro);
   return (
-    <main className="mx-auto max-w-2xl px-5 pt-6 pb-24">
+    <main className="mx-auto max-w-2xl px-5 pt-2 pb-24">
       <OpenSong songId={found.song.songId} />
+      <BackToSearch />
       <h1 className="text-2xl font-bold">{found.song.title}</h1>
       {chosen && sheet ? (
         <>

@@ -25,6 +25,20 @@ export const builtIns = query({
   },
 });
 
+export const search = query({
+  args: { query: v.string() },
+  returns: v.array(songSummary),
+  handler: async (ctx, args) => {
+    const query = args.query.trim();
+    if (query.length < 2 || query.length > 100) return [];
+    const songs = await ctx.db
+      .query("songs")
+      .withSearchIndex("search", (q) => q.search("searchText", query))
+      .take(20);
+    return songs.map(summaryOf);
+  },
+});
+
 export const song = query({
   args: { songId: v.string() },
   returns: v.union(
@@ -62,16 +76,21 @@ export const seed = internalMutation({
   args: {},
   returns: v.null(),
   handler: async (ctx) => {
-    for (const hit of builtInHits) {
-      const existing = await ctx.db
-        .query("songs")
-        .withIndex("by_builtIn", (q) => q.eq("builtInId", hit.builtInId))
-        .unique();
-      await openSong(ctx, existing?._id ?? (await ctx.db.insert("songs", hit)));
-    }
+    for (const hit of builtInHits) await openSong(ctx, await storeBuiltIn(ctx, hit));
     return null;
   },
 });
+
+async function storeBuiltIn(ctx: MutationCtx, hit: (typeof builtInHits)[number]) {
+  const song = { ...hit, searchText: `${hit.title} ${hit.artist}` };
+  const existing = await ctx.db
+    .query("songs")
+    .withIndex("by_builtIn", (q) => q.eq("builtInId", hit.builtInId))
+    .unique();
+  if (!existing) return await ctx.db.insert("songs", song);
+  await ctx.db.patch(existing._id, song);
+  return existing._id;
+}
 
 async function openSong(ctx: MutationCtx, songId: Id<"songs">) {
   const song = await ctx.db.get(songId);
