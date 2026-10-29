@@ -41,6 +41,17 @@ describe("signing in with Google", () => {
     expect(await backend.run((ctx) => ctx.db.query("users").collect())).toHaveLength(0);
   });
 
+  test("a returning email whose invite was deleted gets no new session", async () => {
+    const backend = testBackend();
+    await invite(backend, "anna@example.com");
+    await returnFromGoogle(backend, { email: "anna@example.com", email_verified: true });
+    await backend.run(async (ctx) => {
+      for (const invite of await ctx.db.query("invites").take(10)) await ctx.db.delete(invite._id);
+    });
+    await expect(returnFromGoogle(backend, { email: "anna@example.com", email_verified: true })).rejects.toThrow();
+    expect(await sessions(backend)).toHaveLength(1);
+  });
+
   test("the invite matches whatever case Google sends the email in", async () => {
     const backend = testBackend();
     await invite(backend, " Anna@Example.com ");
