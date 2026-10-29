@@ -72,3 +72,36 @@ describe("Catalog", () => {
     expect(await backend.query(api.catalog.index.song, { songId: "x" })).toBeNull();
   });
 });
+
+describe("Catalog search", () => {
+  async function titlesFound(backend: ReturnType<typeof testBackend>, query: string) {
+    const songs = await backend.query(api.catalog.index.search, { query });
+    return songs.map((song) => song.title);
+  }
+
+  test("finds a Song from part of its title", async () => {
+    const backend = await seeded();
+    expect(await titlesFound(backend, "Rising")).toEqual(["House of the Rising Sun"]);
+    expect(await titlesFound(backend, "shenan")).toEqual(["Shenandoah"]);
+  });
+
+  test("finds a Song by its artist", async () => {
+    const backend = await seeded();
+    expect(await titlesFound(backend, "John Newton")).toEqual(["Amazing Grace"]);
+  });
+
+  test("answers only queries of 2 to 100 characters", async () => {
+    const backend = await seeded();
+    expect(await titlesFound(backend, " S ")).toEqual([]);
+    expect(await titlesFound(backend, `Shenandoah ${"x".repeat(90)}`)).toEqual([]);
+  });
+
+  test("finds built-in Songs stored before search existed once they are seeded again", async () => {
+    const backend = testBackend();
+    await backend.run((ctx) =>
+      ctx.db.insert("songs", { title: "Shenandoah", artist: "Traditional", builtInId: "shenandoah" }),
+    );
+    await backend.mutation(internal.catalog.index.seed, {});
+    expect(await titlesFound(backend, "Shenandoah")).toEqual(["Shenandoah"]);
+  });
+});

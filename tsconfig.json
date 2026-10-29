@@ -12,5 +12,5 @@
     "noEmit": true,
     "types": ["vite/client", "bun"]
   },
-  "include": ["src", "convex", "*.ts"]
+  "include": ["src", "convex", "tests", "*.ts"]
 }
