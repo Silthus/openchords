@@ -13,4 +13,4 @@ bun run dev         # the app on http://localhost:5173
 bun run gate:lane   # typecheck, lint and tests, as CI runs them
 ```
 
-Every push to `main` deploys to production and uploads the app to Convex static hosting.
+Every push to `main` deploys to production and uploads the app to Convex static hosting. Every pull request from this repo, drafts included, deploys its own Convex preview `pr-<number>` and comments its link.
