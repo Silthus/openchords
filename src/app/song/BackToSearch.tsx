@@ -10,7 +10,7 @@ export function BackToSearch() {
     router.history.back();
   };
   return (
-    <Link to="/" onClick={returnToSearch} className="inline-block py-2 text-base font-semibold text-orange-600">
+    <Link to="/" onClick={returnToSearch} className="inline-block py-2 text-base font-semibold text-accent">
       ‹ Search
     </Link>
   );

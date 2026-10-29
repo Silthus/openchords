@@ -108,7 +108,7 @@ function Dot({ x, y, finger }: { x: number; y: number; finger?: number }) {
 function FingerNumber({ x, y, finger }: { x: number; y: number; finger?: number }) {
   if (!finger) return null;
   return (
-    <text x={x} y={y + 2.5} textAnchor="middle" fontSize={7} fontWeight="bold" stroke="none" className="fill-white">
+    <text x={x} y={y + 2.5} textAnchor="middle" fontSize={7} fontWeight="bold" stroke="none" className="fill-page">
       {finger}
     </text>
   );

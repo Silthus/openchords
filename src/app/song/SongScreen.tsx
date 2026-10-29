@@ -1,14 +1,19 @@
 import { useMutation, useQuery } from "convex/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { parse, type SheetMeta } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordSheetView } from "./ChordSheetView";
+import { SettingsSheet } from "./SettingsSheet";
+
+const startingSpeed = 3;
 
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
   const found = useQuery(api.catalog.index.song, { songId });
+  const [speed, setSpeed] = useState(startingSpeed);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   if (found === undefined) return null;
   if (found === null) return <PageNotFound />;
 
@@ -21,11 +26,21 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
       <h1 className="text-2xl font-bold">{found.song.title}</h1>
       {chosen && sheet ? (
         <>
-          <p className="text-base text-stone-500">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
-          <ChordSheetView sheet={sheet} />
+          <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
+          <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
+          {settingsOpen && (
+            <SettingsSheet
+              songId={found.song.songId}
+              sheets={found.sheets}
+              chosenId={chosen.chordSheetId}
+              speed={speed}
+              onSpeed={setSpeed}
+              onClose={() => setSettingsOpen(false)}
+            />
+          )}
         </>
       ) : (
-        <p className="text-base text-stone-500">Getting this Song ready…</p>
+        <p className="text-base text-muted">Getting this Song ready…</p>
       )}
     </main>
   );

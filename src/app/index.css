@@ -1,4 +1,23 @@
 @import "tailwindcss";
 
+@theme {
+  --color-page: var(--color-white);
+  --color-ink: var(--color-stone-900);
+  --color-muted: var(--color-stone-500);
+  --color-panel: var(--color-stone-100);
+  --color-line: var(--color-stone-300);
+  --color-accent: var(--color-orange-600);
+}
+
+.dark {
+  color-scheme: dark;
+  --color-page: var(--color-neutral-950);
+  --color-ink: var(--color-neutral-100);
+  --color-muted: var(--color-neutral-400);
+  --color-panel: var(--color-neutral-900);
+  --color-line: var(--color-neutral-700);
+  --color-accent: var(--color-amber-400);
+}
+
 html, body, #root { height: 100%; }
-body { -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
+body { background-color: var(--color-page); -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }

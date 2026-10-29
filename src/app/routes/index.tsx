@@ -26,7 +26,7 @@ function StartScreen() {
   return (
     <main className="mx-auto max-w-xl px-5 pt-16 pb-24">
       <Logo />
-      <p className="mt-2 text-lg text-stone-600">Chords over the words, without the ads.</p>
+      <p className="mt-2 text-lg text-muted">Chords over the words, without the ads.</p>
       <input
         type="search"
         value={query}
@@ -34,18 +34,18 @@ function StartScreen() {
         maxLength={100}
         placeholder="Search a song or artist"
         aria-label="Search songs"
-        className="mt-8 w-full rounded-xl border border-stone-300 px-4 py-3 text-lg outline-none focus:border-orange-600"
+        className="mt-8 w-full rounded-xl border border-line bg-page px-4 py-3 text-lg outline-none focus:border-accent"
       />
-      {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-stone-500 uppercase">Built-in Songs</h2>}
+      {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length === 0 ? (
-        <p className="mt-6 text-lg text-stone-600">No Songs found for “{query.trim()}”.</p>
+        <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
       ) : (
-        <ul className="mt-4 divide-y divide-stone-200">
+        <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
             <li key={song.songId}>
               <SongLink songId={song.songId} className="block py-3">
                 <span className="block text-lg font-semibold">{song.title}</span>
-                <span className="block text-stone-500">{song.artist}</span>
+                <span className="block text-muted">{song.artist}</span>
               </SongLink>
             </li>
           ))}
