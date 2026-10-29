@@ -24,6 +24,17 @@ function aFullDeviceStorage(): Storage {
   };
 }
 
+function aNearlyFullDeviceStorage(): Storage {
+  const device = aDeviceStorage();
+  return {
+    ...device,
+    setItem: (key, value) => {
+      if (value.length > 100) throw new DOMException("Storage is full.", "QuotaExceededError");
+      device.setItem(key, value);
+    },
+  };
+}
+
 function aDeniedDeviceStorage(): Storage {
   throw new DOMException("Storage is denied.", "SecurityError");
 }
@@ -37,6 +48,7 @@ describe("sign-in tokens are kept", () => {
 
   test.each([
     ["full", aFullDeviceStorage],
+    ["too full for a sign-in", aNearlyFullDeviceStorage],
     ["denied", aDeniedDeviceStorage],
   ])("for the visit when device storage is %s", (_, device) => {
     const tokens = tokenStorageFrom(device);

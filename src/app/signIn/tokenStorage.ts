@@ -6,11 +6,13 @@ export function tokenStorageFrom(deviceStorage: () => Storage): TokenStorage {
   return deviceStorageThatSaves(deviceStorage) ?? storageForThisVisit();
 }
 
+const probe = "openchords.storageProbe";
+const roomForASignIn = "x".repeat(8 * 1024);
+
 function deviceStorageThatSaves(deviceStorage: () => Storage) {
-  const probe = "openchords.storageProbe";
   try {
     const storage = deviceStorage();
-    storage.setItem(probe, probe);
+    storage.setItem(probe, roomForASignIn);
     storage.removeItem(probe);
     return storage;
   } catch {
