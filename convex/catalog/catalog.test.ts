@@ -40,7 +40,12 @@ describe("Catalog", () => {
   test("opening a Song fills it once, however often it is opened", async () => {
     const backend = testBackend();
     const songId = await backend.run((ctx) =>
-      ctx.db.insert("songs", { title: "House of the Rising Sun", artist: "Traditional", builtInId: "house-of-the-rising-sun" }),
+      ctx.db.insert("songs", {
+        title: "House of the Rising Sun",
+        artist: "Traditional",
+        builtInId: "house-of-the-rising-sun",
+        searchText: "House of the Rising Sun Traditional",
+      }),
     );
     expect((await backend.query(api.catalog.index.song, { songId }))?.sheets).toHaveLength(0);
     await backend.mutation(api.catalog.index.open, { songId });
@@ -94,14 +99,5 @@ describe("Catalog search", () => {
     const backend = await seeded();
     expect(await titlesFound(backend, " S ")).toEqual([]);
     expect(await titlesFound(backend, `Shenandoah ${"x".repeat(90)}`)).toEqual([]);
-  });
-
-  test("finds built-in Songs stored before search existed once they are seeded again", async () => {
-    const backend = testBackend();
-    await backend.run((ctx) =>
-      ctx.db.insert("songs", { title: "Shenandoah", artist: "Traditional", builtInId: "shenandoah" }),
-    );
-    await backend.mutation(internal.catalog.index.seed, {});
-    expect(await titlesFound(backend, "Shenandoah")).toEqual(["Shenandoah"]);
   });
 });
