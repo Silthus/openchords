@@ -58,7 +58,7 @@ export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easier
           />
           {easierCapo !== null && (
             <button type="button" onClick={() => onView({ ...view, capo: easierCapo })} className="mb-3 w-full rounded-xl bg-orange-500 py-2 font-semibold text-white">
-              Make it easier: capo on fret {easierCapo}
+              Make it easier: {describeCapo(easierCapo).toLowerCase()}
             </button>
           )}
           <Stepper label="Scroll speed" value={String(speed)} hint="How fast the lyrics move while playing." step={(by) => onSpeed(speed + by)} lowest={speed <= speeds.slowest} highest={speed >= speeds.fastest} />

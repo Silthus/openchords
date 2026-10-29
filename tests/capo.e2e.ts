@@ -12,6 +12,7 @@ test("A capo keeps the key and shows the shapes she plays", async ({ app, screen
 
   for (let fret = 0; fret < 3; fret++) await sheet.getByRole("button", "Capo +").click();
   await expect(sheet.getByText("Capo on fret 3")).toBeVisible();
+  await expect(sheet.getByRole("button", "Make it easier: no capo")).toBeVisible();
   await sheet.getByRole("button", "Done").click();
   await expect(screen.getByText("Traditional · Classic · Key Am · Capo on fret 3")).toBeVisible();
   await expect(screen.getByRole("region", "Verse 1").getByRole("button").first()).toHaveText("F#m");
