@@ -58,8 +58,8 @@ function StartScreen() {
 function useSongsFor(query: string) {
   const searching = query.length >= 2;
   const builtIns = useQuery(api.catalog.index.builtIns, searching ? "skip" : {});
-  const found = useLastAnswer(useQuery(api.catalog.index.search, searching ? { query } : "skip"));
-  return { searching, songs: searching ? found : builtIns };
+  const found = useQuery(api.catalog.index.search, searching ? { query } : "skip");
+  return { searching, songs: useLastAnswer(searching ? found : builtIns) };
 }
 
 function useLastAnswer<T>(answer: T | undefined) {

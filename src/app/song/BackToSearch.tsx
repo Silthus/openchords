@@ -5,7 +5,7 @@ export function BackToSearch() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const returnToSearch = (event: MouseEvent) => {
-    if (!canGoBack) return;
+    if (!canGoBack || opensElsewhere(event)) return;
     event.preventDefault();
     router.history.back();
   };
@@ -14,4 +14,8 @@ export function BackToSearch() {
       ‹ Search
     </Link>
   );
+}
+
+function opensElsewhere(event: MouseEvent) {
+  return event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 }
