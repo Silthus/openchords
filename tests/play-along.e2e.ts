@@ -1,5 +1,5 @@
 import { test } from "@e2e-dev/web";
-import { expect } from "e2e";
+import { expect, type App, type Screen } from "e2e";
 
 type WakeLockLog = { held: number };
 
@@ -27,6 +27,57 @@ test("She plays a Song, pauses it with a tap on the lyrics, and it stops at the 
   await expect(screen.getByText("End of song")).toBeVisible();
   expect(await browser.evaluate(pixelsScrolledIn, 500)).toBe(0);
 });
+
+test("She scrolls herself while it plays, and it carries on from there", async ({ app, browser, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Play").click();
+  const herPosition = await browser.evaluate(scrollBy, 200);
+  const later = await browser.evaluate(positionAfter, 1000);
+  expect(later).toBeGreaterThan(herPosition + 5);
+  expect(later).toBeLessThan(herPosition + 60);
+});
+
+test("A chord tapped while it plays shows its diagram and the Song keeps playing", async ({ app, browser, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Play").click();
+  await (await screen.getByRole("region", "Verse 1").getByRole("button", "Am").all())[0]!.click();
+  await expect(screen.getByRole("dialog", "Am large")).toBeVisible();
+  expect(await browser.evaluate(pixelsScrolledIn, 1000)).toBeGreaterThan(10);
+  await browser.keyboard.press("Escape");
+  await expect(screen.getByRole("button", "Pause")).toBeVisible();
+});
+
+test("After the page stalls, the Song moves on from where it was", async ({ app, browser, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Play").click();
+  expect(await browser.evaluate(pixelsScrolledAcrossAStallOf, 3000)).toBeLessThan(15);
+});
+
+async function openRisingSun(app: App, screen: Screen) {
+  await app.open("/?q=rising");
+  await screen.getByRole("link").filter({ hasText: "House of the Rising Sun" }).click();
+  await expect(screen.getByText("End of song")).toBeVisible();
+}
+
+function scrollBy(pixels: number) {
+  window.scrollTo(0, window.scrollY + pixels);
+  return window.scrollY;
+}
+
+function positionAfter(milliseconds: number) {
+  return new Promise<number>((resolve) => setTimeout(() => resolve(window.scrollY), milliseconds));
+}
+
+async function pixelsScrolledAcrossAStallOf(milliseconds: number) {
+  const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+  await nextFrame();
+  const before = window.scrollY;
+  const stallEnds = performance.now() + milliseconds;
+  while (performance.now() < stallEnds);
+  await nextFrame();
+  await nextFrame();
+  return Math.round(window.scrollY - before);
+}
 
 function recordWakeLocks() {
   const log: WakeLockLog = { held: 0 };

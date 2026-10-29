@@ -1,6 +1,7 @@
 import { useEffect, useEffectEvent } from "react";
 
 const pixelsPerSecondPerStep = 7;
+const longestFrameInSeconds = 0.1;
 
 export function useAutoScroll(playing: boolean, speed: number, onEnd: () => void) {
   const end = useEffectEvent(onEnd);
@@ -11,7 +12,7 @@ export function useAutoScroll(playing: boolean, speed: number, onEnd: () => void
     let position = window.scrollY;
     const tick = (now: number) => {
       if (scrolledByHer(position)) position = window.scrollY;
-      position += ((now - last) / 1000) * speed * pixelsPerSecondPerStep;
+      position += Math.min((now - last) / 1000, longestFrameInSeconds) * speed * pixelsPerSecondPerStep;
       last = now;
       window.scrollTo(0, position);
       if (atTheEnd()) return end();
