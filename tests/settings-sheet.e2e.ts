@@ -1,7 +1,7 @@
 import { test } from "@e2e-dev/web";
 import { expect, type Screen } from "e2e";
 import { openRisingSun, pixelsScrolledIn, scrollPosition } from "./risingSun";
-import { looksDark } from "./looks";
+import { looksDark, statusBarColor } from "./looks";
 
 test("She sets up the Song in one settings sheet, and her look stays on this device", async ({ app, browser, screen }) => {
   await app.open("/?q=rising");
@@ -29,6 +29,7 @@ test("She sets up the Song in one settings sheet, and her look stays on this dev
   await expect(screen.getByText("Scroll speed 10")).toBeVisible();
   expect(await browser.evaluate(lyricsFontSize)).toBeCloseTo(lyricsBefore * 1.2, 0);
   expect(await browser.evaluate(looksDark)).toBe(true);
+  expect(await browser.evaluate(statusBarColor)).toBe("#0a0a0a");
 
   await browser.reload();
   await expect(screen.getByText(/Easy shapes · Key Am · Capo on fret 5/)).toBeVisible();
@@ -40,6 +41,7 @@ test("She sets up the Song in one settings sheet, and her look stays on this dev
   await screen.tapAt({ x: 10, y: 10 });
   await expect(sheet).toBeHidden();
   expect(await browser.evaluate(looksDark)).toBe(false);
+  expect(await browser.evaluate(statusBarColor)).toBe("#ffffff");
 });
 
 test("The Song scrolls at the speed she sets, also while it plays", async ({ app, browser, screen }) => {

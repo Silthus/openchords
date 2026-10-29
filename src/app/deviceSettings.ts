@@ -2,6 +2,8 @@ import { useEffect, useSyncExternalStore } from "react";
 
 export type Look = "light" | "dark";
 
+const statusBarColors: Record<Look, string> = { light: "#ffffff", dark: "#0a0a0a" };
+
 export const textSizes = { smallest: 80, standard: 100, largest: 180, step: 10 };
 
 const lookKey = "openchords.look";
@@ -18,6 +20,7 @@ export function useLookOnThePage() {
   const [look] = useLook();
   useEffect(() => {
     document.documentElement.classList.toggle("dark", look === "dark");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", statusBarColors[look]);
   }, [look]);
 }
 

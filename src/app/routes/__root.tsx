@@ -1,5 +1,6 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { useLookOnThePage } from "../deviceSettings";
+import { NewVersionBanner } from "../NewVersionBanner";
 import { PageNotFound } from "../PageNotFound";
 
 export const Route = createRootRoute({
@@ -8,6 +9,7 @@ export const Route = createRootRoute({
     return (
       <div className="min-h-full bg-page text-ink">
         <Outlet />
+        <NewVersionBanner />
       </div>
     );
   },
