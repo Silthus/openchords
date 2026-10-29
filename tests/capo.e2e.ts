@@ -38,3 +38,24 @@ test("Make it easier puts back the capo a Chord sheet is written for", async ({ 
   await expect(sheet.getByRole("button", /^Make it easier/)).toBeHidden();
   await expect(screen.getByText("Traditional · Easy shapes · Key Am · Capo on fret 5")).toBeAttached();
 });
+
+test("Each Chord sheet keeps the capo she set on it", async ({ app, screen }) => {
+  await openRisingSun(app, screen);
+  await screen.getByRole("button", "Settings").click();
+  const sheet = screen.getByRole("dialog", "Settings");
+  const firstChord = screen.getByRole("region", "Verse 1").getByRole("button").first();
+  for (let fret = 0; fret < 3; fret++) await sheet.getByRole("button", "Capo +").click();
+
+  await sheet.getByRole("link", /^Easy shapes/).click();
+  await expect(sheet.getByText("Capo on fret 5")).toBeVisible();
+  await sheet.getByRole("button", "Capo −").click();
+  await expect(firstChord).toHaveText("Fm");
+
+  await sheet.getByRole("link", /^Classic/).click();
+  await expect(sheet.getByText("Capo on fret 3")).toBeVisible();
+  await expect(firstChord).toHaveText("F#m");
+
+  await sheet.getByRole("link", /^Easy shapes/).click();
+  await expect(sheet.getByText("Capo on fret 4")).toBeVisible();
+  await expect(firstChord).toHaveText("Fm");
+});
