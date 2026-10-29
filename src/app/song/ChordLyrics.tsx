@@ -15,7 +15,14 @@ export function ChordLyrics({ sheet, onChord }: { sheet: ParsedSheet; onChord: (
                     {word.chords.length === 0
                       ? blank
                       : word.chords.map((chord, chordIndex) => (
-                          <button key={chordIndex} type="button" onClick={() => onChord(chord)}>
+                          <button
+                            key={chordIndex}
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onChord(chord);
+                            }}
+                          >
                             {chord}
                           </button>
                         ))}

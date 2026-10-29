@@ -1,0 +1,57 @@
+import { test } from "@e2e-dev/web";
+import { expect } from "e2e";
+
+type WakeLockLog = { held: number };
+
+test("She plays a Song, pauses it with a tap on the lyrics, and it stops at the end", async ({ app, browser, screen }) => {
+  await app.open("/?q=rising");
+  await screen.getByRole("link").filter({ hasText: "House of the Rising Sun" }).click();
+  await browser.evaluate(recordWakeLocks);
+  const play = screen.getByRole("button", "Play");
+  const pause = screen.getByRole("button", "Pause");
+  const hint = screen.getByText("Tap the lyrics to pause");
+  await expect(screen.getByText("Scroll speed 3")).toBeVisible();
+
+  await play.click();
+  await expect(hint).toBeVisible();
+  expect(await browser.evaluate(pixelsScrolledIn, 1000)).toBeGreaterThan(10);
+  expect(await browser.evaluate(heldWakeLocks)).toBe(1);
+
+  await screen.getByText("ruin").click();
+  await expect(play).toBeVisible();
+  await expect(hint).toBeHidden();
+  expect(await browser.evaluate(pixelsScrolledIn, 500)).toBe(0);
+  expect(await browser.evaluate(heldWakeLocks)).toBe(0);
+
+  await browser.evaluate(scrollToPixelsAboveTheEnd, 40);
+  await play.click();
+  await expect(pause).toBeVisible();
+  await expect(play).toBeVisible();
+  await expect(screen.getByText("End of song")).toBeVisible();
+  expect(await browser.evaluate(pixelsScrolledIn, 500)).toBe(0);
+});
+
+function recordWakeLocks() {
+  const log: WakeLockLog = { held: 0 };
+  const request = async () => {
+    log.held += 1;
+    return { release: async () => void (log.held -= 1) };
+  };
+  Object.assign(window, { wakeLockLog: log });
+  Object.defineProperty(navigator, "wakeLock", { configurable: true, value: { request } });
+  return log.held;
+}
+
+function heldWakeLocks() {
+  return (window as unknown as { wakeLockLog: WakeLockLog }).wakeLockLog.held;
+}
+
+function pixelsScrolledIn(milliseconds: number) {
+  const start = window.scrollY;
+  return new Promise<number>((resolve) => setTimeout(() => resolve(Math.round(window.scrollY - start)), milliseconds));
+}
+
+function scrollToPixelsAboveTheEnd(pixels: number) {
+  window.scrollTo(0, document.documentElement.scrollHeight - window.innerHeight - pixels);
+  return window.scrollY;
+}
