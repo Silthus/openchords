@@ -5,7 +5,7 @@ import type { Id } from "../../../convex/_generated/dataModel";
 import { parse, type SheetMeta } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
-import { ChordLyrics } from "./ChordLyrics";
+import { ChordSheetView } from "./ChordSheetView";
 
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
   const found = useQuery(api.catalog.index.song, { songId });
@@ -22,7 +22,7 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
       {chosen && sheet ? (
         <>
           <p className="text-base text-stone-500">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
-          <ChordLyrics sheet={sheet} />
+          <ChordSheetView sheet={sheet} />
         </>
       ) : (
         <p className="text-base text-stone-500">Getting this Song ready…</p>

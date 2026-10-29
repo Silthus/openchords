@@ -15,7 +15,7 @@ export const catalogTables = {
     title: v.string(),
     artist: v.string(),
     builtInId: v.optional(v.string()),
-    searchText: v.optional(v.string()),
+    searchText: v.string(),
   })
     .index("by_builtIn", ["builtInId"])
     .searchIndex("search", { searchField: "searchText" }),

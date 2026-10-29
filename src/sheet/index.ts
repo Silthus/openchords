@@ -1,3 +1,5 @@
+export { chordSuffixes, chordsIn, chordTones, essentialTones, isChord, notationOf, readChord, type Chord, type Notation } from "./chords";
+
 export type SheetMeta = { title: string; artist: string; key?: string; capo: number };
 export type Word = { text: string; chords: string[] };
 export type SheetLine = { words: Word[] };
