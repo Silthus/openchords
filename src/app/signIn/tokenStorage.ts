@@ -1,13 +1,13 @@
 import type { TokenStorage } from "@convex-dev/auth/react";
 
+const probe = "openchords.storageProbe";
+const roomForASignIn = "x".repeat(8 * 1024);
+
 export const tokenStorage = tokenStorageFrom(() => window.localStorage);
 
 export function tokenStorageFrom(deviceStorage: () => Storage): TokenStorage {
   return deviceStorageThatSaves(deviceStorage) ?? storageForThisVisit();
 }
-
-const probe = "openchords.storageProbe";
-const roomForASignIn = "x".repeat(8 * 1024);
 
 function deviceStorageThatSaves(deviceStorage: () => Storage) {
   try {

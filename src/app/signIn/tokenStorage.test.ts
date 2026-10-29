@@ -40,6 +40,17 @@ function aDeniedDeviceStorage(): Storage {
 }
 
 describe("sign-in tokens are kept", () => {
+  test("in the browser's own storage when it saves", async () => {
+    const device = aDeviceStorage();
+    Object.assign(globalThis, { window: { localStorage: device } });
+    try {
+      const { tokenStorage } = await import(`./tokenStorage?${crypto.randomUUID()}`);
+      expect(tokenStorage).toBe(device);
+    } finally {
+      Reflect.deleteProperty(globalThis, "window");
+    }
+  });
+
   test("on the device itself when it saves, so other tabs see the sign-in", () => {
     const device = aDeviceStorage();
     expect(tokenStorageFrom(() => device)).toBe(device);
