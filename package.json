@@ -1,0 +1,28 @@
+{
+  "name": "openchords",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/bun": "latest",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@tombatossals/chords-db": "^0.5.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "svguitar": "^2.10.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "prototype": "VITE_PROTOTYPE=1 vite",
+    "build:prototype": "VITE_PROTOTYPE=1 vite build",
+    "typecheck": "tsc",
+    "build:pages": "VITE_PROTOTYPE=1 PROTOTYPE_BASE=/openchords/ vite build --outDir docs --emptyOutDir"
+  }
+}
