@@ -1,6 +1,7 @@
 import { test } from "@e2e-dev/web";
 import { expect, type Screen } from "e2e";
 import { openRisingSun, pixelsScrolledIn, scrollPosition } from "./risingSun";
+import { looksDark } from "./looks";
 
 test("She sets up the Song in one settings sheet, and her look stays on this device", async ({ app, browser, screen }) => {
   await app.open("/?q=rising");
@@ -100,8 +101,4 @@ function fillStorage() {
 
 function lyricsFontSize() {
   return parseFloat(getComputedStyle(document.querySelector("[data-lyrics]")!).fontSize);
-}
-
-function looksDark() {
-  return document.documentElement.classList.contains("dark") && getComputedStyle(document.body).backgroundColor !== "rgb(255, 255, 255)";
 }

@@ -1,5 +1,6 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { looksDark } from "./looks";
 
 test("She picks a Chord sheet, a look and a text size", async ({ agent, app, browser, screen }) => {
   await app.open("/");
@@ -18,7 +19,7 @@ test("She picks a Chord sheet, a look and a text size", async ({ agent, app, bro
   const lyricsBefore = await browser.evaluate(lyricsFontSize);
   await agent.act("Choose the Dark look and press Text size + twice, then Done");
   await expect(sheet).toBeHidden();
-  await expect.poll(() => browser.evaluate(() => document.documentElement.classList.contains("dark"))).toBe(true);
+  await expect.poll(() => browser.evaluate(looksDark)).toBe(true);
   expect(await browser.evaluate(lyricsFontSize)).toBeCloseTo(lyricsBefore * 1.2, 0);
   await agent.assert("the screen is dark with light lyrics", { vision: true });
   await app.screenshot("Easy shapes in the dark look with bigger text");
@@ -28,7 +29,8 @@ test("She picks a Chord sheet, a look and a text size", async ({ agent, app, bro
   await agent.waitFor("the Song's title is shown");
   await expect(browser).toHaveURL(new RegExp(`${easyShapesLink}$`));
   await expect(screen.getByText(/Easy shapes · Key Am · Capo on fret 5/)).toBeVisible();
-  await agent.assert("the header line still names Easy shapes, and the look is still dark", { vision: true });
+  expect(await browser.evaluate(looksDark)).toBe(true);
+  await agent.assert("the header line names Easy shapes, and the screen is dark with light lyrics", { vision: true });
   await app.screenshot("The link keeps the Chord sheet and the look stays dark");
 });
 
