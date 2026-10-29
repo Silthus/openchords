@@ -11,6 +11,7 @@
 import type * as access_index from "../access/index.js";
 import type * as access_invited from "../access/invited.js";
 import type * as access_invites from "../access/invites.js";
+import type * as access_testUser from "../access/testUser.js";
 import type * as auth from "../auth.js";
 import type * as catalog_index from "../catalog/index.js";
 import type * as http from "../http.js";
@@ -34,6 +35,7 @@ declare const fullApi: ApiFromModules<{
   "access/index": typeof access_index;
   "access/invited": typeof access_invited;
   "access/invites": typeof access_invites;
+  "access/testUser": typeof access_testUser;
   auth: typeof auth;
   "catalog/index": typeof catalog_index;
   http: typeof http;

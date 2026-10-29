@@ -21,6 +21,7 @@ export function SignInScreen({ to, returned }: { to?: string; returned: boolean 
         <p className="mt-4 text-lg text-muted">Sign in to play along.</p>
       )}
       <SignInWithGoogle destination={destination} />
+      {import.meta.env.VITE_TEST_SIGN_IN === "1" && <SignInAsTestUser />}
     </main>
   );
 }
@@ -35,6 +36,19 @@ function SignInWithGoogle({ destination }: { destination: string }) {
       className="mt-8 w-full rounded-xl bg-orange-500 py-3 text-lg font-semibold text-white"
     >
       Sign in with Google
+    </button>
+  );
+}
+
+function SignInAsTestUser() {
+  const { signIn } = useAuthActions();
+  return (
+    <button
+      type="button"
+      onClick={() => void signIn("test-user", { email: "walker@test.openchords.invalid" })}
+      className="mt-3 w-full rounded-xl bg-panel py-3 text-lg font-semibold"
+    >
+      Sign in as the test user
     </button>
   );
 }

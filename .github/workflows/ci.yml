@@ -50,6 +50,7 @@ jobs:
       - name: Deploy the preview and build the app against it
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_PREVIEW_DEPLOY_KEY }}
+          VITE_TEST_SIGN_IN: "1"
         run: bunx convex deploy --preview-name "$PREVIEW_NAME" --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL
       - name: Swap the preview deploy key for this preview's own admin key
         env:

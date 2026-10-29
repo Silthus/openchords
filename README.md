@@ -30,6 +30,8 @@ To take an invite back, delete its row from the `invites` table in the Convex da
 
 Signing in needs device storage, because Convex Auth keeps its sign-in state there across the trip to Google. A browser that denies storage still reads the Songs while invites are off.
 
+Previews and dev also offer "Sign in as the test user", which needs no invite. Their deployments set `OPENCHORDS_ALLOW_TEST_SIGNIN=1` (previews get it from the project's preview defaults, with their own key pair), and their app is built with `VITE_TEST_SIGN_IN=1`. Production sets `OPENCHORDS_ENV=production` and refuses to start with test sign-in on.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.
