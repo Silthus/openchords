@@ -30,6 +30,14 @@ To take an invite back, delete its row from the `invites` table in the Convex da
 
 Signing in needs device storage, because Convex Auth keeps its sign-in state there across the trip to Google. A browser that denies storage still reads the Songs while invites are off.
 
+With `OPENCHORDS_INVITES=on`, reading needs an invited sign-in too: every public Catalog function asks a signed-out visitor to sign in and keeps the link they came from. Dev and previews have it on. Production turns it on once the first invites exist, so nobody is locked out:
+
+```sh
+bunx convex run --prod access/invites:add '{"email": "<his Google email>"}'
+bunx convex run --prod access/invites:add '{"email": "<her Google email>"}'
+bunx convex env set --prod OPENCHORDS_INVITES on
+```
+
 Previews and dev also offer "Sign in as the test user", which needs no invite. Their deployments set `OPENCHORDS_ALLOW_TEST_SIGNIN=1` (previews get it from the project's preview defaults, with their own key pair), and their app is built with `VITE_TEST_SIGN_IN=1`. Production sets `OPENCHORDS_ENV=production` and refuses to start with test sign-in on.
 
 ## On her phone
@@ -51,3 +59,5 @@ APP_URL=https://<preview>.convex.site bunx e2e run   # against a pull request's 
 ```
 
 The install check needs a build with its service worker, so it runs only with `APP_URL` set.
+
+Where the app offers "Sign in as the test user" (dev and previews), each walk signs in with it first; on production, which offers none, the walks read signed out.

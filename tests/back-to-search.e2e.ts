@@ -1,8 +1,9 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openAsReader } from "./reader";
 
 test("She goes back from a Song to her search", async ({ app, browser, screen }) => {
-  await app.open("/?q=shen");
+  await openAsReader(app, screen, "/?q=shen");
   await screen.getByRole("link").filter({ hasText: "Shenandoah" }).click();
   await expect(screen.getByRole("heading", "Shenandoah")).toBeVisible();
 

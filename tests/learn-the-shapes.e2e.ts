@@ -1,10 +1,11 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openAsReader } from "./reader";
 
 const legend = "Dots: where your fingers go. Numbers: which finger. O: play the string open. X: skip it.";
 
 test("She learns the shapes before she plays", async ({ agent, app, screen }) => {
-  await app.open("/");
+  await openAsReader(app, screen, "/");
   await agent.act("Open House of the Rising Sun");
   await agent.waitFor("the Song's title is shown");
   await expect(screen.getByText("Traditional · Classic · Key Am · No capo")).toBeVisible();

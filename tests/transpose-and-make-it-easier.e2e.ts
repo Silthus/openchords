@@ -1,8 +1,9 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openAsReader } from "./reader";
 
 test("She moves a Song to her voice and lets a capo make it easy", async ({ agent, app, screen }) => {
-  await app.open("/");
+  await openAsReader(app, screen, "/");
   await agent.act("Open House of the Rising Sun and open the settings sheet");
   const sheet = screen.getByRole("dialog", "Settings");
   await expect(sheet).toBeVisible();

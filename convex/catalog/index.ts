@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { compose } from "../../src/sheet";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, mutation, query, type MutationCtx } from "../_generated/server";
+import { requireInvitedWhileInvitesOn } from "../access";
 import { builtIns as builtInHits, chordsFor, lyricsFor } from "../sources";
 import { origin } from "./schema";
 
@@ -17,6 +18,7 @@ export const builtIns = query({
   args: {},
   returns: v.array(songSummary),
   handler: async (ctx) => {
+    await requireInvitedWhileInvitesOn(ctx);
     const songs = await ctx.db
       .query("songs")
       .withIndex("by_builtIn", (q) => q.gt("builtInId", ""))
@@ -29,6 +31,7 @@ export const search = query({
   args: { query: v.string() },
   returns: v.array(songSummary),
   handler: async (ctx, args) => {
+    await requireInvitedWhileInvitesOn(ctx);
     const query = args.query.trim();
     if (query.length < 2 || query.length > 100) return [];
     const songs = await ctx.db
@@ -49,6 +52,7 @@ export const song = query({
     }),
   ),
   handler: async (ctx, args) => {
+    await requireInvitedWhileInvitesOn(ctx);
     const songId = ctx.db.normalizeId("songs", args.songId);
     const song = songId && (await ctx.db.get(songId));
     if (!song) return null;
@@ -67,6 +71,7 @@ export const open = mutation({
   args: { songId: v.id("songs") },
   returns: v.null(),
   handler: async (ctx, { songId }) => {
+    await requireInvitedWhileInvitesOn(ctx);
     await openSong(ctx, songId);
     return null;
   },
