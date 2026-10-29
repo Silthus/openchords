@@ -5,6 +5,8 @@ import { internalMutation, mutation, query, type MutationCtx } from "../_generat
 import { builtIns as builtInHits, chordsFor, lyricsFor } from "../sources";
 import { origin } from "./schema";
 
+export { catalogTables } from "./schema";
+
 const songSummary = v.object({ songId: v.id("songs"), title: v.string(), artist: v.string() });
 
 function summaryOf(song: Doc<"songs">) {

@@ -26,7 +26,6 @@ describe("a context is reached only through its public file", () => {
     ["src/app/routes/index.tsx", "../../sheet/index"],
     ["src/app/routes/index.tsx", "../../sheet/index.ts"],
     ["convex/schema.ts", "./catalog"],
-    ["convex/schema.ts", "./catalog/schema"],
     ["src/app/routes/index.tsx", "../../../convex/_generated/api"],
     ["convex/catalog/index.ts", "../sources"],
     ["convex/catalog/index.ts", "../_generated/server"],

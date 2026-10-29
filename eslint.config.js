@@ -24,8 +24,4 @@ export default tseslint.config(
       ],
     },
   },
-  {
-    files: ["convex/schema.ts"],
-    rules: { "no-restricted-imports": "off" },
-  },
 );
