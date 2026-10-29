@@ -1,6 +1,7 @@
 import { notationOf, writtenChordsOf, type Notation } from "./chords";
 
 export { chordSuffixes, chordsIn, chordTones, essentialTones, isChord, notationOf, readChord, type Chord, type Notation } from "./chords";
+export { easierCapo, shapes, type View } from "./shapes";
 export { transpose } from "./transpose";
 
 export type SheetMeta = { title: string; artist: string; key?: string; capo: number };
