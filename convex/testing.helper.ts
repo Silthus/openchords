@@ -12,3 +12,10 @@ const modules = Object.fromEntries(
 export function testBackend() {
   return convexTest(schema, modules);
 }
+
+export async function testBackendWith(env: Record<string, string>) {
+  Object.assign(process.env, env);
+  const authLoadedWithEnv = `${convexDir}/auth.ts?${new URLSearchParams(env)}`;
+  await import(authLoadedWithEnv);
+  return convexTest(schema, { ...modules, "./auth.ts": () => import(authLoadedWithEnv) });
+}

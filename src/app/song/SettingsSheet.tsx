@@ -1,4 +1,5 @@
 import { parse, type View } from "../../sheet";
+import { SignOutButton } from "../signIn";
 import { textSizes, useLook, useTextSize, type Look } from "../deviceSettings";
 import { useModalDialog } from "../useModalDialog";
 import { describeCapo, describeChordSheet } from "./describeChordSheet";
@@ -74,6 +75,7 @@ export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easier
         <button type="button" onClick={close} className="mt-4 w-full rounded-xl bg-panel py-3 font-semibold">
           Done
         </button>
+        <SignOutButton />
       </div>
     </dialog>
   );

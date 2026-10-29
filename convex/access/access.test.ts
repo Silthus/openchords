@@ -66,3 +66,11 @@ describe("signing in with Google", () => {
     expect(await sessions(backend)).toHaveLength(0);
   });
 });
+
+describe("a test email", () => {
+  test("is refused where test sign-in is off, even with an invite", async () => {
+    const backend = testBackend();
+    await invite(backend, "walker@test.openchords.invalid");
+    await expect(returnFromGoogle(backend, { email: "walker@test.openchords.invalid", email_verified: true })).rejects.toThrow();
+  });
+});

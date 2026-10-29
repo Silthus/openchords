@@ -1,5 +1,6 @@
 import { ConvexError } from "convex/values";
 import type { DatabaseReader } from "../_generated/server";
+import { isTestEmail, testSignInAllowed } from "./testUser";
 
 export function emailKey(email: string) {
   return email.trim().toLowerCase();
@@ -15,6 +16,11 @@ export async function inviteFor(db: DatabaseReader, email: string) {
 type SignInProfile = { email?: string; emailVerified?: boolean };
 
 export async function refuseUninvited(db: DatabaseReader, profile: SignInProfile) {
-  const invited = profile.emailVerified === true && profile.email !== undefined && (await inviteFor(db, profile.email));
-  if (!invited) throw new ConvexError({ code: "NOT_INVITED" });
+  if (!(await mayEnter(db, profile))) throw new ConvexError({ code: "NOT_INVITED" });
+}
+
+async function mayEnter(db: DatabaseReader, { email, emailVerified }: SignInProfile) {
+  if (email === undefined) return false;
+  if (isTestEmail(email)) return testSignInAllowed();
+  return emailVerified === true && (await inviteFor(db, email)) !== null;
 }
