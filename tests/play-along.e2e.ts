@@ -51,6 +51,8 @@ test("After the page stalls, the Song moves on from where it was", async ({ app,
   await openRisingSun(app, screen);
   await screen.getByRole("button", "Play").click();
   expect(await browser.evaluate(pixelsScrolledAcrossAStallOf, 3000)).toBeLessThan(15);
+  expect(await browser.evaluate(pixelsScrolledIn, 1000)).toBeGreaterThan(10);
+  await expect(screen.getByRole("button", "Pause")).toBeVisible();
 });
 
 async function openRisingSun(app: App, screen: Screen) {
