@@ -1,10 +1,10 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
+import { openRisingSun } from "./risingSun";
 
 test("She plays a Song with auto-scroll at her speed", async ({ agent, app, browser, screen }) => {
-  await app.open("/");
-  await agent.act("Open House of the Rising Sun");
-  await agent.waitFor("the Song's title is shown");
+  await openRisingSun(app, screen);
+  await expect(screen.getByRole("button", "Play")).toBeVisible();
   await expect(screen.getByText("Scroll speed 3")).toBeVisible();
 
   await agent.act("Press the big play button");
