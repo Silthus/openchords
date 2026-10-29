@@ -93,7 +93,7 @@ export function chordsIn(sheet: ParsedSheet): Chord[] {
   return written.flatMap((text) => readChord(text, notation) ?? []);
 }
 
-function writtenChordsOf(sheet: ParsedSheet) {
+export function writtenChordsOf(sheet: ParsedSheet) {
   const words = sheet.sections.flatMap((section) => section.lines.flatMap((line) => line.words));
   return [...new Set(words.flatMap((word) => word.chords))];
 }
@@ -110,14 +110,17 @@ function read(written: string, notation: Notation) {
   return { chord: { ...chord, bass: bass.root }, german: name.german || bass.german };
 }
 
-function readName(text: string, notation: Notation) {
+export function readName(text: string, notation: Notation) {
   const letter = text[0] ?? "";
   const natural = letter === "B" && notation === "german" ? 10 : naturals[letter];
   if (natural === undefined) return null;
   for (const [accidental, shift] of accidentals) {
     if (!text.startsWith(accidental, 1) || (accidental === "s" && !"AE".includes(letter))) continue;
     const suffix = canonicalSuffix(text.slice(1 + accidental.length));
-    if (suffix !== null) return { root: (natural + shift + 12) % 12, suffix, german: letter === "H" || germanAccidentals.includes(accidental) };
+    if (suffix !== null) {
+      const german = letter === "H" || germanAccidentals.includes(accidental);
+      return { root: (natural + shift + 12) % 12, suffix, german, rootLength: 1 + accidental.length };
+    }
   }
   return null;
 }
