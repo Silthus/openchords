@@ -23,7 +23,11 @@ export function ChordSheetView({ sheet }: { sheet: ParsedSheet }) {
         <ChordLyrics sheet={sheet} onChord={showLarge} />
         <p className="pb-12 text-center text-base text-stone-500">End of song</p>
       </div>
-      {playing && <p className="pointer-events-none fixed inset-x-0 top-2 z-10 text-center text-xs text-stone-500">Tap the lyrics to pause</p>}
+      {playing && (
+        <p className="pointer-events-none fixed inset-x-0 top-2 z-10 mx-auto w-fit rounded-full bg-stone-900/80 px-3 py-1 text-xs text-white">
+          Tap the lyrics to pause
+        </p>
+      )}
       <PlayBar playing={playing} speed={startingSpeed} onToggle={togglePlaying} />
       {large && <LargeChordDiagram chord={large} onClose={() => setLarge(undefined)} />}
     </>
