@@ -50,6 +50,16 @@ describe("transpose", () => {
     expect(chordsIn(shown).map((chord) => chord.root)).toEqual([5, 10, 0]);
   });
 
+  test("reads a sheet as German when only its key is German", () => {
+    const shown = transpose(sheetIn("Hm", "Em G A"), -1);
+    expect(shown.meta.key).toBe("Bm");
+    expect(chordsOf(shown)).toBe("Esm Ges As");
+  });
+
+  test("spells by the first readable chord when the sheet names no key", () => {
+    expect(chordsOf(transpose(sheetIn(undefined, "N.C. Em D"), 6))).toBe("N.C. Bbm Ab");
+  });
+
   test("spells by the first chord when the sheet names no key", () => {
     const shown = transpose(sheetIn(undefined, "Em D"), 6);
     expect(shown.meta.key).toBeUndefined();

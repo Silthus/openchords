@@ -29,7 +29,8 @@ export function parse(chordPro: string): ParsedSheet {
     if (directive) applyDirective(sheet, directive[1]!, directive[2]!);
     else currentSection(sheet).lines.push(parseLyricLine(line));
   }
-  return { ...sheet, notation: notationOf(writtenChordsOf(sheet)) };
+  const key = sheet.meta.key === undefined ? [] : [sheet.meta.key];
+  return { ...sheet, notation: notationOf([...key, ...writtenChordsOf(sheet)]) };
 }
 
 function applyDirective(sheet: ParsedSheet, name: string, value: string) {
