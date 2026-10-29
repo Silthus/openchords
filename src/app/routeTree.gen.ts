@@ -10,33 +10,55 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SongsSongIdIndexRouteImport } from './routes/songs.$songId.index'
+import { Route as SongsSongIdSheetsChordSheetIdRouteImport } from './routes/songs.$songId.sheets.$chordSheetId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SongsSongIdIndexRoute = SongsSongIdIndexRouteImport.update({
+  id: '/songs/$songId/',
+  path: '/songs/$songId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SongsSongIdSheetsChordSheetIdRoute =
+  SongsSongIdSheetsChordSheetIdRouteImport.update({
+    id: '/songs/$songId/sheets/$chordSheetId',
+    path: '/songs/$songId/sheets/$chordSheetId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/songs/$songId/': typeof SongsSongIdIndexRoute
+  '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/songs/$songId': typeof SongsSongIdIndexRoute
+  '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/songs/$songId/': typeof SongsSongIdIndexRoute
+  '/songs/$songId/sheets/$chordSheetId': typeof SongsSongIdSheetsChordSheetIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/songs/$songId/' | '/songs/$songId/sheets/$chordSheetId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/songs/$songId' | '/songs/$songId/sheets/$chordSheetId'
+  id:
+    '__root__' | '/' | '/songs/$songId/' | '/songs/$songId/sheets/$chordSheetId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SongsSongIdIndexRoute: typeof SongsSongIdIndexRoute
+  SongsSongIdSheetsChordSheetIdRoute: typeof SongsSongIdSheetsChordSheetIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +70,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/songs/$songId/': {
+      id: '/songs/$songId/'
+      path: '/songs/$songId'
+      fullPath: '/songs/$songId/'
+      preLoaderRoute: typeof SongsSongIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/songs/$songId/sheets/$chordSheetId': {
+      id: '/songs/$songId/sheets/$chordSheetId'
+      path: '/songs/$songId/sheets/$chordSheetId'
+      fullPath: '/songs/$songId/sheets/$chordSheetId'
+      preLoaderRoute: typeof SongsSongIdSheetsChordSheetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SongsSongIdIndexRoute: SongsSongIdIndexRoute,
+  SongsSongIdSheetsChordSheetIdRoute: SongsSongIdSheetsChordSheetIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
