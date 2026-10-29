@@ -33,6 +33,7 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bunx convex deploy --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL
       - run: bunx static-hosting upload --prod --dist dist
+      - run: bunx convex run --prod catalog/index:seed
 
   deploy-preview:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
@@ -67,6 +68,7 @@ jobs:
           echo "PREVIEW_SITE_URL=${url/.convex.cloud/.convex.site}" >> "$GITHUB_ENV"
       - run: bunx convex env set SITE_URL "$PREVIEW_SITE_URL"
       - run: bunx static-hosting upload --dist dist
+      - run: bunx convex run catalog/index:seed
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: preview
