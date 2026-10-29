@@ -1,8 +1,8 @@
 import { test, type Browser } from "@e2e-dev/web";
 import { expect, type App, type Screen } from "e2e";
-import { openAsReader } from "./reader";
+import { openAsReader, productionOffersNoTestUser } from "./reader";
 
-test("A signed-out visitor signs in and lands on the shared Song", async ({ agent, app, browser, screen }) => {
+test("A signed-out visitor signs in and lands on the shared Song", { skip: productionOffersNoTestUser }, async ({ agent, app, browser, screen }) => {
   const sharedLink = await risingSunLinkThenSignOut(app, browser, screen);
 
   await app.open(sharedLink);

@@ -1,8 +1,6 @@
 import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
-import { openAsReader } from "./reader";
-
-const productionOffersNoTestUser = process.env.APP_URL?.startsWith("https://judicious-falcon-175.") && "production has no test user";
+import { openAsReader, productionOffersNoTestUser } from "./reader";
 
 test("Signed in, she signs out from the settings sheet and is asked to sign in again", { skip: productionOffersNoTestUser }, async ({ app, browser, screen }) => {
   await openAsReader(app, screen, "/?q=rising");
