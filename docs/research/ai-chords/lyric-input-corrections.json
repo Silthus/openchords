@@ -1,0 +1,92 @@
+[
+  {
+    "song_id": "billboard_147",
+    "old_id": 1397517,
+    "new_id": 19832101,
+    "old_duration": 167.0,
+    "new_duration": 144.132875,
+    "lyric_text_changed": false,
+    "old_sha256": "76bb00219a8ebaf653d44c03c72ec896ded21d0c10c9b0b6896f72fd505f26e5",
+    "new_sha256": "76bb00219a8ebaf653d44c03c72ec896ded21d0c10c9b0b6896f72fd505f26e5"
+  },
+  {
+    "song_id": "billboard_226",
+    "old_id": 84794,
+    "new_id": 35308299,
+    "old_duration": 217.0,
+    "new_duration": 195.0,
+    "lyric_text_changed": false,
+    "old_sha256": "0e1d31746b8c8b3077b11bfc3fdb372404d4d094bab61343f6b846abce7a77c7",
+    "new_sha256": "0e1d31746b8c8b3077b11bfc3fdb372404d4d094bab61343f6b846abce7a77c7"
+  },
+  {
+    "song_id": "billboard_160",
+    "old_id": 12622,
+    "new_id": 16441888,
+    "old_duration": 140.0,
+    "new_duration": 187.0,
+    "lyric_text_changed": true,
+    "old_sha256": "8483f7739f8a4b91b0a842c2331b7b0febba77332f970e21d203941372a3f5c8",
+    "new_sha256": "ac6115596091e2b130f19028c87c2924a7549ab92e37d2fd761464677f41520b"
+  },
+  {
+    "song_id": "billboard_344",
+    "old_id": 806850,
+    "new_id": 37167400,
+    "old_duration": 309.0,
+    "new_duration": 349.0,
+    "lyric_text_changed": false,
+    "old_sha256": "86682a535ac8d7da4fd11fd28c03f5117f32b08419f3372b04034232b91e0093",
+    "new_sha256": "86682a535ac8d7da4fd11fd28c03f5117f32b08419f3372b04034232b91e0093"
+  },
+  {
+    "song_id": "billboard_261",
+    "old_id": 137682,
+    "new_id": 37200541,
+    "old_duration": 240.0,
+    "new_duration": 227.0,
+    "lyric_text_changed": false,
+    "old_sha256": "1e68d29cf311186ca6803de41ea06bc3ebf179635d924354f66a08b1aa86c444",
+    "new_sha256": "1e68d29cf311186ca6803de41ea06bc3ebf179635d924354f66a08b1aa86c444"
+  },
+  {
+    "song_id": "billboard_120",
+    "old_id": 140446,
+    "new_id": 31056157,
+    "old_duration": 939.0,
+    "new_duration": 265.0,
+    "lyric_text_changed": false,
+    "old_sha256": "014be6f551a50e8b96021d5147bcbd94b9ecc707675a8213c3fbda63e9f6ac18",
+    "new_sha256": "014be6f551a50e8b96021d5147bcbd94b9ecc707675a8213c3fbda63e9f6ac18"
+  },
+  {
+    "song_id": "billboard_309",
+    "old_id": 29661,
+    "new_id": 37494041,
+    "old_duration": 326.0,
+    "new_duration": 315.0,
+    "lyric_text_changed": false,
+    "old_sha256": "07b7e7aa66290d0e24107663cdb842546cc4510a22a3f717fa6fc82750cd9160",
+    "new_sha256": "07b7e7aa66290d0e24107663cdb842546cc4510a22a3f717fa6fc82750cd9160"
+  },
+  {
+    "song_id": "billboard_240",
+    "old_id": 1047875,
+    "new_id": 20758253,
+    "old_duration": 265.0,
+    "new_duration": 218.430113,
+    "lyric_text_changed": false,
+    "old_sha256": "06cbebf1881cf92136cdf6a497c3a10a404de6148c8a5e4e0eaedceecaed83e7",
+    "new_sha256": "06cbebf1881cf92136cdf6a497c3a10a404de6148c8a5e4e0eaedceecaed83e7"
+  },
+  {
+    "song_id": "billboard_74",
+    "old_id": 804003,
+    "new_id": 36977960,
+    "old_duration": 461.0,
+    "new_duration": 234.0,
+    "lyric_text_changed": false,
+    "old_sha256": "75101b2086a7793f6e253f5f3522157763afd6ffa66ad5648eaa00d4067deb15",
+    "new_sha256": "75101b2086a7793f6e253f5f3522157763afd6ffa66ad5648eaa00d4067deb15"
+  }
+]

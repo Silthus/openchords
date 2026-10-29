@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_87",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "914c3d507a66eb59aebb8ff0b765841779e6d2ae03b325f3fb6ddc891b4c2855",
+  "started_utc": "2026-10-29T17:55:24Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20293,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 102,
+    "reasoning_output_tokens": 66
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 4.964
+}

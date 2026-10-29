@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_147",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "8819bf8c06e1781fd30b977f0a3e6e29dc97105894ec58a32743c77dcab2ba66",
+  "started_utc": "2026-10-29T17:56:00Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7790,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 236,
+    "output_tokens_details": {
+      "thinking_tokens": 191
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7790
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 236,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7790,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7790,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 236,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 7790,
+      "webSearchRequests": 0,
+      "costUSD": 0.00109195,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 191,
+      "cacheCreationEphemeral5mInputTokens": 7790,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.00109195,
+  "duration_api_ms": 1683,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 2.443
+}

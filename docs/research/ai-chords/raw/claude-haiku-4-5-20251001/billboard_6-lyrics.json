@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_6",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "2b1794caaa90b59987da0796c8012fde60bff9eb541b4bd6d6c8cfc3d619a60e",
+  "started_utc": "2026-10-29T17:59:52Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"G\",\n    \"mode\": \"major\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [[\"G\"], [\"D\"]],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"interlude\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"interlude\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"], [\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [[\"G\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 6\n    }\n  ],\n  \"placements\": [\n    {\"line\": 0, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 1, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 2, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 3, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 4, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 5, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 7, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 8, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 9, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 10, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 11, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 12, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 14, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 15, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 17, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 18, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 19, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 20, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 21, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 22, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 24, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 25, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 27, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 28, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 29, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 30, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 31, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 32, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 34, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 35, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 36, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 37, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 38, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 39, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 40, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 41, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 43, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 44, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 45, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 46, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 47, \"word\": 0, \"chord\": \"G\"},\n    {\"line\": 48, \"word\": 0, \"chord\": \"D\"}\n  ]\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6304,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 14703,
+    "output_tokens_details": {
+      "thinking_tokens": 13239
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6304
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 14703,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6304,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6304,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1873,
+      "outputTokens": 14715,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6304,
+      "webSearchRequests": 0,
+      "costUSD": 0.08332799999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 13239,
+      "cacheCreationEphemeral5mInputTokens": 6304,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.08332799999999999,
+  "duration_api_ms": 102462,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 102.504
+}

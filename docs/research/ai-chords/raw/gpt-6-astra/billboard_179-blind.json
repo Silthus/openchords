@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_179",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "e563c1599719540ab34e9de0b50d1f24f23d71113be27860e2d4921ff7af9011",
+  "started_utc": "2026-10-29T17:56:17Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20296,
+    "cached_input_tokens": 9728,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 358,
+    "reasoning_output_tokens": 322
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 25.546
+}

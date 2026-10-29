@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_19",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "6dc6ae3b2f29570205d764b35f4dced1b9b3660a24475f9d259f35781f3405f8",
+  "started_utc": "2026-10-29T18:25:41Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Am7\"],[\"Am7\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Am7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Am7\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Am7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Em7\"],[\"Dm7\"],[\"G\"],[\"Am7\"],[\"Am7\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Am7\"],[\"Am7\"],[\"Am7\"],[\"Am7\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Am7\"},{\"line\":0,\"word\":3,\"chord\":\"Em7\"},{\"line\":1,\"word\":0,\"chord\":\"Dm7\"},{\"line\":1,\"word\":4,\"chord\":\"G\"},{\"line\":2,\"word\":0,\"chord\":\"Am7\"},{\"line\":2,\"word\":3,\"chord\":\"Em7\"},{\"line\":3,\"word\":0,\"chord\":\"Dm7\"},{\"line\":3,\"word\":3,\"chord\":\"G\"},{\"line\":4,\"word\":0,\"chord\":\"Am7\"},{\"line\":6,\"word\":0,\"chord\":\"Am7\"},{\"line\":6,\"word\":3,\"chord\":\"Em7\"},{\"line\":7,\"word\":0,\"chord\":\"Dm7\"},{\"line\":7,\"word\":4,\"chord\":\"G\"},{\"line\":8,\"word\":0,\"chord\":\"Am7\"},{\"line\":8,\"word\":3,\"chord\":\"Em7\"},{\"line\":9,\"word\":0,\"chord\":\"Dm7\"},{\"line\":9,\"word\":4,\"chord\":\"G\"},{\"line\":10,\"word\":0,\"chord\":\"Am7\"},{\"line\":12,\"word\":0,\"chord\":\"Am7\"},{\"line\":13,\"word\":0,\"chord\":\"Am7\"},{\"line\":14,\"word\":0,\"chord\":\"Am7\"},{\"line\":15,\"word\":0,\"chord\":\"Am7\"},{\"line\":16,\"word\":0,\"chord\":\"Am7\"},{\"line\":17,\"word\":0,\"chord\":\"Am7\"},{\"line\":18,\"word\":0,\"chord\":\"Dm7\"},{\"line\":18,\"word\":4,\"chord\":\"G\"},{\"line\":19,\"word\":0,\"chord\":\"Am7\"},{\"line\":21,\"word\":0,\"chord\":\"Am7\"},{\"line\":21,\"word\":3,\"chord\":\"Em7\"},{\"line\":22,\"word\":0,\"chord\":\"Dm7\"},{\"line\":22,\"word\":2,\"chord\":\"G\"},{\"line\":23,\"word\":0,\"chord\":\"Am7\"},{\"line\":23,\"word\":3,\"chord\":\"Em7\"},{\"line\":24,\"word\":0,\"chord\":\"Dm7\"},{\"line\":24,\"word\":4,\"chord\":\"G\"},{\"line\":25,\"word\":0,\"chord\":\"Am7\"},{\"line\":27,\"word\":0,\"chord\":\"Am7\"},{\"line\":28,\"word\":0,\"chord\":\"Am7\"},{\"line\":29,\"word\":0,\"chord\":\"Am7\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8446,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2662,
+    "output_tokens_details": {
+      "thinking_tokens": 1399
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8446
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2662,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8446,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8446,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2271,
+      "outputTokens": 2685,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8446,
+      "webSearchRequests": 0,
+      "costUSD": 0.052507000000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1399,
+      "cacheCreationEphemeral5mInputTokens": 8446,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.052507000000000005,
+  "duration_api_ms": 21380,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 21.006
+}

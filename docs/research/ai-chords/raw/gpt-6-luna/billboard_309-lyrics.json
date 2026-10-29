@@ -1,0 +1,14 @@
+{
+  "song_id": "billboard_309",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "3ec24b3dd40dbf0e7ccf417188fb3ceb638da624c1a1e13be57603faabe14303",
+  "started_utc": "2026-10-29T18:17:24Z",
+  "exit_code": 124,
+  "is_error": true,
+  "error": "timeout",
+  "elapsed_seconds": 180.058
+}

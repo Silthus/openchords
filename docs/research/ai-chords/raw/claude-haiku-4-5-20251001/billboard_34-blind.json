@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_34",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "260864b1a62acfc1340edfd753fed8d8c09fa7b241a47613c5d54e582a221999",
+  "started_utc": "2026-10-29T18:00:34Z",
+  "response_text": "```json\n{\n  \"abstain\": true,\n  \"key\": {\n    \"tonic\": \"\",\n    \"mode\": \"\"\n  },\n  \"capo\": 0,\n  \"sections\": [],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 5873,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1019,
+    "output_tokens_details": {
+      "thinking_tokens": 953
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 5873
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 1019,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5873,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 5873,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1444,
+      "outputTokens": 1034,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 5873,
+      "webSearchRequests": 0,
+      "costUSD": 0.013955249999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 953,
+      "cacheCreationEphemeral5mInputTokens": 5873,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.013955249999999999,
+  "duration_api_ms": 12125,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 11.466
+}

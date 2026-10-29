@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_265",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "510e532b3ac8e88d402910a877ccc6b2d9d0ed5ba377568718ab8e97c92da121",
+  "started_utc": "2026-10-29T18:07:43Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"F#\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"],[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"],[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"],[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"F#m\"],[\"D\"],[\"A\"],[\"E\"],[\"F#m\"],[\"D\"],[\"A\"],[\"E\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"],[\"F#m\"],[\"F#m\"],[\"D\"],[\"D\"],[\"A\"],[\"A\"],[\"E\"],[\"E\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"F#m\"],[\"D\"],[\"A\"],[\"E\"],[\"F#m\"],[\"D\"],[\"A\"],[\"E\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"F#m\"],[\"F#m\"],[\"F#m\"],[\"F#m\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 19682,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 531,
+    "reasoning_output_tokens": 0
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.026
+}

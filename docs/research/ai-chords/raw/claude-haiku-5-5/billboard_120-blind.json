@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_120",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "3538188bc1c645fb6285fd711b9223ce7ccae962e1ea144d05467acc2535dc5e",
+  "started_utc": "2026-10-29T17:55:39Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7801,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 686,
+    "output_tokens_details": {
+      "thinking_tokens": 641
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7801
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 686,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7801,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7801,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1126,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9728,
+      "webSearchRequests": 0,
+      "costUSD": 0.0017794,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1061,
+      "cacheCreationEphemeral5mInputTokens": 9728,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0017794,
+  "duration_api_ms": 8304,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.429
+}

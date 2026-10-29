@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_344",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "f8956246eb81be59215ca9931ed7eb2e4d8223ebe71060ad9e5ffba660f73ccc",
+  "started_utc": "2026-10-29T17:58:12Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":null,\"mode\":null},\"capo\":null,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7792,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 599,
+    "output_tokens_details": {
+      "thinking_tokens": 553
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7792
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 599,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7792,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7792,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 885,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9710,
+      "webSearchRequests": 0,
+      "costUSD": 0.00165665,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 821,
+      "cacheCreationEphemeral5mInputTokens": 9710,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.00165665,
+  "duration_api_ms": 7408,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.297
+}

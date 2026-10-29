@@ -1,0 +1,8 @@
+[
+  {"provider":"claude","model":"claude-haiku-5-5","effort":"medium","role":"small"},
+  {"provider":"claude","model":"claude-haiku-4-5-20251001","effort":"medium","role":"small-previous-generation"},
+  {"provider":"claude","model":"claude-sonnet-5-5","effort":"high","role":"ceiling"},
+  {"provider":"codex","model":"gpt-6-luna","effort":"medium","role":"efficient"},
+  {"provider":"codex","model":"gpt-6.1-terra","effort":"medium","role":"efficient"},
+  {"provider":"codex","model":"gpt-6-astra","effort":"high","role":"ceiling"}
+]

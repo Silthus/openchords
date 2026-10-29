@@ -1,0 +1,529 @@
+{
+  "song_id": "extra_nothing",
+  "source": "ChoCo Wikifonia",
+  "source_url": "https://github.com/smashub/choco/blob/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/wikifonia/choco/jams-converted/wikifonia_4143.jams",
+  "license": "CC BY 4.0 (ChoCo)",
+  "limitations": "Symbolic lead sheet, no named sections or verified lyric-word anchors. Used only for supplementary vocabulary comparison, excluded from the 40-song primary benchmark. Composer names Lars Ulrich and James Hetfield are established by the source metadata, not a recording identifier.",
+  "annotations": [
+    {
+      "namespace": "chord_harte",
+      "data": [
+        {
+          "time": 1.1,
+          "duration": 1.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 1.2,
+          "duration": 1.0,
+          "value": "G:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 2.1,
+          "duration": 0.6666666666666714,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 2.1666666666666665,
+          "duration": 0.3333333333333286,
+          "value": "D:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 2.2,
+          "duration": 0.6666666666666714,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 2.2666666666666666,
+          "duration": 0.3333333333333286,
+          "value": "C:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 3.1,
+          "duration": 1.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 3.2,
+          "duration": 1.0,
+          "value": "G:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 4.1,
+          "duration": 0.6666666666666714,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 4.166666666666667,
+          "duration": 0.3333333333333286,
+          "value": "D:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 4.2,
+          "duration": 0.6666666666666714,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 4.266666666666667,
+          "duration": 0.3333333333333286,
+          "value": "C:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 5.1,
+          "duration": 1.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 5.2,
+          "duration": 1.0,
+          "value": "G:(3,*5)",
+          "confidence": 1.0
+        },
+        {
+          "time": 6.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 6.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 7.1,
+          "duration": 1.0,
+          "value": "G:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 7.2,
+          "duration": 1.0,
+          "value": "B:7",
+          "confidence": 1.0
+        },
+        {
+          "time": 8.1,
+          "duration": 4.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 10.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 11.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 11.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 12.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 13.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 13.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 14.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 15.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 15.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 16.1,
+          "duration": 1.0,
+          "value": "G:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 16.2,
+          "duration": 1.0,
+          "value": "B:7",
+          "confidence": 1.0
+        },
+        {
+          "time": 17.1,
+          "duration": 4.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 19.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 20.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 20.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 21.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 22.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 22.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 23.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 24.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 24.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 25.1,
+          "duration": 1.0,
+          "value": "G:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 25.2,
+          "duration": 1.0,
+          "value": "B:7",
+          "confidence": 1.0
+        },
+        {
+          "time": 26.1,
+          "duration": 4.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 28.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 29.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 29.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 30.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 31.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 31.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 32.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 33.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 33.2,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 34.1,
+          "duration": 1.0,
+          "value": "G:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 34.2,
+          "duration": 1.0,
+          "value": "B:7",
+          "confidence": 1.0
+        },
+        {
+          "time": 35.1,
+          "duration": 2.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 36.1,
+          "duration": 0.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 36.1,
+          "duration": 0.6666666666666714,
+          "value": "C:maj/5",
+          "confidence": 1.0
+        },
+        {
+          "time": 36.166666666666664,
+          "duration": 0.6666666666666572,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 36.233333333333334,
+          "duration": 0.6666666666666714,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 37.1,
+          "duration": 2.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 38.1,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 38.2,
+          "duration": 1.0,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 39.1,
+          "duration": 2.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 40.1,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 40.2,
+          "duration": 1.0,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 41.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 41.2,
+          "duration": 3.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 43.1,
+          "duration": 4.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 45.1,
+          "duration": 4.0,
+          "value": "A:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 47.1,
+          "duration": 2.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 48.1,
+          "duration": 2.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 49.1,
+          "duration": 4.0,
+          "value": "E:min",
+          "confidence": 1.0
+        },
+        {
+          "time": 51.1,
+          "duration": 2.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 52.1,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 52.2,
+          "duration": 1.0,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 53.1,
+          "duration": 2.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 54.1,
+          "duration": 1.0,
+          "value": "C:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 54.2,
+          "duration": 1.0,
+          "value": "A:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 55.1,
+          "duration": 1.0,
+          "value": "D:maj",
+          "confidence": 1.0
+        },
+        {
+          "time": 55.2,
+          "duration": 5.0,
+          "value": "E:min",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "namespace": "key_mode",
+      "data": [
+        {
+          "time": 1.1,
+          "duration": 114.0,
+          "value": "E:minor",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "namespace": "timesig",
+      "data": [
+        {
+          "time": 1.1,
+          "duration": 114.0,
+          "value": {
+            "numerator": 6,
+            "denominator": 8
+          },
+          "confidence": 1.0
+        }
+      ]
+    }
+  ],
+  "independent_chart_check": {
+    "source": "ChoCo iReal Pro forum",
+    "source_url": "https://github.com/smashub/choco/blob/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/ireal-pro/choco/forum/jams-converted/ireal-pro-forum_17231.jams",
+    "artist": "Metallica",
+    "annotation_sizes": {
+      "chord_harte": 122,
+      "key_mode": 1
+    },
+    "use": "Corroborates the title/artist identity of the lead sheet; not used as an additional primary evaluation reference."
+  }
+}

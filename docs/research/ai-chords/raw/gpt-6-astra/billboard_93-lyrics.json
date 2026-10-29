@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_93",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "2ba6c42d19fe6334400f0c4d2711fa62e556259f5abd36cc0e93687d57ce1101",
+  "started_utc": "2026-10-29T18:06:14Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"C\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20599,
+    "cached_input_tokens": 9728,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 87,
+    "reasoning_output_tokens": 51
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 7.785
+}

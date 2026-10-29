@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_220",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "a0ad8bc1dffd660b27d7c0b3566fe9835695ed664284a5a8f4d1a504e307b3a7",
+  "started_utc": "2026-10-29T18:11:42Z",
+  "response_text": "```json\n{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6842,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 876,
+    "output_tokens_details": {
+      "thinking_tokens": 834
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6842
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 876,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6842,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6842,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2256,
+      "outputTokens": 889,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6842,
+      "webSearchRequests": 0,
+      "costUSD": 0.0152535,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 834,
+      "cacheCreationEphemeral5mInputTokens": 6842,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0152535,
+  "duration_api_ms": 10909,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 10.912
+}

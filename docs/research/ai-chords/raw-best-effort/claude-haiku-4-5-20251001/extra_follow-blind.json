@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_follow",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "2c1e5c3f8836e670cedee49815b5e773f9f929c3736fc4a5c3ff9972e7a292aa",
+  "started_utc": "2026-10-29T18:32:33Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"B\",\n    \"mode\": \"minor\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"bridge\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [[\"Bm\"], [\"A\"], [\"G\"], [\"A\"], [\"Bm\"], [\"A\"], [\"G\"], [\"A\"]],\n      \"repeat\": 1\n    }\n  ],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6059,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 12247,
+    "output_tokens_details": {
+      "thinking_tokens": 11726
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6059
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 12247,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6059,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6059,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1472,
+      "outputTokens": 12264,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6059,
+      "webSearchRequests": 0,
+      "costUSD": 0.07036574999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 11726,
+      "cacheCreationEphemeral5mInputTokens": 6059,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.07036574999999999,
+  "duration_api_ms": 87469,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 87.398
+}

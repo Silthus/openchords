@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_93",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "60834f90306b303ea81a15a6c884e180959ca1d60bad16a32519f42f032ec474",
+  "started_utc": "2026-10-29T17:55:30Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"C\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20296,
+    "cached_input_tokens": 9728,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 97,
+    "reasoning_output_tokens": 61
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 7.912
+}

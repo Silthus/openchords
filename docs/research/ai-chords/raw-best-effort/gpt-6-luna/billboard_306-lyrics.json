@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_306",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "e242086b64e26483a266ae837adcd7b599ffe8647998f05e746ed44a57dfe3b4",
+  "started_utc": "2026-10-29T18:09:11Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"],[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"F#7\"],[\"Bm\"],[\"Bm/A\"],[\"G\"],[\"Gm\"],[\"D\"],[\"A7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"],[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"F#7\"],[\"Bm\"],[\"Bm/A\"],[\"G\"],[\"Gm\"],[\"D\"],[\"A7\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"G\"],[\"A/G\"],[\"F#m7\"],[\"B7\"],[\"Em7\"],[\"A7\"],[\"D\"],[\"D7\"],[\"G\"],[\"A/G\"],[\"F#m7\"],[\"B7\"],[\"Em7\"],[\"A7\"],[\"D\"],[\"A7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"],[\"D\"],[\"Dmaj7\"],[\"D7\"],[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"F#7\"],[\"Bm\"],[\"Bm/A\"],[\"G\"],[\"Gm\"],[\"D\"],[\"A7\"]],\"repeat\":2},{\"name\":\"outro\",\"bars\":[[\"G\"],[\"Gm\"],[\"D\"],[\"Em7\"],[\"A7\"],[\"D\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"D\"},{\"line\":0,\"word\":2,\"chord\":\"Dmaj7\"},{\"line\":1,\"word\":0,\"chord\":\"D7\"},{\"line\":1,\"word\":3,\"chord\":\"G\"},{\"line\":2,\"word\":0,\"chord\":\"Gm\"},{\"line\":2,\"word\":5,\"chord\":\"D\"},{\"line\":3,\"word\":0,\"chord\":\"Em7\"},{\"line\":3,\"word\":3,\"chord\":\"A7\"},{\"line\":4,\"word\":0,\"chord\":\"D\"},{\"line\":4,\"word\":3,\"chord\":\"Dmaj7\"},{\"line\":4,\"word\":5,\"chord\":\"D7\"},{\"line\":6,\"word\":0,\"chord\":\"G\"},{\"line\":6,\"word\":4,\"chord\":\"Gm\"},{\"line\":7,\"word\":0,\"chord\":\"D\"},{\"line\":7,\"word\":5,\"chord\":\"Em7\"},{\"line\":8,\"word\":0,\"chord\":\"A7\"},{\"line\":9,\"word\":0,\"chord\":\"D\"},{\"line\":10,\"word\":0,\"chord\":\"D\"},{\"line\":10,\"word\":3,\"chord\":\"F#7\"},{\"line\":10,\"word\":5,\"chord\":\"Bm\"},{\"line\":12,\"word\":0,\"chord\":\"D\"},{\"line\":12,\"word\":3,\"chord\":\"Dmaj7\"},{\"line\":13,\"word\":0,\"chord\":\"D7\"},{\"line\":13,\"word\":5,\"chord\":\"G\"},{\"line\":14,\"word\":0,\"chord\":\"Gm\"},{\"line\":14,\"word\":4,\"chord\":\"D\"},{\"line\":15,\"word\":0,\"chord\":\"Em7\"},{\"line\":15,\"word\":4,\"chord\":\"A7\"},{\"line\":17,\"word\":0,\"chord\":\"D\"},{\"line\":17,\"word\":5,\"chord\":\"Dmaj7\"},{\"line\":18,\"word\":0,\"chord\":\"D7\"},{\"line\":18,\"word\":5,\"chord\":\"G\"},{\"line\":19,\"word\":0,\"chord\":\"Gm\"},{\"line\":20,\"word\":0,\"chord\":\"D\"},{\"line\":20,\"word\":4,\"chord\":\"Em7\"},{\"line\":21,\"word\":0,\"chord\":\"A7\"},{\"line\":21,\"word\":2,\"chord\":\"D\"},{\"line\":23,\"word\":0,\"chord\":\"G\"},{\"line\":23,\"word\":5,\"chord\":\"A/G\"},{\"line\":24,\"word\":0,\"chord\":\"F#m7\"},{\"line\":24,\"word\":2,\"chord\":\"B7\"},{\"line\":25,\"word\":0,\"chord\":\"Em7\"},{\"line\":25,\"word\":5,\"chord\":\"A7\"},{\"line\":26,\"word\":0,\"chord\":\"D\"},{\"line\":26,\"word\":4,\"chord\":\"D7\"},{\"line\":28,\"word\":0,\"chord\":\"G\"},{\"line\":28,\"word\":5,\"chord\":\"A/G\"},{\"line\":29,\"word\":0,\"chord\":\"F#m7\"},{\"line\":29,\"word\":3,\"chord\":\"B7\"},{\"line\":30,\"word\":0,\"chord\":\"Em7\"},{\"line\":30,\"word\":4,\"chord\":\"A7\"},{\"line\":31,\"word\":0,\"chord\":\"D\"},{\"line\":31,\"word\":4,\"chord\":\"F#7\"},{\"line\":33,\"word\":0,\"chord\":\"D\"},{\"line\":33,\"word\":4,\"chord\":\"Dmaj7\"},{\"line\":34,\"word\":0,\"chord\":\"D7\"},{\"line\":34,\"word\":5,\"chord\":\"G\"},{\"line\":35,\"word\":0,\"chord\":\"Gm\"},{\"line\":35,\"word\":5,\"chord\":\"D\"},{\"line\":36,\"word\":0,\"chord\":\"Em7\"}]}",
+  "usage": {
+    "input_tokens": 20042,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1345,
+    "reasoning_output_tokens": 0
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 12.015
+}

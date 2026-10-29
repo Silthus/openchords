@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_306",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "db1ebb9298a31a0889adccc9d02b0940ce743ddd8460d8db1efd2b3ecad6e726",
+  "started_utc": "2026-10-29T17:57:53Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"C\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7793,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 697,
+    "output_tokens_details": {
+      "thinking_tokens": 649
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7793
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 697,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7793,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7793,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1550,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9713,
+      "webSearchRequests": 0,
+      "costUSD": 0.001989525,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1487,
+      "cacheCreationEphemeral5mInputTokens": 9713,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.001989525,
+  "duration_api_ms": 9257,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.873
+}

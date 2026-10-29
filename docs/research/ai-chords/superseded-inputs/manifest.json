@@ -1,0 +1,47 @@
+[
+  {
+    "from": "raw/claude-sonnet-5-5/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/claude-sonnet-5-5/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw/claude-haiku-4-5-20251001/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/claude-haiku-4-5-20251001/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw/gpt-6-luna/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/gpt-6-luna/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw/gpt-6.1-terra/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/gpt-6.1-terra/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw/gpt-6-astra/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/gpt-6-astra/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw/claude-haiku-5-5/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/primary/claude-haiku-5-5/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw-best-effort/gpt-6-luna/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/best-effort/gpt-6-luna/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw-best-effort/gpt-6.1-terra/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/best-effort/gpt-6.1-terra/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  },
+  {
+    "from": "raw-best-effort/gpt-6-astra/billboard_160-lyrics.json",
+    "archived_to": "superseded-inputs/best-effort/gpt-6-astra/billboard_160-lyrics.json",
+    "reason": "Wichita Lineman lyric input replaced with recording-matched studio text"
+  }
+]

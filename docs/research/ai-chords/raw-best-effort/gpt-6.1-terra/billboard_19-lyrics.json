@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_19",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "6dc6ae3b2f29570205d764b35f4dced1b9b3660a24475f9d259f35781f3405f8",
+  "started_utc": "2026-10-29T18:05:42Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Dm\"],[\"Am\",\"Em\"],[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Dm\"],[\"Am\",\"Em\"],[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Dm\"],[\"Am\",\"Em\"],[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Dm\"],[\"Am\",\"Em\"],[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"],[\"Am\",\"Em\"],[\"G\",\"Am\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Am\"},{\"line\":0,\"word\":4,\"chord\":\"Em\"},{\"line\":0,\"word\":5,\"chord\":\"G\"},{\"line\":0,\"word\":6,\"chord\":\"Am\"},{\"line\":1,\"word\":0,\"chord\":\"Am\"},{\"line\":1,\"word\":3,\"chord\":\"Em\"},{\"line\":1,\"word\":4,\"chord\":\"G\"},{\"line\":1,\"word\":5,\"chord\":\"Am\"},{\"line\":2,\"word\":0,\"chord\":\"Am\"},{\"line\":2,\"word\":4,\"chord\":\"Em\"},{\"line\":2,\"word\":5,\"chord\":\"G\"},{\"line\":2,\"word\":6,\"chord\":\"Am\"},{\"line\":3,\"word\":0,\"chord\":\"Dm\"},{\"line\":3,\"word\":3,\"chord\":\"Am\"},{\"line\":3,\"word\":5,\"chord\":\"Em\"},{\"line\":4,\"word\":0,\"chord\":\"Am\"},{\"line\":4,\"word\":2,\"chord\":\"Em\"},{\"line\":4,\"word\":3,\"chord\":\"G\"},{\"line\":4,\"word\":4,\"chord\":\"Am\"},{\"line\":6,\"word\":0,\"chord\":\"Am\"},{\"line\":6,\"word\":3,\"chord\":\"Em\"},{\"line\":6,\"word\":4,\"chord\":\"G\"},{\"line\":6,\"word\":5,\"chord\":\"Am\"},{\"line\":7,\"word\":0,\"chord\":\"Am\"},{\"line\":7,\"word\":3,\"chord\":\"Em\"},{\"line\":7,\"word\":4,\"chord\":\"G\"},{\"line\":7,\"word\":5,\"chord\":\"Am\"},{\"line\":8,\"word\":0,\"chord\":\"Am\"},{\"line\":8,\"word\":4,\"chord\":\"Em\"},{\"line\":8,\"word\":5,\"chord\":\"G\"},{\"line\":8,\"word\":6,\"chord\":\"Am\"},{\"line\":9,\"word\":0,\"chord\":\"Dm\"},{\"line\":9,\"word\":4,\"chord\":\"Am\"},{\"line\":9,\"word\":5,\"chord\":\"Em\"},{\"line\":10,\"word\":0,\"chord\":\"Am\"},{\"line\":10,\"word\":1,\"chord\":\"Em\"},{\"line\":10,\"word\":2,\"chord\":\"G\"},{\"line\":10,\"word\":3,\"chord\":\"Am\"},{\"line\":12,\"word\":0,\"chord\":\"Am\"},{\"line\":13,\"word\":0,\"chord\":\"Am\"},{\"line\":14,\"word\":0,\"chord\":\"Am\"},{\"line\":15,\"word\":0,\"chord\":\"Am\"},{\"line\":16,\"word\":0,\"chord\":\"Am\"},{\"line\":17,\"word\":0,\"chord\":\"Am\"},{\"line\":18,\"word\":0,\"chord\":\"Dm\"},{\"line\":18,\"word\":4,\"chord\":\"Am\"},{\"line\":18,\"word\":5,\"chord\":\"Em\"},{\"line\":19,\"word\":0,\"chord\":\"Am\"},{\"line\":19,\"word\":5,\"chord\":\"Em\"},{\"line\":19,\"word\":6,\"chord\":\"G\"},{\"line\":19,\"word\":7,\"chord\":\"Am\"},{\"line\":21,\"word\":0,\"chord\":\"Am\"},{\"line\":21,\"word\":4,\"chord\":\"Em\"},{\"line\":21,\"word\":5,\"chord\":\"G\"},{\"line\":21,\"word\":6,\"chord\":\"Am\"},{\"line\":22,\"word\":0,\"chord\":\"Am\"},{\"line\":22,\"word\":2,\"chord\":\"Em\"},{\"line\":22,\"word\":3,\"chord\":\"G\"},{\"line\":22,\"word\":4,\"chord\":\"Am\"},{\"line\":23,\"word\":0,\"chord\":\"Am\"},{\"line\":23,\"word\":4,\"chord\":\"Em\"},{\"line\":23,\"word\":5,\"chord\":\"G\"},{\"line\":23,\"word\":6,\"chord\":\"Am\"},{\"line\":24,\"word\":0,\"chord\":\"Dm\"},{\"line\":24,\"word\":4,\"chord\":\"Am\"},{\"line\":24,\"word\":5,\"chord\":\"Em\"},{\"line\":25,\"word\":0,\"chord\":\"Am\"},{\"line\":25,\"word\":1,\"chord\":\"Em\"},{\"line\":25,\"word\":2,\"chord\":\"G\"},{\"line\":25,\"word\":3,\"chord\":\"Am\"},{\"line\":27,\"word\":0,\"chord\":\"Am\"},{\"line\":27,\"word\":1,\"chord\":\"Em\"},{\"line\":27,\"word\":2,\"chord\":\"G\"},{\"line\":27,\"word\":3,\"chord\":\"Am\"},{\"line\":28,\"word\":0,\"chord\":\"Am\"},{\"line\":28,\"word\":1,\"chord\":\"Em\"},{\"line\":28,\"word\":2,\"chord\":\"G\"},{\"line\":28,\"word\":3,\"chord\":\"Am\"},{\"line\":29,\"word\":0,\"chord\":\"Am\"},{\"line\":29,\"word\":1,\"chord\":\"Em\"},{\"line\":29,\"word\":2,\"chord\":\"G\"},{\"line\":29,\"word\":3,\"chord\":\"Am\"}]}",
+  "usage": {
+    "input_tokens": 20601,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1456,
+    "reasoning_output_tokens": 59
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 11.987
+}

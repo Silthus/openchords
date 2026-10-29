@@ -1,0 +1,14 @@
+{
+  "song_id": "billboard_179",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "b4e59efa493a2b0d2ab1aaaf5aad9f09864126e66993165f217c7e65e4229376",
+  "started_utc": "2026-10-29T18:07:31Z",
+  "exit_code": 124,
+  "is_error": true,
+  "error": "timeout",
+  "elapsed_seconds": 90.112
+}

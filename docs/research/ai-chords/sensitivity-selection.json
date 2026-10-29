@@ -1,0 +1,18 @@
+{
+  "design": "Exploratory sensitivity analysis selected after observing high abstention in the primary blind condition. Not a pre-registered or representative estimate. Primary prompt/results remain unchanged.",
+  "changed_prompt": "Only the abstention instruction is changed: request an approximate chart even if uncertain.",
+  "song_ids": [
+    "billboard_19",
+    "billboard_179",
+    "billboard_347",
+    "billboard_160",
+    "billboard_306",
+    "billboard_265",
+    "extra_riverside",
+    "extra_follow"
+  ],
+  "reference_songs": 6,
+  "unscored_modern_checks": 2,
+  "created_utc": "2026-10-29T18:05:35.989281+00:00",
+  "interpretation": "Compares sensitivity to asking for approximate charts. Do not combine its six-reference-song averages with the 40-song primary averages or use it to establish a model ranking."
+}

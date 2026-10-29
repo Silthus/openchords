@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_103",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "0491a7eb2efdff35696c7b04baa5700d0d7be5df4e821e8f61c82a5e32691c54",
+  "started_utc": "2026-10-29T17:55:32Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"mixolydian\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D7\"]],\"repeat\":4},{\"name\":\"verse\",\"bars\":[[\"D7\"],[\"D7\"],[\"D7\"],[\"D7\"],[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"],[\"C7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D7\"],[\"D7\"],[\"D7\"],[\"D7\"],[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"],[\"C7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"D7\"],[\"D7\"],[\"D7\"],[\"D7\"],[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"],[\"C7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D7\"],[\"D7\"],[\"D7\"],[\"D7\"],[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G7\"],[\"G7\"],[\"D7\"],[\"D7\"],[\"C7\"],[\"G7\"],[\"D7\"],[\"D7\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"D7\"]],\"repeat\":4}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7795,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1390,
+    "output_tokens_details": {
+      "thinking_tokens": 845
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7795
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1390,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7795,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7795,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 1825,
+      "outputTokens": 1417,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 7795,
+      "webSearchRequests": 0,
+      "costUSD": 0.0373075,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 845,
+      "cacheCreationEphemeral5mInputTokens": 7795,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0373075,
+  "duration_api_ms": 12366,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 12.278
+}

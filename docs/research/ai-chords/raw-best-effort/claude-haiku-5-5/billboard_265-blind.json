@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_265",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "510e532b3ac8e88d402910a877ccc6b2d9d0ed5ba377568718ab8e97c92da121",
+  "started_utc": "2026-10-29T18:28:01Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"E\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Em\"],[\"Em\"],[\"Am\"],[\"Em\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"Em\"],[\"Am\"],[\"Em\"],[\"Am\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":2},{\"name\":\"interlude\",\"bars\":[[\"Em\"],[\"C\"],[\"D\"],[\"Em\"]],\"repeat\":2},{\"name\":\"solo\",\"bars\":[[\"Em\"],[\"Am\"],[\"Em\"],[\"Am\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"Em\"],[\"Am\"],[\"Em\"],[\"Am\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":2},{\"name\":\"outro\",\"bars\":[[\"Em\"],[\"Am\"],[\"Em\"],[\"N\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8031,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1323,
+    "output_tokens_details": {
+      "thinking_tokens": 982
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8031
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1323,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8031,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8031,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1626,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9983,
+      "webSearchRequests": 0,
+      "costUSD": 0.002061275,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1266,
+      "cacheCreationEphemeral5mInputTokens": 9983,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.002061275,
+  "duration_api_ms": 9018,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 7.877
+}

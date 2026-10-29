@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_160",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "abb08ae0a5bc9141ce3500f5696f771ad29d770e1c9216c4edf316548e71ca1c",
+  "started_utc": "2026-10-29T18:09:19Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D\"],[\"G/D\"],[\"D\"],[\"G/D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"G/D\"],[\"D\"],[\"Em7\"],[\"A7\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bm\"],[\"A\"],[\"G\"],[\"D/F#\"],[\"Em7\"],[\"A7\"],[\"D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"G/D\"],[\"D\"],[\"Em7\"],[\"G\"],[\"A7\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D/F#\"],[\"Em7\"],[\"A7\"],[\"Bm\"],[\"A\"],[\"D\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"D\"],[\"G/D\"],[\"D\"],[\"G/D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D/F#\"],[\"Em7\"],[\"A7\"],[\"Bm\"],[\"A\"],[\"D\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"D\"],[\"G/D\"],[\"D\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"D\"},{\"line\":0,\"word\":4,\"chord\":\"G/D\"},{\"line\":1,\"word\":0,\"chord\":\"D\"},{\"line\":1,\"word\":3,\"chord\":\"Em7\"},{\"line\":2,\"word\":0,\"chord\":\"A7\"},{\"line\":2,\"word\":5,\"chord\":\"D\"},{\"line\":4,\"word\":0,\"chord\":\"Bm\"},{\"line\":4,\"word\":4,\"chord\":\"A\"},{\"line\":5,\"word\":0,\"chord\":\"G\"},{\"line\":5,\"word\":4,\"chord\":\"D/F#\"},{\"line\":6,\"word\":0,\"chord\":\"Em7\"},{\"line\":6,\"word\":2,\"chord\":\"A7\"},{\"line\":7,\"word\":0,\"chord\":\"D\"},{\"line\":9,\"word\":0,\"chord\":\"D\"},{\"line\":9,\"word\":5,\"chord\":\"G/D\"},{\"line\":10,\"word\":0,\"chord\":\"D\"},{\"line\":10,\"word\":3,\"chord\":\"Em7\"},{\"line\":11,\"word\":0,\"chord\":\"G\"},{\"line\":11,\"word\":4,\"chord\":\"A7\"},{\"line\":12,\"word\":0,\"chord\":\"D\"},{\"line\":14,\"word\":0,\"chord\":\"G\"},{\"line\":14,\"word\":4,\"chord\":\"D/F#\"},{\"line\":15,\"word\":0,\"chord\":\"Em7\"},{\"line\":15,\"word\":3,\"chord\":\"A7\"},{\"line\":16,\"word\":0,\"chord\":\"Bm\"},{\"line\":16,\"word\":2,\"chord\":\"A\"},{\"line\":17,\"word\":0,\"chord\":\"D\"},{\"line\":19,\"word\":0,\"chord\":\"G\"},{\"line\":19,\"word\":4,\"chord\":\"D/F#\"},{\"line\":20,\"word\":0,\"chord\":\"Em7\"},{\"line\":20,\"word\":3,\"chord\":\"A7\"},{\"line\":21,\"word\":0,\"chord\":\"Bm\"},{\"line\":21,\"word\":2,\"chord\":\"A\"},{\"line\":22,\"word\":0,\"chord\":\"D\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8049,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2821,
+    "output_tokens_details": {
+      "thinking_tokens": 1705
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8049
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2821,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8049,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8049,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2079,
+      "outputTokens": 2842,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8049,
+      "webSearchRequests": 0,
+      "costUSD": 0.052700500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1705,
+      "cacheCreationEphemeral5mInputTokens": 8049,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.052700500000000004,
+  "duration_api_ms": 23283,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 22.966
+}

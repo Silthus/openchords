@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_93",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "2ba6c42d19fe6334400f0c4d2711fa62e556259f5abd36cc0e93687d57ce1101",
+  "started_utc": "2026-10-29T18:06:08Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8210,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 711,
+    "output_tokens_details": {
+      "thinking_tokens": 666
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8210
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 711,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8210,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8210,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1508,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10546,
+      "webSearchRequests": 0,
+      "costUSD": 0.00207265,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1441,
+      "cacheCreationEphemeral5mInputTokens": 10546,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.00207265,
+  "duration_api_ms": 8724,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.417
+}

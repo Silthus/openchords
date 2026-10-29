@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_160",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "11ac3d347298e8df470cf702e4ae40f7867923e479d27e30304f2db1d5c65b81",
+  "started_utc": "2026-10-29T18:24:19Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"F\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"F\"],[\"Bb\"],[\"F\"],[\"C\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Fmaj7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Dm\"],[\"Am\"],[\"Bb\"],[\"F\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"D7\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"],[\"Bb\"],[\"F/A\"],[\"Gm7\",\"C7\"],[\"F\"],[\"F\"],[\"C7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Fmaj7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Dm\"],[\"Am\"],[\"Bb\"],[\"F\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"D7\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"],[\"Bb\"],[\"F/A\"],[\"Gm7\",\"C7\"],[\"F\"],[\"F\"],[\"C7\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"Fmaj7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Am7\"],[\"Bbmaj7\"],[\"Dm\"],[\"Am\"],[\"Bb\"],[\"F\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"D7\"],[\"Gm7\"],[\"C7\"],[\"F\"],[\"F\"],[\"Bb\"],[\"F/A\"],[\"Gm7\",\"C7\"],[\"F\"],[\"F\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Bb\"],[\"F/A\"],[\"Gm7\",\"C7\"],[\"F\"]],\"repeat\":2}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":0,\"word\":4,\"chord\":\"Gm7\"},{\"line\":2,\"word\":0,\"chord\":\"Am7\"},{\"line\":2,\"word\":4,\"chord\":\"Bbmaj7\"},{\"line\":3,\"word\":0,\"chord\":\"Am7\"},{\"line\":3,\"word\":3,\"chord\":\"Gm7\"},{\"line\":3,\"word\":6,\"chord\":\"Am7\"},{\"line\":3,\"word\":7,\"chord\":\"Bbmaj7\"},{\"line\":5,\"word\":0,\"chord\":\"Dm\"},{\"line\":5,\"word\":3,\"chord\":\"Am\"},{\"line\":5,\"word\":5,\"chord\":\"Bb\"},{\"line\":6,\"word\":0,\"chord\":\"F\"},{\"line\":6,\"word\":4,\"chord\":\"Gm7\"},{\"line\":6,\"word\":6,\"chord\":\"C7\"},{\"line\":7,\"word\":0,\"chord\":\"F\"},{\"line\":7,\"word\":2,\"chord\":\"Bb\"},{\"line\":8,\"word\":0,\"chord\":\"F/A\"},{\"line\":8,\"word\":2,\"chord\":\"Gm7\"},{\"line\":8,\"word\":4,\"chord\":\"C7\"},{\"line\":8,\"word\":5,\"chord\":\"F\"},{\"line\":10,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":10,\"word\":4,\"chord\":\"Gm7\"},{\"line\":11,\"word\":0,\"chord\":\"Am7\"},{\"line\":11,\"word\":4,\"chord\":\"Bbmaj7\"},{\"line\":12,\"word\":0,\"chord\":\"Am7\"},{\"line\":12,\"word\":3,\"chord\":\"Gm7\"},{\"line\":12,\"word\":5,\"chord\":\"Am7\"},{\"line\":13,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":13,\"word\":2,\"chord\":\"Dm\"},{\"line\":13,\"word\":3,\"chord\":\"Am\"},{\"line\":15,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":15,\"word\":4,\"chord\":\"Am7\"},{\"line\":15,\"word\":6,\"chord\":\"Gm7\"},{\"line\":16,\"word\":0,\"chord\":\"D7\"},{\"line\":16,\"word\":3,\"chord\":\"Gm7\"},{\"line\":16,\"word\":5,\"chord\":\"C7\"},{\"line\":17,\"word\":0,\"chord\":\"F\"},{\"line\":17,\"word\":2,\"chord\":\"Bb\"},{\"line\":19,\"word\":0,\"chord\":\"F/A\"},{\"line\":19,\"word\":2,\"chord\":\"Gm7\"},{\"line\":19,\"word\":4,\"chord\":\"C7\"},{\"line\":19,\"word\":5,\"chord\":\"F\"},{\"line\":21,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":21,\"word\":4,\"chord\":\"Am7\"},{\"line\":21,\"word\":6,\"chord\":\"Gm7\"},{\"line\":22,\"word\":0,\"chord\":\"D7\"},{\"line\":22,\"word\":3,\"chord\":\"Gm7\"},{\"line\":22,\"word\":5,\"chord\":\"C7\"},{\"line\":23,\"word\":0,\"chord\":\"F\"},{\"line\":23,\"word\":2,\"chord\":\"Bb\"},{\"line\":24,\"word\":0,\"chord\":\"F/A\"},{\"line\":24,\"word\":2,\"chord\":\"Gm7\"},{\"line\":24,\"word\":4,\"chord\":\"C7\"},{\"line\":24,\"word\":5,\"chord\":\"F\"}]}",
+  "usage": {
+    "input_tokens": 20668,
+    "cached_input_tokens": 9728,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1418,
+    "reasoning_output_tokens": 135
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 14.671
+}

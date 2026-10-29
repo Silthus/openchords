@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_nothing",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "d93acae86f157535cb8ce40e5989aa9ece3996691305dc6b49cb13113b44fba4",
+  "started_utc": "2026-10-29T18:22:28Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"E\",\n    \"mode\": \"minor\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"bridge\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"bridge\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"bridge\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"G\"],\n        [\"Em\"],\n        [\"Am\"],\n        [\"Dm\"],\n        [\"Em\"]\n      ],\n      \"repeat\": 1\n    }\n  ],\n  \"placements\": [\n    {\"line\": 0, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 0, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 0, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 1, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 1, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 1, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 2, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 2, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 2, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 3, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 3, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 3, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 5, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 5, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 5, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 6, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 6, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 6, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 7, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 7, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 7, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 8, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 8, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 8, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 10, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 10, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 10, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 11, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 11, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 11, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 12, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 12, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 12, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 13, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 13, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 13, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 15, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 15, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 15, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 16, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 16, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 16, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 17, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 17, \"word\": 1, \"chord\": \"Am\"},\n    {\"line\": 19, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 19, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 19, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 20, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 20, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 20, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 21, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 21, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 21, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 22, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 22, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 22, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 24, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 24, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 24, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 25, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 25, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 25, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 26, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 26, \"word\": 1, \"chord\": \"Am\"},\n    {\"line\": 28, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 28, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 28, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 29, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 29, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 29, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 30, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 30, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 30, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 31, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 31, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 31, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 33, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 33, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 33, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 34, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 34, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 34, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 35, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 35, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 35, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 36, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 36, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 36, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 38, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 38, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 38, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 39, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 39, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 39, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 40, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 40, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 40, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 41, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 41, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 41, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 42, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 42, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 44, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 44, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 44, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 45, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 45, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 45, \"word\": 5, \"chord\": \"Dm\"},\n    {\"line\": 46, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 46, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 46, \"word\": 4, \"chord\": \"Dm\"},\n    {\"line\": 47, \"word\": 0, \"chord\": \"Em\"},\n    {\"line\": 47, \"word\": 2, \"chord\": \"Am\"},\n    {\"line\": 47, \"word\": 4, \"chord\": \"Dm\"}\n  ]\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6444,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 17274,
+    "output_tokens_details": {
+      "thinking_tokens": 13619
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6444
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 17274,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6444,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6444,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1858,
+      "outputTokens": 17289,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6444,
+      "webSearchRequests": 0,
+      "costUSD": 0.09635799999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 13619,
+      "cacheCreationEphemeral5mInputTokens": 6444,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.09635799999999999,
+  "duration_api_ms": 110974,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 110.937
+}

@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_160",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "11ac3d347298e8df470cf702e4ae40f7867923e479d27e30304f2db1d5c65b81",
+  "started_utc": "2026-10-29T18:24:19Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"F\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"F\"],[\"Fmaj7\"],[\"F7\"],[\"Bb\"],[\"Bbm\"],[\"F\",\"C/E\"],[\"Dm\"],[\"Gm\",\"C7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"F\",\"Fmaj7\"],[\"F7\",\"Bb\"],[\"Bbm\",\"F\"],[\"Dm\"],[\"Gm\"],[\"C7\"],[\"F\"],[\"Bb\"],[\"F\"],[\"Dm\"],[\"Gm\",\"C7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"F\",\"Fmaj7\"],[\"F7\",\"Bb\"],[\"Bbm\",\"F\"],[\"Dm\"],[\"Gm\"],[\"C7\"],[\"F\"],[\"Bb\"],[\"F\"],[\"Dm\"],[\"Gm\",\"C7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"F\"],[\"Bb\"],[\"F\"],[\"C7\"],[\"F\"],[\"Bb\"],[\"Bbm\"],[\"F\"],[\"C7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"F\"],[\"Bb\"],[\"F\"],[\"C7\"],[\"F\"],[\"Bb\"],[\"Bbm\"],[\"F\"],[\"C7\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"F\"],[\"Fmaj7\"],[\"F7\"],[\"Bb\"],[\"Bbm\"],[\"F\",\"C/E\"],[\"Dm\"],[\"Gm\",\"C7\"],[\"F\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"F\"},{\"line\":0,\"word\":5,\"chord\":\"Fmaj7\"},{\"line\":2,\"word\":0,\"chord\":\"F7\"},{\"line\":2,\"word\":3,\"chord\":\"Bb\"},{\"line\":2,\"word\":6,\"chord\":\"Bbm\"},{\"line\":3,\"word\":0,\"chord\":\"F\"},{\"line\":3,\"word\":6,\"chord\":\"Dm\"},{\"line\":5,\"word\":0,\"chord\":\"Gm\"},{\"line\":5,\"word\":5,\"chord\":\"C7\"},{\"line\":6,\"word\":0,\"chord\":\"F\"},{\"line\":6,\"word\":5,\"chord\":\"Bb\"},{\"line\":7,\"word\":0,\"chord\":\"F\"},{\"line\":8,\"word\":0,\"chord\":\"Dm\"},{\"line\":8,\"word\":3,\"chord\":\"C7\"},{\"line\":10,\"word\":0,\"chord\":\"F\"},{\"line\":10,\"word\":6,\"chord\":\"Fmaj7\"},{\"line\":11,\"word\":0,\"chord\":\"F7\"},{\"line\":11,\"word\":5,\"chord\":\"Bb\"},{\"line\":12,\"word\":0,\"chord\":\"Bbm\"},{\"line\":12,\"word\":7,\"chord\":\"F\"},{\"line\":13,\"word\":0,\"chord\":\"Dm\"},{\"line\":13,\"word\":4,\"chord\":\"Gm\"},{\"line\":15,\"word\":0,\"chord\":\"F\"},{\"line\":15,\"word\":6,\"chord\":\"Bb\"},{\"line\":16,\"word\":0,\"chord\":\"F\"},{\"line\":16,\"word\":5,\"chord\":\"C7\"},{\"line\":17,\"word\":0,\"chord\":\"F\"},{\"line\":19,\"word\":0,\"chord\":\"Bb\"},{\"line\":19,\"word\":4,\"chord\":\"Bbm\"},{\"line\":19,\"word\":7,\"chord\":\"F\"},{\"line\":21,\"word\":0,\"chord\":\"F\"},{\"line\":21,\"word\":6,\"chord\":\"Bb\"},{\"line\":22,\"word\":0,\"chord\":\"F\"},{\"line\":22,\"word\":5,\"chord\":\"C7\"},{\"line\":23,\"word\":0,\"chord\":\"F\"},{\"line\":24,\"word\":0,\"chord\":\"Bb\"},{\"line\":24,\"word\":4,\"chord\":\"Bbm\"},{\"line\":24,\"word\":7,\"chord\":\"F\"}]}",
+  "usage": {
+    "input_tokens": 20038,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1540,
+    "reasoning_output_tokens": 692
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 12.245
+}

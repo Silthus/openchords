@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_water",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "e425a796b8ec2809c402f5bfa8634da5508c0b6c58d197d225ef380454fd0c75",
+  "started_utc": "2026-10-29T18:22:06Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":null,\"mode\":null},\"capo\":null,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8469,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 731,
+    "output_tokens_details": {
+      "thinking_tokens": 685
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8469
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 731,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8469,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8469,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1264,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10860,
+      "webSearchRequests": 0,
+      "costUSD": 0.0019899,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1197,
+      "cacheCreationEphemeral5mInputTokens": 10860,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0019899,
+  "duration_api_ms": 8650,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.348
+}

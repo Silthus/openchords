@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_347",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "eba087413b8c4dd377f466167ef69c43fc07ad84759a19ceefc88af62f271ac9",
+  "started_utc": "2026-10-29T18:19:05Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"D\",\n    \"mode\": \"major\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"interlude\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    }\n  ],\n  \"placements\": [\n    {\"line\": 0, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 1, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 3, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 4, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 5, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 6, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 7, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 9, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 10, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 11, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 12, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 14, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 15, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 16, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 17, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 19, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 20, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 21, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 22, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 23, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 25, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 26, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 27, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 28, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 29, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 31, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 32, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 33, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 34, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 36, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 37, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 38, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 39, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 40, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 42, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 43, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 44, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 45, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 47, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 48, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 49, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 50, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 52, \"word\": 0, \"chord\": \"D\"}\n  ]\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6550,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 15211,
+    "output_tokens_details": {
+      "thinking_tokens": 13696
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6550
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 15211,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6550,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6550,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1965,
+      "outputTokens": 15223,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6550,
+      "webSearchRequests": 0,
+      "costUSD": 0.0862675,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 13696,
+      "cacheCreationEphemeral5mInputTokens": 6550,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0862675,
+  "duration_api_ms": 106301,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 106.282
+}

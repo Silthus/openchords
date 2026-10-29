@@ -1,0 +1,35 @@
+{
+  "date_utc": "2026-10-29",
+  "python": "3.12.3",
+  "platform_machine": "aarch64",
+  "claude_version": "2.1.312 (Claude Code)",
+  "codex_version": "codex-cli 0.165.0",
+  "generation_transport": "Existing authenticated subscription CLIs; no API-key calls made by the experiment",
+  "temperature": "Not set; CLI defaults",
+  "sampling": "One generation per song, model and prompt condition; no seed control exposed by this harness",
+  "claude_tools": "Disabled with --tools, --strict-mcp-config, --disable-slash-commands and disableAllHooks",
+  "codex_tools": "Closed-book instruction, web_search disabled, read-only sandbox; recorded tool events must be empty",
+  "worker_limits": {
+    "claude": 3,
+    "codex": 6
+  },
+  "prompts": "prompt.txt (conservative primary) and prompt-best-effort.txt (exploratory sensitivity)",
+  "recorded_run_ranges": {
+    "primary": {
+      "records": 528,
+      "earliest_start_utc": "2026-10-29T17:52:52+00:00",
+      "latest_end_utc": "2026-10-29T18:24:53.467000+00:00",
+      "timeouts": 1
+    },
+    "sensitivity": {
+      "records": 96,
+      "earliest_start_utc": "2026-10-29T18:05:36+00:00",
+      "latest_end_utc": "2026-10-29T18:34:37.242000+00:00",
+      "timeouts": 5
+    }
+  },
+  "timeouts": {
+    "primary": "150s one-song pilot; 90s early five-model blind batch; 180s later primary and corrected lyric calls",
+    "sensitivity_seconds": 90
+  }
+}

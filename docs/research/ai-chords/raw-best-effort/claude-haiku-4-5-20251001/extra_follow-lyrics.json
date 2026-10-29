@@ -1,0 +1,14 @@
+{
+  "song_id": "extra_follow",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "9032b80020435043c8cdf7b0cbb6bd559718fb23876600f8aa0d0cea7263724a",
+  "started_utc": "2026-10-29T18:33:07Z",
+  "exit_code": 124,
+  "is_error": true,
+  "error": "timeout",
+  "elapsed_seconds": 90.242
+}

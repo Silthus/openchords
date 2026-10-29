@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_160",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "1b41280f7f84e74b5000475bde4beda935f62af5f23112668283c371809dabb0",
+  "started_utc": "2026-10-29T18:06:53Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"F\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Bbmaj7\"],[\"C\"],[\"Bbmaj7\"],[\"C\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Dm7\"],[\"Am7\"],[\"Em7\"],[\"A7\"],[\"D\",\"Dsus4\",\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"C\"],[\"Bb\"],[\"Bb\"],[\"Gm7\",\"D/A\"],[\"A7sus4\",\"A7\"],[\"Bb\"],[\"C\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"Bb\"],[\"C\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Dm7\"],[\"Am7\"],[\"Em7\"],[\"A7\"],[\"D\",\"Dsus4\",\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"C\"],[\"Bb\"],[\"Bb\"],[\"Gm7\",\"D/A\"],[\"A7sus4\",\"A7\"],[\"Bb\"],[\"C\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"Bb\"],[\"C\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"Bbmaj7\"],[\"Am7\"],[\"Gm7\"],[\"Dm7\"],[\"Am7\"],[\"Em7\"],[\"A7\"],[\"D\",\"Dsus4\",\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"C\"],[\"Bb\"],[\"Bb\"],[\"Gm7\",\"D/A\"],[\"A7sus4\",\"A7\"],[\"Bb\"],[\"C\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Bb\"],[\"C\"]],\"repeat\":6}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":0,\"word\":6,\"chord\":\"Am7\"},{\"line\":1,\"word\":0,\"chord\":\"Gm7\"},{\"line\":1,\"word\":4,\"chord\":\"Dm7\"},{\"line\":2,\"word\":0,\"chord\":\"Am7\"},{\"line\":2,\"word\":3,\"chord\":\"Em7\"},{\"line\":2,\"word\":5,\"chord\":\"A7\"},{\"line\":2,\"word\":6,\"chord\":\"D\"},{\"line\":4,\"word\":0,\"chord\":\"D\"},{\"line\":4,\"word\":6,\"chord\":\"C\"},{\"line\":5,\"word\":0,\"chord\":\"C\"},{\"line\":5,\"word\":6,\"chord\":\"Bb\"},{\"line\":6,\"word\":0,\"chord\":\"Gm7\"},{\"line\":6,\"word\":2,\"chord\":\"D/A\"},{\"line\":6,\"word\":3,\"chord\":\"A7sus4\"},{\"line\":7,\"word\":0,\"chord\":\"A7\"},{\"line\":7,\"word\":4,\"chord\":\"Bb\"},{\"line\":9,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":9,\"word\":7,\"chord\":\"Am7\"},{\"line\":10,\"word\":0,\"chord\":\"Gm7\"},{\"line\":10,\"word\":5,\"chord\":\"Dm7\"},{\"line\":11,\"word\":0,\"chord\":\"Am7\"},{\"line\":11,\"word\":6,\"chord\":\"Em7\"},{\"line\":12,\"word\":0,\"chord\":\"A7\"},{\"line\":12,\"word\":4,\"chord\":\"D\"},{\"line\":14,\"word\":0,\"chord\":\"D\"},{\"line\":14,\"word\":7,\"chord\":\"C\"},{\"line\":15,\"word\":0,\"chord\":\"C\"},{\"line\":15,\"word\":6,\"chord\":\"Bb\"},{\"line\":16,\"word\":0,\"chord\":\"Gm7\"},{\"line\":16,\"word\":2,\"chord\":\"D/A\"},{\"line\":16,\"word\":3,\"chord\":\"A7sus4\"},{\"line\":17,\"word\":0,\"chord\":\"A7\"},{\"line\":17,\"word\":4,\"chord\":\"Bb\"},{\"line\":19,\"word\":0,\"chord\":\"D\"},{\"line\":19,\"word\":7,\"chord\":\"C\"},{\"line\":20,\"word\":0,\"chord\":\"C\"},{\"line\":20,\"word\":6,\"chord\":\"Bb\"},{\"line\":21,\"word\":0,\"chord\":\"Gm7\"},{\"line\":21,\"word\":2,\"chord\":\"D/A\"},{\"line\":21,\"word\":3,\"chord\":\"A7sus4\"},{\"line\":22,\"word\":0,\"chord\":\"A7\"},{\"line\":22,\"word\":4,\"chord\":\"Bb\"}]}",
+  "usage": {
+    "input_tokens": 20516,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2255,
+    "reasoning_output_tokens": 1247
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 84.515
+}

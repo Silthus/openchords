@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_298",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "91d40ab60298e3b60a4bfcfa159dec683261c193b85c904b1c7ef1a2fb31db63",
+  "started_utc": "2026-10-29T17:57:45Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"D\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7799,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1358,
+    "output_tokens_details": {
+      "thinking_tokens": 1309
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7799
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1358,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7799,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7799,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1670,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9725,
+      "webSearchRequests": 0,
+      "costUSD": 0.002051025,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1600,
+      "cacheCreationEphemeral5mInputTokens": 9725,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.002051025,
+  "duration_api_ms": 10646,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 9.557
+}

@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_93",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "2ba6c42d19fe6334400f0c4d2711fa62e556259f5abd36cc0e93687d57ce1101",
+  "started_utc": "2026-10-29T18:06:14Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"E\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"E\"],[\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"B7\"],[\"E\"],[\"B7\"],[\"A\"],[\"E\"],[\"E\",\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"B7\"],[\"E\"],[\"B7\"],[\"A\"],[\"E\"],[\"E\",\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"],[\"A\"],[\"E\",\"B7\",\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"],[\"A\"],[\"E\",\"B7\",\"E\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"E\",\"B7\"],[\"E\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"E\"},{\"line\":0,\"word\":9,\"chord\":\"B7\"},{\"line\":1,\"word\":0,\"chord\":\"E\"},{\"line\":1,\"word\":9,\"chord\":\"B7\"},{\"line\":2,\"word\":0,\"chord\":\"A\"},{\"line\":2,\"word\":4,\"chord\":\"E\"},{\"line\":2,\"word\":7,\"chord\":\"B7\"},{\"line\":3,\"word\":0,\"chord\":\"E\"},{\"line\":3,\"word\":3,\"chord\":\"B7\"},{\"line\":3,\"word\":6,\"chord\":\"E\"},{\"line\":5,\"word\":0,\"chord\":\"E\"},{\"line\":5,\"word\":7,\"chord\":\"B7\"},{\"line\":6,\"word\":0,\"chord\":\"E\"},{\"line\":6,\"word\":7,\"chord\":\"B7\"},{\"line\":7,\"word\":0,\"chord\":\"A\"},{\"line\":7,\"word\":4,\"chord\":\"E\"},{\"line\":7,\"word\":7,\"chord\":\"B7\"},{\"line\":8,\"word\":0,\"chord\":\"E\"},{\"line\":8,\"word\":3,\"chord\":\"B7\"},{\"line\":8,\"word\":6,\"chord\":\"E\"},{\"line\":10,\"word\":0,\"chord\":\"E\"},{\"line\":11,\"word\":0,\"chord\":\"A\"},{\"line\":12,\"word\":0,\"chord\":\"E\"},{\"line\":13,\"word\":0,\"chord\":\"B7\"},{\"line\":14,\"word\":0,\"chord\":\"A\"},{\"line\":15,\"word\":0,\"chord\":\"E\"},{\"line\":15,\"word\":3,\"chord\":\"B7\"},{\"line\":15,\"word\":6,\"chord\":\"E\"},{\"line\":17,\"word\":0,\"chord\":\"E\"},{\"line\":18,\"word\":0,\"chord\":\"A\"},{\"line\":19,\"word\":0,\"chord\":\"E\"},{\"line\":20,\"word\":0,\"chord\":\"B7\"},{\"line\":21,\"word\":0,\"chord\":\"A\"},{\"line\":22,\"word\":0,\"chord\":\"E\"},{\"line\":22,\"word\":3,\"chord\":\"B7\"},{\"line\":22,\"word\":6,\"chord\":\"E\"},{\"line\":23,\"word\":0,\"chord\":\"E\"},{\"line\":23,\"word\":3,\"chord\":\"B7\"},{\"line\":23,\"word\":6,\"chord\":\"E\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8211,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2833,
+    "output_tokens_details": {
+      "thinking_tokens": 1753
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8211
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2833,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8211,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8211,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2242,
+      "outputTokens": 2867,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8211,
+      "webSearchRequests": 0,
+      "costUSD": 0.0536815,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1753,
+      "cacheCreationEphemeral5mInputTokens": 8211,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0536815,
+  "duration_api_ms": 21412,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 20.132
+}

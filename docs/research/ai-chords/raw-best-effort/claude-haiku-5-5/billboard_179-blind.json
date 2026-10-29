@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_179",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "ff677927c8506e76554b565523538be3f088b1be1be7889a6d80d59627550feb",
+  "started_utc": "2026-10-29T18:26:49Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":2},{\"name\":\"interlude\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":2},{\"name\":\"outro\",\"bars\":[[\"D\"],[\"G\"],[\"D\"],[\"A\"]],\"repeat\":2}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8048,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1133,
+    "output_tokens_details": {
+      "thinking_tokens": 709
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8048
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1133,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8048,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8048,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1341,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10016,
+      "webSearchRequests": 0,
+      "costUSD": 0.0019228999999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 895,
+      "cacheCreationEphemeral5mInputTokens": 10016,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0019228999999999997,
+  "duration_api_ms": 7315,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.631
+}

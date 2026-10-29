@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_306",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "4e7501b76d6fac181c17f14110187f8097edc64c3a99f9406a183d5588d0500e",
+  "started_utc": "2026-10-29T18:16:52Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"F\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Fmaj7\"],[\"Bbmaj7\"],[\"Gm7\"],[\"C7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Fmaj7\",\"Gm7\"],[\"Am7\",\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"],[\"Fmaj7\",\"Dm7\"],[\"Gm7\"],[\"C7\"],[\"Fmaj7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\",\"Am7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"],[\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Fmaj7\",\"Gm7\"],[\"Am7\",\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\",\"Dm7\",\"C7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\",\"Am7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"],[\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Bbmaj7\",\"Am7\"],[\"Gm7\",\"C7\"],[\"Dm7\",\"Gm7\",\"C7\"],[\"Fmaj7\",\"Gm7\",\"C7\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"Fmaj7\",\"Gm7\"],[\"Am7\",\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\",\"Dm7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Fmaj7\",\"Gm7\"],[\"Am7\",\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\",\"Dm7\",\"C7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Bbmaj7\",\"Am7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"],[\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Bbmaj7\"],[\"Gm7\",\"C7\"],[\"Fmaj7\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":0,\"word\":2,\"chord\":\"Gm7\"},{\"line\":1,\"word\":0,\"chord\":\"Am7\"},{\"line\":1,\"word\":3,\"chord\":\"Bbmaj7\"},{\"line\":2,\"word\":0,\"chord\":\"Gm7\"},{\"line\":2,\"word\":4,\"chord\":\"C7\"},{\"line\":3,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":3,\"word\":3,\"chord\":\"Dm7\"},{\"line\":4,\"word\":0,\"chord\":\"Gm7\"},{\"line\":4,\"word\":4,\"chord\":\"C7\"},{\"line\":4,\"word\":5,\"chord\":\"Fmaj7\"},{\"line\":6,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":6,\"word\":6,\"chord\":\"Am7\"},{\"line\":7,\"word\":0,\"chord\":\"Gm7\"},{\"line\":7,\"word\":6,\"chord\":\"C7\"},{\"line\":8,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":9,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":10,\"word\":0,\"chord\":\"Gm7\"},{\"line\":10,\"word\":5,\"chord\":\"C7\"},{\"line\":10,\"word\":7,\"chord\":\"Fmaj7\"},{\"line\":12,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":12,\"word\":4,\"chord\":\"Gm7\"},{\"line\":13,\"word\":0,\"chord\":\"Am7\"},{\"line\":13,\"word\":4,\"chord\":\"Bbmaj7\"},{\"line\":14,\"word\":0,\"chord\":\"Gm7\"},{\"line\":14,\"word\":4,\"chord\":\"C7\"},{\"line\":15,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":15,\"word\":3,\"chord\":\"Dm7\"},{\"line\":15,\"word\":6,\"chord\":\"C7\"},{\"line\":17,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":17,\"word\":4,\"chord\":\"Am7\"},{\"line\":18,\"word\":0,\"chord\":\"Gm7\"},{\"line\":18,\"word\":5,\"chord\":\"C7\"},{\"line\":19,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":20,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":21,\"word\":0,\"chord\":\"Gm7\"},{\"line\":21,\"word\":5,\"chord\":\"C7\"},{\"line\":21,\"word\":7,\"chord\":\"Fmaj7\"},{\"line\":23,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":23,\"word\":5,\"chord\":\"Am7\"},{\"line\":24,\"word\":0,\"chord\":\"Gm7\"},{\"line\":24,\"word\":4,\"chord\":\"C7\"},{\"line\":25,\"word\":0,\"chord\":\"Dm7\"},{\"line\":25,\"word\":6,\"chord\":\"Gm7\"},{\"line\":25,\"word\":8,\"chord\":\"C7\"},{\"line\":26,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":26,\"word\":4,\"chord\":\"Gm7\"},{\"line\":26,\"word\":6,\"chord\":\"C7\"},{\"line\":28,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":28,\"word\":5,\"chord\":\"Gm7\"},{\"line\":29,\"word\":0,\"chord\":\"Am7\"},{\"line\":29,\"word\":4,\"chord\":\"Bbmaj7\"},{\"line\":30,\"word\":0,\"chord\":\"Gm7\"},{\"line\":30,\"word\":5,\"chord\":\"C7\"},{\"line\":31,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":31,\"word\":3,\"chord\":\"Dm7\"},{\"line\":31,\"word\":6,\"chord\":\"C7\"},{\"line\":33,\"word\":0,\"chord\":\"Bbmaj7\"},{\"line\":33,\"word\":4,\"chord\":\"Am7\"},{\"line\":34,\"word\":0,\"chord\":\"Gm7\"},{\"line\":34,\"word\":5,\"chord\":\"C7\"},{\"line\":35,\"word\":0,\"chord\":\"Fmaj7\"},{\"line\":36,\"word\":0,\"chord\":\"Gm7\"},{\"line\":36,\"word\":5,\"chord\":\"C7\"},{\"line\":36,\"word\":7,\"chord\":\"Fmaj7\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8455,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 5385,
+    "output_tokens_details": {
+      "thinking_tokens": 3138
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8455
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5385,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8455,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8455,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2278,
+      "outputTokens": 5406,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8455,
+      "webSearchRequests": 0,
+      "costUSD": 0.0797535,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3138,
+      "cacheCreationEphemeral5mInputTokens": 8455,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0797535,
+  "duration_api_ms": 31550,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 31.219
+}

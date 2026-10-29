@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_19",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "5366aa29d592385c239cf9f15b4f605e1b36cb873cddb82aa420f986ddd2e6bd",
+  "started_utc": "2026-10-29T17:52:58Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\"],[\"G\"],[\"Dm\"]],\"repeat\":2},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\"],[\"G\"],[\"Dm\"]],\"repeat\":2},{\"name\":\"bridge\",\"bars\":[[\"Am\"],[\"Am\"],[\"G\"],[\"Am\"]],\"repeat\":4},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\"],[\"G\"],[\"Dm\"]],\"repeat\":2},{\"name\":\"outro\",\"bars\":[[\"Am\"],[\"Em\"],[\"G\"],[\"Dm\"]],\"repeat\":2}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Am\"},{\"line\":0,\"word\":2,\"chord\":\"Em\"},{\"line\":0,\"word\":4,\"chord\":\"G\"},{\"line\":0,\"word\":5,\"chord\":\"Dm\"},{\"line\":1,\"word\":0,\"chord\":\"Am\"},{\"line\":1,\"word\":2,\"chord\":\"Em\"},{\"line\":1,\"word\":4,\"chord\":\"G\"},{\"line\":1,\"word\":5,\"chord\":\"Dm\"},{\"line\":2,\"word\":0,\"chord\":\"Am\"},{\"line\":2,\"word\":2,\"chord\":\"Em\"},{\"line\":2,\"word\":4,\"chord\":\"G\"},{\"line\":2,\"word\":5,\"chord\":\"Dm\"},{\"line\":3,\"word\":0,\"chord\":\"Am\"},{\"line\":3,\"word\":3,\"chord\":\"Em\"},{\"line\":3,\"word\":5,\"chord\":\"G\"},{\"line\":3,\"word\":6,\"chord\":\"Dm\"},{\"line\":4,\"word\":0,\"chord\":\"Am\"},{\"line\":4,\"word\":2,\"chord\":\"Em\"},{\"line\":6,\"word\":0,\"chord\":\"Am\"},{\"line\":6,\"word\":2,\"chord\":\"Em\"},{\"line\":6,\"word\":4,\"chord\":\"G\"},{\"line\":6,\"word\":5,\"chord\":\"Dm\"},{\"line\":7,\"word\":0,\"chord\":\"Am\"},{\"line\":7,\"word\":2,\"chord\":\"Em\"},{\"line\":7,\"word\":4,\"chord\":\"G\"},{\"line\":7,\"word\":5,\"chord\":\"Dm\"},{\"line\":8,\"word\":0,\"chord\":\"Am\"},{\"line\":8,\"word\":2,\"chord\":\"Em\"},{\"line\":8,\"word\":4,\"chord\":\"G\"},{\"line\":8,\"word\":5,\"chord\":\"Dm\"},{\"line\":9,\"word\":0,\"chord\":\"Am\"},{\"line\":9,\"word\":3,\"chord\":\"Em\"},{\"line\":9,\"word\":5,\"chord\":\"G\"},{\"line\":9,\"word\":6,\"chord\":\"Dm\"},{\"line\":10,\"word\":0,\"chord\":\"Am\"},{\"line\":10,\"word\":2,\"chord\":\"Em\"},{\"line\":12,\"word\":0,\"chord\":\"Am\"},{\"line\":12,\"word\":4,\"chord\":\"G\"},{\"line\":12,\"word\":6,\"chord\":\"Am\"},{\"line\":13,\"word\":0,\"chord\":\"Am\"},{\"line\":13,\"word\":4,\"chord\":\"G\"},{\"line\":13,\"word\":6,\"chord\":\"Am\"},{\"line\":14,\"word\":0,\"chord\":\"Am\"},{\"line\":14,\"word\":4,\"chord\":\"G\"},{\"line\":14,\"word\":6,\"chord\":\"Am\"},{\"line\":15,\"word\":0,\"chord\":\"Am\"},{\"line\":15,\"word\":4,\"chord\":\"G\"},{\"line\":15,\"word\":6,\"chord\":\"Am\"},{\"line\":16,\"word\":0,\"chord\":\"Am\"},{\"line\":16,\"word\":4,\"chord\":\"G\"},{\"line\":16,\"word\":6,\"chord\":\"Am\"},{\"line\":17,\"word\":0,\"chord\":\"Am\"},{\"line\":17,\"word\":2,\"chord\":\"G\"},{\"line\":18,\"word\":0,\"chord\":\"Am\"},{\"line\":18,\"word\":3,\"chord\":\"G\"},{\"line\":18,\"word\":5,\"chord\":\"Am\"},{\"line\":19,\"word\":0,\"chord\":\"Am\"},{\"line\":19,\"word\":3,\"chord\":\"Em\"},{\"line\":19,\"word\":5,\"chord\":\"G\"},{\"line\":19,\"word\":7,\"chord\":\"Dm\"},{\"line\":21,\"word\":0,\"chord\":\"Am\"},{\"line\":21,\"word\":2,\"chord\":\"Em\"},{\"line\":21,\"word\":4,\"chord\":\"G\"},{\"line\":21,\"word\":5,\"chord\":\"Dm\"},{\"line\":22,\"word\":0,\"chord\":\"Am\"},{\"line\":22,\"word\":2,\"chord\":\"Em\"},{\"line\":22,\"word\":3,\"chord\":\"G\"},{\"line\":22,\"word\":4,\"chord\":\"Dm\"},{\"line\":23,\"word\":0,\"chord\":\"Am\"},{\"line\":23,\"word\":2,\"chord\":\"Em\"},{\"line\":23,\"word\":4,\"chord\":\"G\"},{\"line\":23,\"word\":5,\"chord\":\"Dm\"},{\"line\":24,\"word\":0,\"chord\":\"Am\"},{\"line\":24,\"word\":3,\"chord\":\"Em\"},{\"line\":24,\"word\":5,\"chord\":\"G\"},{\"line\":24,\"word\":6,\"chord\":\"Dm\"},{\"line\":25,\"word\":0,\"chord\":\"Am\"},{\"line\":25,\"word\":2,\"chord\":\"Em\"},{\"line\":27,\"word\":0,\"chord\":\"Am\"},{\"line\":27,\"word\":2,\"chord\":\"Em\"},{\"line\":28,\"word\":0,\"chord\":\"Am\"},{\"line\":28,\"word\":2,\"chord\":\"G\"},{\"line\":29,\"word\":0,\"chord\":\"Am\"},{\"line\":29,\"word\":2,\"chord\":\"Dm\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8200,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3174,
+    "output_tokens_details": {
+      "thinking_tokens": 1252
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8200
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3174,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8200,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8200,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2230,
+      "outputTokens": 3197,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8200,
+      "webSearchRequests": 0,
+      "costUSD": 0.05693,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1252,
+      "cacheCreationEphemeral5mInputTokens": 8200,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.05693,
+  "duration_api_ms": 21764,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 21.535
+}

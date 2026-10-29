@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_179",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "b4e59efa493a2b0d2ab1aaaf5aad9f09864126e66993165f217c7e65e4229376",
+  "started_utc": "2026-10-29T18:27:18Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"A\",\n    \"mode\": \"major\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"], [\"A\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [[\"D\"], [\"A\"], [\"D\"]],\n      \"repeat\": 1\n    }\n  ],\n  \"placements\": [\n    {\"line\": 0, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 1, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 2, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 3, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 5, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 6, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 7, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 9, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 10, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 11, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 12, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 14, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 15, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 16, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 18, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 19, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 20, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 21, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 23, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 24, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 25, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 27, \"word\": 0, \"chord\": \"D\"},\n    {\"line\": 28, \"word\": 0, \"chord\": \"A\"},\n    {\"line\": 29, \"word\": 0, \"chord\": \"D\"}\n  ]\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6339,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 9814,
+    "output_tokens_details": {
+      "thinking_tokens": 8950
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6339
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 9814,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6339,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6339,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1753,
+      "outputTokens": 9826,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6339,
+      "webSearchRequests": 0,
+      "costUSD": 0.058806750000000005,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 8950,
+      "cacheCreationEphemeral5mInputTokens": 6339,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.058806750000000005,
+  "duration_api_ms": 69365,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 69.271
+}

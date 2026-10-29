@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_309",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "e445c6c69783e41be6fa82691812e28b82f1f217904f866138c7e47e6330a167",
+  "started_utc": "2026-10-29T17:58:03Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"C\",\"mode\":\"major\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20292,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 118,
+    "reasoning_output_tokens": 82
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 4.511
+}

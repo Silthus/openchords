@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_160",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "11ac3d347298e8df470cf702e4ae40f7867923e479d27e30304f2db1d5c65b81",
+  "started_utc": "2026-10-29T18:26:16Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"G\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"G\"],[\"Em7\"],[\"Cmaj7\"],[\"D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"G\",\"Em\"],[\"C\",\"D\"],[\"Em\",\"Am7\"],[\"G\",\"Em\"],[\"C\",\"D\"],[\"G\",\"Em7\"],[\"C\",\"G\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"G\",\"Em\"],[\"C\",\"D\"],[\"Em\",\"Am7\"],[\"C\",\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\",\"B7\"],[\"C\",\"D\"],[\"G\",\"Em7\"],[\"C\",\"D\"]],\"repeat\":1},{\"name\":\"interlude\",\"bars\":[[\"G\"],[\"Em7\"],[\"C\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\",\"B7\"],[\"C\",\"D\"],[\"G\",\"Em7\"],[\"C\",\"D\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"G\"},{\"line\":0,\"word\":4,\"chord\":\"Em\"},{\"line\":2,\"word\":0,\"chord\":\"C\"},{\"line\":2,\"word\":3,\"chord\":\"D\"},{\"line\":3,\"word\":0,\"chord\":\"Em\"},{\"line\":3,\"word\":4,\"chord\":\"Am7\"},{\"line\":5,\"word\":0,\"chord\":\"G\"},{\"line\":5,\"word\":4,\"chord\":\"Em\"},{\"line\":6,\"word\":0,\"chord\":\"C\"},{\"line\":6,\"word\":4,\"chord\":\"D\"},{\"line\":7,\"word\":0,\"chord\":\"G\"},{\"line\":7,\"word\":2,\"chord\":\"Em7\"},{\"line\":8,\"word\":0,\"chord\":\"C\"},{\"line\":8,\"word\":3,\"chord\":\"G\"},{\"line\":10,\"word\":0,\"chord\":\"G\"},{\"line\":10,\"word\":4,\"chord\":\"Em\"},{\"line\":11,\"word\":0,\"chord\":\"C\"},{\"line\":11,\"word\":3,\"chord\":\"D\"},{\"line\":12,\"word\":0,\"chord\":\"Em\"},{\"line\":12,\"word\":5,\"chord\":\"Am7\"},{\"line\":13,\"word\":0,\"chord\":\"C\"},{\"line\":13,\"word\":3,\"chord\":\"D\"},{\"line\":15,\"word\":0,\"chord\":\"G\"},{\"line\":15,\"word\":4,\"chord\":\"B7\"},{\"line\":16,\"word\":0,\"chord\":\"C\"},{\"line\":16,\"word\":3,\"chord\":\"D\"},{\"line\":17,\"word\":0,\"chord\":\"G\"},{\"line\":17,\"word\":2,\"chord\":\"Em7\"},{\"line\":19,\"word\":0,\"chord\":\"C\"},{\"line\":19,\"word\":3,\"chord\":\"D\"},{\"line\":21,\"word\":0,\"chord\":\"G\"},{\"line\":21,\"word\":4,\"chord\":\"B7\"},{\"line\":22,\"word\":0,\"chord\":\"C\"},{\"line\":22,\"word\":3,\"chord\":\"D\"},{\"line\":23,\"word\":0,\"chord\":\"G\"},{\"line\":23,\"word\":2,\"chord\":\"Em7\"},{\"line\":24,\"word\":0,\"chord\":\"C\"},{\"line\":24,\"word\":3,\"chord\":\"D\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8301,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4464,
+    "output_tokens_details": {
+      "thinking_tokens": 3382
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8301
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 4464,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8301,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8301,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4810,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10523,
+      "webSearchRequests": 0,
+      "costUSD": 0.003720775,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3707,
+      "cacheCreationEphemeral5mInputTokens": 10523,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.003720775,
+  "duration_api_ms": 19688,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 18.568
+}

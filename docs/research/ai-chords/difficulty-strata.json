@@ -1,0 +1,290 @@
+[
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.05466666666666666
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.02256944444444444
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.042666666666666665
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.026041666666666668
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 3,
+    "mean_transposition_invariant_sequence": 0.13042559523809524
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.027777777777777776
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 2,
+    "mean_transposition_invariant_sequence": 0.06733870967741935
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 5,
+    "mean_transposition_invariant_sequence": 0.09547617912534961
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 3,
+    "mean_transposition_invariant_sequence": 0.06528184861003632
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 10,
+    "mean_transposition_invariant_sequence": 0.4207931283374943
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 15,
+    "mean_transposition_invariant_sequence": 0.3149834367514537
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 13,
+    "mean_transposition_invariant_sequence": 0.27210545150297827
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 10,
+    "mean_transposition_invariant_sequence": 0.46980025645298285
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 15,
+    "mean_transposition_invariant_sequence": 0.3715275203364273
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 13,
+    "mean_transposition_invariant_sequence": 0.28019688637364315
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.05535714285714286
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 2,
+    "mean_transposition_invariant_sequence": 0.021875
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 3,
+    "mean_transposition_invariant_sequence": 0.1680873015873016
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 2,
+    "mean_transposition_invariant_sequence": 0.05924796747967479
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 1,
+    "mean_transposition_invariant_sequence": 0.015517241379310343
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "blind",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "blind",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "blind",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "lyrics",
+    "difficulty": "simple",
+    "n": 10,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "lyrics",
+    "difficulty": "moderate",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "lyrics",
+    "difficulty": "complex",
+    "n": 15,
+    "charts": 0,
+    "mean_transposition_invariant_sequence": 0.0
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_179",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "b4e59efa493a2b0d2ab1aaaf5aad9f09864126e66993165f217c7e65e4229376",
+  "started_utc": "2026-10-29T18:07:12Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D\"],[\"A\"],[\"G\"],[\"D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"A\"],[\"G\"],[\"D\"],[\"D\"],[\"A\"],[\"G\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"A\"],[\"G\"],[\"D\"],[\"D\"],[\"A\"],[\"G\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"A\"],[\"G\"],[\"D\"],[\"D\"],[\"A\"],[\"G\"],[\"D\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"],[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"G\"],[\"D\"],[\"A\"],[\"D\"]],\"repeat\":2}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"D\"},{\"line\":1,\"word\":0,\"chord\":\"A\"},{\"line\":2,\"word\":0,\"chord\":\"G\"},{\"line\":3,\"word\":0,\"chord\":\"D\"},{\"line\":5,\"word\":0,\"chord\":\"G\"},{\"line\":6,\"word\":0,\"chord\":\"D\"},{\"line\":7,\"word\":0,\"chord\":\"A\"},{\"line\":9,\"word\":0,\"chord\":\"D\"},{\"line\":10,\"word\":0,\"chord\":\"A\"},{\"line\":11,\"word\":0,\"chord\":\"G\"},{\"line\":12,\"word\":0,\"chord\":\"D\"},{\"line\":14,\"word\":0,\"chord\":\"G\"},{\"line\":15,\"word\":0,\"chord\":\"D\"},{\"line\":16,\"word\":0,\"chord\":\"A\"},{\"line\":18,\"word\":0,\"chord\":\"D\"},{\"line\":19,\"word\":0,\"chord\":\"A\"},{\"line\":20,\"word\":0,\"chord\":\"G\"},{\"line\":21,\"word\":0,\"chord\":\"D\"},{\"line\":23,\"word\":0,\"chord\":\"G\"},{\"line\":24,\"word\":0,\"chord\":\"D\"},{\"line\":25,\"word\":0,\"chord\":\"A\"},{\"line\":27,\"word\":0,\"chord\":\"G\"},{\"line\":28,\"word\":0,\"chord\":\"D\"},{\"line\":29,\"word\":0,\"chord\":\"A\"}]}",
+  "usage": {
+    "input_tokens": 19939,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 608,
+    "reasoning_output_tokens": 0
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.03
+}

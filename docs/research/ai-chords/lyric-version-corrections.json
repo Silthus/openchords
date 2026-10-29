@@ -1,0 +1,84 @@
+[
+  {
+    "song_id": "billboard_74",
+    "reference_duration": 234.031020408,
+    "previous_id": 804003,
+    "selected_id": 36977960,
+    "selected_duration": 234.0,
+    "duration_difference": 0.031020407999989175,
+    "search_url": "https://lrclib.net/api/search?track_name=La+Grange&artist_name=ZZ+Top"
+  },
+  {
+    "song_id": "billboard_226",
+    "reference_duration": 195.030204081,
+    "previous_id": 84794,
+    "selected_id": 35308299,
+    "selected_duration": 195.0,
+    "duration_difference": 0.03020408099999372,
+    "search_url": "https://lrclib.net/api/search?track_name=50+Ways+To+Leave+Your+Lover&artist_name=Paul+Simon"
+  },
+  {
+    "song_id": "billboard_261",
+    "reference_duration": 227.813877551,
+    "previous_id": 137682,
+    "selected_id": 37200541,
+    "selected_duration": 227.0,
+    "duration_difference": 0.8138775509999903,
+    "search_url": "https://lrclib.net/api/search?track_name=Higher+Ground&artist_name=Stevie+Wonder"
+  },
+  {
+    "song_id": "billboard_309",
+    "reference_duration": 315.142857142,
+    "previous_id": 29661,
+    "selected_id": 37494041,
+    "selected_duration": 315.0,
+    "duration_difference": 0.1428571420000253,
+    "search_url": "https://lrclib.net/api/search?track_name=Space+Oddity&artist_name=David+Bowie"
+  },
+  {
+    "song_id": "billboard_344",
+    "reference_duration": 350.19755102,
+    "previous_id": 806850,
+    "selected_id": 37167400,
+    "selected_duration": 349.0,
+    "duration_difference": 1.1975510199999917,
+    "search_url": "https://lrclib.net/api/search?track_name=Maggie+May&artist_name=Rod+Stewart"
+  },
+  {
+    "song_id": "billboard_147",
+    "reference_duration": 150.909387755,
+    "previous_id": 1397517,
+    "selected_id": 19832101,
+    "selected_duration": 144.132875,
+    "duration_difference": 6.776512754999999,
+    "search_url": "https://lrclib.net/api/search?q=I+Don%27t+mind+James+Brown"
+  },
+  {
+    "song_id": "billboard_160",
+    "reference_duration": 187.428571428,
+    "previous_id": 12622,
+    "selected_id": 16441888,
+    "selected_duration": 187.0,
+    "duration_difference": 0.4285714279999979,
+    "search_url": "https://lrclib.net/api/search?q=Wichita+Lineman+Glen+Campbell"
+  },
+  {
+    "song_id": "billboard_240",
+    "reference_duration": 219.036734693,
+    "previous_id": 1047875,
+    "selected_id": 20758253,
+    "selected_duration": 218.430113,
+    "duration_difference": 0.6066216929999939,
+    "search_url": "https://lrclib.net/api/search?q=The+Joker+Steve+Miller+Band"
+  },
+  {
+    "song_id": "billboard_120",
+    "reference_duration": 254.275918367,
+    "previous_id": 140446,
+    "selected_id": 31056157,
+    "selected_duration": 265.0,
+    "duration_difference": 10.724081632999997,
+    "search_url": "https://lrclib.net/api/search?q=Creedence+Spell",
+    "limitation": "Studio artist/album identity checked. Exact annotated edit not established. Plain lyric text is unchanged."
+  }
+]

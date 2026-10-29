@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_follow",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "d820314cc6bb7627920f0bf58d3207cd12633d797c6e01167e1a779180748374",
+  "started_utc": "2026-10-29T18:21:32Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"D\",\n    \"mode\": \"minor\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"interlude\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [\n        [\"Dm\"],\n        [\"Bb\"],\n        [\"F\"],\n        [\"C\"]\n      ],\n      \"repeat\": 4\n    }\n  ],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6036,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 7177,
+    "output_tokens_details": {
+      "thinking_tokens": 6531
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6036
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 7177,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6036,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6036,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1449,
+      "outputTokens": 7194,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6036,
+      "webSearchRequests": 0,
+      "costUSD": 0.044964000000000004,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 6531,
+      "cacheCreationEphemeral5mInputTokens": 6036,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.044964000000000004,
+  "duration_api_ms": 49614,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 49.475
+}

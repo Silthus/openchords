@@ -1,0 +1,77 @@
+[
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/billboard/choco/meta.csv",
+    "records": 890,
+    "matches": []
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/isophonics/choco/meta.csv",
+    "records": 300,
+    "matches": []
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/uspop2002/choco/meta.csv",
+    "records": 195,
+    "matches": [
+      {
+        "id": "uspop2002_0",
+        "file_performer": "Metallica",
+        "file_title": "Nothing Else Matters",
+        "file_track": "01",
+        "file_release": "Live Shit Binge And Purge Disc 3",
+        "file_path": "../../partitions/uspop2002/raw/metallica/Live_Shit_Binge_And_Purge_Disc_3_/01-Nothing_Else_Matters.lab",
+        "jams_path": "../../partitions/uspop2002/choco/jams/uspop2002_0.jams"
+      }
+    ]
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/rock-corpus/choco/meta.csv",
+    "records": 200,
+    "matches": []
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/wikifonia/choco/meta.csv",
+    "records": 6672,
+    "matches": [
+      {
+        "id": "wikifonia_4143",
+        "file_authors": "Lars Ulrich, James Hetfield",
+        "score_composers": "Lars Ulrich",
+        "file_title": "Nothing Else Matters",
+        "score_title": "Nothing Else Matters",
+        "file_path": "Lars Ulrich, James Hetfield - Nothing Else Matters.mxl",
+        "jams_path": "../../partitions/wikifonia/choco/jams/wikifonia_4143.jams"
+      }
+    ]
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/biab-internet-corpus/choco/meta.csv",
+    "records": 4989,
+    "matches": []
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/ireal-pro/choco/playlists/meta.csv",
+    "records": 2048,
+    "matches": []
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/ireal-pro/choco/forum/meta.csv",
+    "records": 33840,
+    "matches": [
+      {
+        "id": "ireal-pro-forum_17231",
+        "title": "Nothing Else Matters",
+        "artists": "Metallica",
+        "genre": "Rock Ballad",
+        "tempo": "0",
+        "time_signature": "(6, 8)",
+        "jams_path": "../../partitions/ireal-pro/choco/forum/jams/ireal-pro-forum_17231.jams"
+      }
+    ]
+  },
+  {
+    "metadata_url": "https://raw.githubusercontent.com/smashub/choco/5fe168fd55be5c84512abcfbc4e6f1b1f8f0092a/partitions/chordify/choco/meta.csv",
+    "records": 50,
+    "matches": []
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_226",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "fbc3b0f87ea3248e11695678079863a1282cfaec82889bdb4651868c9e827af4",
+  "started_utc": "2026-10-29T18:12:18Z",
+  "response_text": "```json\n{\n  \"abstain\": true,\n  \"key\": {\"tonic\": \"\", \"mode\": \"\"},\n  \"capo\": 0,\n  \"sections\": [],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6031,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1810,
+    "output_tokens_details": {
+      "thinking_tokens": 1751
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6031
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 1810,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6031,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6031,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1446,
+      "outputTokens": 1827,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6031,
+      "webSearchRequests": 0,
+      "costUSD": 0.01811975,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 1751,
+      "cacheCreationEphemeral5mInputTokens": 6031,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.01811975,
+  "duration_api_ms": 17925,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 17.87
+}

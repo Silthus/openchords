@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_103",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "0491a7eb2efdff35696c7b04baa5700d0d7be5df4e821e8f61c82a5e32691c54",
+  "started_utc": "2026-10-29T18:06:14Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"D\",\n    \"mode\": \"major\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [\n        [\"D\"],\n        [\"A\"],\n        [\"D\"],\n        [\"A\"],\n        [\"D\"],\n        [\"A\"],\n        [\"D\"],\n        [\"A\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"solo\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"],\n        [\"D\"],\n        [\"G\"],\n        [\"A\"],\n        [\"D\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [\n        [\"D\"],\n        [\"A\"]\n      ],\n      \"repeat\": 4\n    }\n  ],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 5874,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 8285,
+    "output_tokens_details": {
+      "thinking_tokens": 7682
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 5874
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 8285,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5874,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 5874,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1442,
+      "outputTokens": 8300,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 5874,
+      "webSearchRequests": 0,
+      "costUSD": 0.05028450000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 7682,
+      "cacheCreationEphemeral5mInputTokens": 5874,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.05028450000000001,
+  "duration_api_ms": 61204,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 61.191
+}

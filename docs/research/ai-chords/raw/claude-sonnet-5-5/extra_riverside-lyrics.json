@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_riverside",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "5cd85b1335b9a4f43d1fe303a0384d7ec6216d0f553a85ccf7d0044715c31f6a",
+  "started_utc": "2026-10-29T18:21:38Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8513,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 273,
+    "output_tokens_details": {
+      "thinking_tokens": 228
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8513
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 273,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8513,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8513,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 2337,
+      "outputTokens": 297,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8513,
+      "webSearchRequests": 0,
+      "costUSD": 0.0289265,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 228,
+      "cacheCreationEphemeral5mInputTokens": 8513,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0289265,
+  "duration_api_ms": 7518,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 7.163
+}

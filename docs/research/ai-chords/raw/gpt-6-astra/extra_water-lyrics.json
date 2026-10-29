@@ -1,0 +1,25 @@
+{
+  "song_id": "extra_water",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "e425a796b8ec2809c402f5bfa8634da5508c0b6c58d197d225ef380454fd0c75",
+  "started_utc": "2026-10-29T18:22:17Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":null,\"mode\":null},\"capo\":null,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20802,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 217,
+    "reasoning_output_tokens": 182
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 15.647
+}

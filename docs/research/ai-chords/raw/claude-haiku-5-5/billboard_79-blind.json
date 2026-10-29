@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_79",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "02cba2f8a3453778448cf7d802e6f06e17575770f622e13d53e2ed4859107268",
+  "started_utc": "2026-10-29T17:55:06Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":null,\"mode\":null},\"capo\":null,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7791,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 858,
+    "output_tokens_details": {
+      "thinking_tokens": 812
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7791
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 858,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7791,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7791,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1112,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9707,
+      "webSearchRequests": 0,
+      "costUSD": 0.0017697750000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1047,
+      "cacheCreationEphemeral5mInputTokens": 9707,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.0017697750000000001,
+  "duration_api_ms": 8127,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 7.325
+}

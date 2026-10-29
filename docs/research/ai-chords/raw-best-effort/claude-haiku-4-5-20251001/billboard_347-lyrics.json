@@ -1,0 +1,14 @@
+{
+  "song_id": "billboard_347",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "aa4dbded189eff4df5dfcdf0edfc9634416071105ba7b062035ee2a5fee7eff3",
+  "started_utc": "2026-10-29T18:31:04Z",
+  "exit_code": 124,
+  "is_error": true,
+  "error": "timeout",
+  "elapsed_seconds": 90.287
+}

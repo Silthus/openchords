@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_26",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "c92aaa6d7057980146e489cd9634ca81366d6945ef30db7dadc712777a267346",
+  "started_utc": "2026-10-29T18:00:28Z",
+  "response_text": "```json\n{\n  \"abstain\": true,\n  \"key\": {\n    \"tonic\": \"D\",\n    \"mode\": \"minor\"\n  },\n  \"capo\": 0,\n  \"sections\": [],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6174,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 7137,
+    "output_tokens_details": {
+      "thinking_tokens": 7067
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6174
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 7137,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6174,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6174,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1744,
+      "outputTokens": 7152,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6174,
+      "webSearchRequests": 0,
+      "costUSD": 0.045221500000000005,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 7067,
+      "cacheCreationEphemeral5mInputTokens": 6174,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.045221500000000005,
+  "duration_api_ms": 61008,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 60.797
+}

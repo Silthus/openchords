@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_306",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "ab38a4de68fb0cfba9cad70983c82de857625c73ef5ee89fc947481d460c79af",
+  "started_utc": "2026-10-29T18:29:11Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"Db\",\"mode\":\"major\"},\"capo\":1,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7sus4\",\"G7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7\"],[\"Cmaj7\"],[\"Am7\",\"Dm7\"],[\"Fm6\"],[\"G7sus4\",\"G7\"]],\"repeat\":2},{\"name\":\"chorus\",\"bars\":[[\"Fmaj7\",\"Em7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\",\"C7\"],[\"Fmaj7\",\"Fm6\"],[\"Cmaj7\",\"Am7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\"],[\"Dm7\",\"G7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7\"],[\"Cmaj7\"],[\"Am7\",\"Dm7\"],[\"Fm6\"],[\"G7sus4\",\"G7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Fmaj7\",\"Em7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\",\"C7\"],[\"Fmaj7\",\"Fm6\"],[\"Cmaj7\",\"Am7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\"],[\"Dm7\",\"G7\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7\"],[\"Cmaj7\"],[\"Am7\",\"Dm7\"],[\"Fm6\"],[\"G7sus4\",\"G7\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Em7\"],[\"A7\"],[\"Dm7\"],[\"G7\"],[\"Em7\"],[\"A7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\",\"C7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7\"],[\"Cmaj7\"],[\"Am7\",\"Dm7\"],[\"Fm6\"],[\"G7sus4\",\"G7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Fmaj7\",\"Em7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\",\"C7\"],[\"Fmaj7\",\"Fm6\"],[\"Cmaj7\",\"Am7\"],[\"Dm7\",\"G7\"],[\"Cmaj7\"],[\"Dm7\",\"G7\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Cmaj7\"],[\"Dm7\",\"Em7\"],[\"Fmaj7\"],[\"G7sus4\",\"G7\"],[\"Cmaj7\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8042,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1911,
+    "output_tokens_details": {
+      "thinking_tokens": 952
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8042
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1911,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8042,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8042,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 1867,
+      "outputTokens": 1942,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 8042,
+      "webSearchRequests": 0,
+      "costUSD": 0.043259000000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 952,
+      "cacheCreationEphemeral5mInputTokens": 8042,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.043259000000000006,
+  "duration_api_ms": 14937,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 14.502
+}

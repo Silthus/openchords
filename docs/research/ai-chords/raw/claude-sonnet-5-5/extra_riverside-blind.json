@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_riverside",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "88a085de204e0d05edae1ac3a240afb99710ca066764cc3798aafb6e1f804faa",
+  "started_utc": "2026-10-29T17:58:40Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7794,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 261,
+    "output_tokens_details": {
+      "thinking_tokens": 212
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7794
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 261,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7794,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7794,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 1823,
+      "outputTokens": 285,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 7794,
+      "webSearchRequests": 0,
+      "costUSD": 0.025981,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 212,
+      "cacheCreationEphemeral5mInputTokens": 7794,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.025981,
+  "duration_api_ms": 5277,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.183
+}

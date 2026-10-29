@@ -1,0 +1,1278 @@
+[
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "blind",
+    "n": 40,
+    "charts": 4,
+    "abstentions": 36,
+    "errors": 0,
+    "tonic_correct": 4,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.041666666666666664,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.75,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.05375,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.75,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.01616237113402062,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.25,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.027546875000000002,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.546875,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 4,
+      "mean": 0.3335044642857143,
+      "median": 0.2894047619047619,
+      "min": 0.20833333333333337,
+      "max": 0.546875,
+      "p10": 0.20833333333333337,
+      "p90": 0.3466666666666667
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.043023065476190475,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.546875,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 22.203425,
+      "median": 15.506499999999999,
+      "min": 4.219,
+      "max": 61.371,
+      "p10": 5.189,
+      "p90": 52.551
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.02128530625,
+      "median": 0.016612875,
+      "min": 0.009979000000000002,
+      "max": 0.052185999999999996,
+      "p10": 0.0111545,
+      "p90": 0.04255375
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": {
+      "n": 4,
+      "mean": 0.1616237113402062,
+      "median": 0.1982474226804124,
+      "min": 0.0,
+      "max": 0.25,
+      "p10": 0.0,
+      "p90": 0.21649484536082475
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 4,
+      "mean": 0.43023065476190475,
+      "median": 0.41369047619047616,
+      "min": 0.3466666666666667,
+      "max": 0.546875,
+      "p10": 0.3466666666666667,
+      "p90": 0.41666666666666663
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 4,
+      "mean": 0.5375,
+      "median": 0.5333333333333333,
+      "min": 0.3333333333333333,
+      "max": 0.75,
+      "p10": 0.3333333333333333,
+      "p90": 0.6666666666666666
+    },
+    "songs_with_missing_sections": 4,
+    "songs_with_extra_sections": 4,
+    "section_order_exact": 0
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 10,
+    "abstentions": 30,
+    "errors": 0,
+    "tonic_correct": 3,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.02675820707070707,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.4,
+      "p10": 0.0,
+      "p90": 0.1111111111111111
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.039910714285714285,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.4,
+      "p10": 0.0,
+      "p90": 0.16666666666666666
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.014282457233488161,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.19999999999999996,
+      "p10": 0.0,
+      "p90": 0.01904761904761909
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.02671913527952818,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.2807017543859649,
+      "p10": 0.0,
+      "p90": 0.10370370370370374
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 10,
+      "mean": 0.1265959236006985,
+      "median": 0.12310606060606061,
+      "min": 0.0,
+      "max": 0.2807017543859649,
+      "p10": 0.0,
+      "p90": 0.23958333333333337
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.07711893782012456,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.5483870967741935,
+      "p10": 0.0,
+      "p90": 0.30379746835443033
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 47.29595,
+      "median": 40.025999999999996,
+      "min": 7.403,
+      "max": 130.148,
+      "p10": 11.552,
+      "p90": 86.378
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.0399259375,
+      "median": 0.032709,
+      "min": 0.012895,
+      "max": 0.10973399999999998,
+      "p10": 0.0152535,
+      "p90": 0.06930874999999999
+    },
+    "lyric_line_coverage": {
+      "n": 40,
+      "mean": 0.22469647153167602,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 1.0
+    },
+    "conditional_chart_section_accuracy": {
+      "n": 10,
+      "mean": 0.057129828933952645,
+      "median": 0.014678448699067259,
+      "min": 0.0,
+      "max": 0.19999999999999996,
+      "p10": 0.0,
+      "p90": 0.15384615384615385
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 10,
+      "mean": 0.30847575128049826,
+      "median": 0.29320308200330214,
+      "min": 0.0,
+      "max": 0.5483870967741935,
+      "p10": 0.0,
+      "p90": 0.5151515151515151
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 10,
+      "mean": 0.15964285714285714,
+      "median": 0.14583333333333331,
+      "min": 0.0,
+      "max": 0.4,
+      "p10": 0.0,
+      "p90": 0.25
+    },
+    "songs_with_missing_sections": 10,
+    "songs_with_extra_sections": 8,
+    "section_order_exact": 0
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "blind",
+    "n": 40,
+    "charts": 2,
+    "abstentions": 38,
+    "errors": 0,
+    "tonic_correct": 5,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.03571428571428571,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.04,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.017236498950448445,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.4683544303797469,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.021869791666666666,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.5466666666666666,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 2,
+      "mean": 0.44260416666666663,
+      "median": 0.44260416666666663,
+      "min": 0.33854166666666663,
+      "max": 0.5466666666666666,
+      "p10": 0.33854166666666663,
+      "p90": 0.33854166666666663
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.02213020833333333,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.5466666666666666,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 7.07225,
+      "median": 6.4535,
+      "min": 2.443,
+      "max": 24.344,
+      "p10": 4.795,
+      "p90": 8.119
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.00177142625,
+      "median": 0.0017404,
+      "min": 0.00109195,
+      "max": 0.0026479,
+      "p10": 0.00161715,
+      "p90": 0.001971025
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": {
+      "n": 2,
+      "mean": 0.3447299790089689,
+      "median": 0.3447299790089689,
+      "min": 0.2211055276381909,
+      "max": 0.4683544303797469,
+      "p10": 0.2211055276381909,
+      "p90": 0.2211055276381909
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 2,
+      "mean": 0.44260416666666663,
+      "median": 0.44260416666666663,
+      "min": 0.33854166666666663,
+      "max": 0.5466666666666666,
+      "p10": 0.33854166666666663,
+      "p90": 0.33854166666666663
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 2,
+      "mean": 0.8,
+      "median": 0.8,
+      "min": 0.6,
+      "max": 1.0,
+      "p10": 0.6,
+      "p90": 0.6
+    },
+    "songs_with_missing_sections": 2,
+    "songs_with_extra_sections": 2,
+    "section_order_exact": 0
+  },
+  {
+    "model": "claude-haiku-5-5",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 2,
+    "abstentions": 38,
+    "errors": 0,
+    "tonic_correct": 4,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.03571428571428571,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.04,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.012961766985275121,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.26530612244897955,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.01978125,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.42666666666666664,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 2,
+      "mean": 0.4086458333333333,
+      "median": 0.4086458333333333,
+      "min": 0.390625,
+      "max": 0.42666666666666664,
+      "p10": 0.390625,
+      "p90": 0.390625
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.020432291666666665,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.42666666666666664,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 7.776924999999999,
+      "median": 6.5600000000000005,
+      "min": 3.6,
+      "max": 35.373,
+      "p10": 3.99,
+      "p90": 8.725
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.00211114125,
+      "median": 0.0019544,
+      "min": 0.00126645,
+      "max": 0.00632315,
+      "p10": 0.0017949,
+      "p90": 0.0021356500000000002
+    },
+    "lyric_line_coverage": {
+      "n": 40,
+      "mean": 0.05,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "conditional_chart_section_accuracy": {
+      "n": 2,
+      "mean": 0.25923533970550244,
+      "median": 0.25923533970550244,
+      "min": 0.25316455696202533,
+      "max": 0.26530612244897955,
+      "p10": 0.25316455696202533,
+      "p90": 0.25316455696202533
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 2,
+      "mean": 0.4086458333333333,
+      "median": 0.4086458333333333,
+      "min": 0.390625,
+      "max": 0.42666666666666664,
+      "p10": 0.390625,
+      "p90": 0.390625
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 2,
+      "mean": 0.8,
+      "median": 0.8,
+      "min": 0.6,
+      "max": 1.0,
+      "p10": 0.6,
+      "p90": 0.6
+    },
+    "songs_with_missing_sections": 2,
+    "songs_with_extra_sections": 2,
+    "section_order_exact": 0
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "blind",
+    "n": 40,
+    "charts": 38,
+    "abstentions": 2,
+    "errors": 0,
+    "tonic_correct": 14,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.16090494311759793,
+      "median": 0.04464285714285714,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.4444444444444444
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.2935832917082917,
+      "median": 0.17424242424242425,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.75
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0644530012093054,
+      "median": 0.0074432761483120835,
+      "min": 0.0,
+      "max": 0.5340909090909092,
+      "p10": 0.0,
+      "p90": 0.17419354838709677
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.11556990927134135,
+      "median": 0.023703703703703727,
+      "min": 0.0,
+      "max": 0.8,
+      "p10": 0.0,
+      "p90": 0.28125
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 38,
+      "mean": 0.18846115513791603,
+      "median": 0.11857707509881421,
+      "min": 0.0,
+      "max": 0.8,
+      "p10": 0.0,
+      "p90": 0.4193548387096774
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.32535661517978554,
+      "median": 0.3185736677115988,
+      "min": 0.0,
+      "max": 0.8,
+      "p10": 0.05755395683453235,
+      "p90": 0.484375
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 11.6691,
+      "median": 11.721,
+      "min": 3.412,
+      "max": 23.634,
+      "p10": 6.953,
+      "p90": 15.466
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.035334325,
+      "median": 0.0356605,
+      "min": 0.026362999999999998,
+      "max": 0.0429975,
+      "p10": 0.030221500000000002,
+      "p90": 0.040079000000000004
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": {
+      "n": 38,
+      "mean": 0.0678452644308478,
+      "median": 0.01982788900597121,
+      "min": 0.0,
+      "max": 0.5340909090909092,
+      "p10": 0.0,
+      "p90": 0.17419354838709677
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 38,
+      "mean": 0.342480647557669,
+      "median": 0.3192049808429119,
+      "min": 0.0,
+      "max": 0.8,
+      "p10": 0.125,
+      "p90": 0.484375
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 38,
+      "mean": 0.3090350439034649,
+      "median": 0.20202020202020202,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.75
+    },
+    "songs_with_missing_sections": 36,
+    "songs_with_extra_sections": 33,
+    "section_order_exact": 0
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 38,
+    "abstentions": 2,
+    "errors": 0,
+    "tonic_correct": 13,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.143548303412274,
+      "median": 0.08333333333333333,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.4
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.26241633366633366,
+      "median": 0.19090909090909092,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.75
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.07218484975104698,
+      "median": 0.029156064461408004,
+      "min": 0.0,
+      "max": 0.8181818181818181,
+      "p10": 0.0,
+      "p90": 0.1448598130841121
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.13129453453562728,
+      "median": 0.03612903225806452,
+      "min": 0.0,
+      "max": 0.8823529411764706,
+      "p10": 0.0,
+      "p90": 0.34375
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 38,
+      "mean": 0.20565291085606205,
+      "median": 0.11773989898989895,
+      "min": 0.0,
+      "max": 0.8823529411764706,
+      "p10": 0.0,
+      "p90": 0.5121951219512195
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.3618467166295221,
+      "median": 0.35524549290372076,
+      "min": 0.0,
+      "max": 0.8823529411764706,
+      "p10": 0.011834319526627168,
+      "p90": 0.5892857142857143
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 22.4091,
+      "median": 21.0625,
+      "min": 9.3,
+      "max": 46.588,
+      "p10": 13.716,
+      "p90": 33.366
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.059662324999999995,
+      "median": 0.05778874999999999,
+      "min": 0.029322,
+      "max": 0.104595,
+      "p10": 0.0417965,
+      "p90": 0.0787625
+    },
+    "lyric_line_coverage": {
+      "n": 40,
+      "mean": 0.9470930232558139,
+      "median": 1.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 1.0,
+      "p90": 1.0
+    },
+    "conditional_chart_section_accuracy": {
+      "n": 38,
+      "mean": 0.07598405236952314,
+      "median": 0.031636223191566726,
+      "min": 0.0,
+      "max": 0.8181818181818181,
+      "p10": 0.0,
+      "p90": 0.1448598130841121
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 38,
+      "mean": 0.3808912806626549,
+      "median": 0.35771780303030304,
+      "min": 0.0,
+      "max": 0.8823529411764706,
+      "p10": 0.1674008810572687,
+      "p90": 0.5892857142857143
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 38,
+      "mean": 0.2762277196487723,
+      "median": 0.2,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.75
+    },
+    "songs_with_missing_sections": 32,
+    "songs_with_extra_sections": 30,
+    "section_order_exact": 1
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "blind",
+    "n": 40,
+    "charts": 0,
+    "abstentions": 40,
+    "errors": 0,
+    "tonic_correct": 32,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": null,
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 11.34285,
+      "median": 11.109,
+      "min": 7.13,
+      "max": 25.546,
+      "p10": 7.905,
+      "p90": 14.794
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.11361555,
+      "median": 0.121933,
+      "min": 0.076554,
+      "max": 0.20847,
+      "p10": 0.078494,
+      "p90": 0.135618
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": null,
+    "conditional_chart_transposition_sequence": null,
+    "conditional_chart_reduced_vocabulary": null,
+    "songs_with_missing_sections": 0,
+    "songs_with_extra_sections": 0,
+    "section_order_exact": 0
+  },
+  {
+    "model": "gpt-6-astra",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 0,
+    "abstentions": 40,
+    "errors": 0,
+    "tonic_correct": 31,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": null,
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 12.08525,
+      "median": 9.799,
+      "min": 6.467,
+      "max": 36.227,
+      "p10": 7.289,
+      "p90": 17.652
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.1069829,
+      "median": 0.106229,
+      "min": 0.080424,
+      "max": 0.144518,
+      "p10": 0.082974,
+      "p90": 0.128498
+    },
+    "lyric_line_coverage": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "conditional_chart_section_accuracy": null,
+    "conditional_chart_transposition_sequence": null,
+    "conditional_chart_reduced_vocabulary": null,
+    "songs_with_missing_sections": 0,
+    "songs_with_extra_sections": 0,
+    "section_order_exact": 0
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "blind",
+    "n": 40,
+    "charts": 3,
+    "abstentions": 37,
+    "errors": 0,
+    "tonic_correct": 4,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.010714285714285714,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.42857142857142855,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.03375,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.75,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.006025641025641027,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.24102564102564106,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.008203125,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.328125,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 3,
+      "mean": 0.29389880952380953,
+      "median": 0.328125,
+      "min": 0.0,
+      "max": 0.5535714285714286,
+      "p10": 0.0,
+      "p90": 0.328125
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.022042410714285716,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.5535714285714286,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 3.158125,
+      "median": 2.9945,
+      "min": 2.452,
+      "max": 5.347,
+      "p10": 2.701,
+      "p90": 3.79
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.0010140805,
+      "median": 0.00116403,
+      "min": 0.0007375400000000001,
+      "max": 0.0013987800000000003,
+      "p10": 0.00073774,
+      "p90": 0.00130748
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": {
+      "n": 3,
+      "mean": 0.08034188034188035,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.24102564102564106,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 3,
+      "mean": 0.29389880952380953,
+      "median": 0.328125,
+      "min": 0.0,
+      "max": 0.5535714285714286,
+      "p10": 0.0,
+      "p90": 0.328125
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 3,
+      "mean": 0.45,
+      "median": 0.6,
+      "min": 0.0,
+      "max": 0.75,
+      "p10": 0.0,
+      "p90": 0.6
+    },
+    "songs_with_missing_sections": 3,
+    "songs_with_extra_sections": 2,
+    "section_order_exact": 0
+  },
+  {
+    "model": "gpt-6-luna",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 6,
+    "abstentions": 29,
+    "errors": 1,
+    "tonic_correct": 11,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.046825396825396826,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.099375,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.5
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.022836119818878443,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.4545454545454546,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0359244156504065,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.7066666666666667,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": {
+      "n": 6,
+      "mean": 0.45700105352859766,
+      "median": 0.44435975609756095,
+      "min": 0.1724137931034483,
+      "max": 0.7066666666666667,
+      "p10": 0.1724137931034483,
+      "p90": 0.5714285714285714
+    },
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.07005877871894482,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.7066666666666667,
+      "p10": 0.0,
+      "p90": 0.4027777777777778
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 8.571825,
+      "median": 3.3305,
+      "min": 2.52,
+      "max": 180.058,
+      "p10": 2.69,
+      "p90": 6.52
+    },
+    "list_equivalent_usd": {
+      "n": 39,
+      "mean": 0.0010732789743589744,
+      "median": 0.00098134,
+      "min": 0.0007599400000000001,
+      "max": 0.0020423000000000004,
+      "p10": 0.0007848400000000001,
+      "p90": 0.0013676800000000002
+    },
+    "lyric_line_coverage": {
+      "n": 39,
+      "mean": 0.05128205128205128,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "conditional_chart_section_accuracy": {
+      "n": 6,
+      "mean": 0.15224079879252295,
+      "median": 0.08045977011494254,
+      "min": 0.0,
+      "max": 0.4545454545454546,
+      "p10": 0.0,
+      "p90": 0.297979797979798
+    },
+    "conditional_chart_transposition_sequence": {
+      "n": 6,
+      "mean": 0.4670585247929655,
+      "median": 0.44435975609756095,
+      "min": 0.23275862068965514,
+      "max": 0.7066666666666667,
+      "p10": 0.23275862068965514,
+      "p90": 0.5714285714285714
+    },
+    "conditional_chart_reduced_vocabulary": {
+      "n": 6,
+      "mean": 0.6625,
+      "median": 0.675,
+      "min": 0.125,
+      "max": 1.0,
+      "p10": 0.125,
+      "p90": 1.0
+    },
+    "songs_with_missing_sections": 6,
+    "songs_with_extra_sections": 4,
+    "section_order_exact": 0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "blind",
+    "n": 40,
+    "charts": 0,
+    "abstentions": 40,
+    "errors": 0,
+    "tonic_correct": 17,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": null,
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 4.728475,
+      "median": 4.8845,
+      "min": 2.977,
+      "max": 7.248,
+      "p10": 3.6,
+      "p90": 5.617
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.009202855,
+      "median": 0.007245,
+      "min": 0.0067972,
+      "max": 0.017923599999999998,
+      "p10": 0.0068902,
+      "p90": 0.0115894
+    },
+    "lyric_line_coverage": null,
+    "conditional_chart_section_accuracy": null,
+    "conditional_chart_transposition_sequence": null,
+    "conditional_chart_reduced_vocabulary": null,
+    "songs_with_missing_sections": 0,
+    "songs_with_extra_sections": 0,
+    "section_order_exact": 0
+  },
+  {
+    "model": "gpt-6.1-terra",
+    "condition": "lyrics",
+    "n": 40,
+    "charts": 0,
+    "abstentions": 40,
+    "errors": 0,
+    "tonic_correct": 18,
+    "playable_proxy_passes": 0,
+    "vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_vocab_jaccard": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "section_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "global_sequence_accuracy": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "triad_global_sequence_accuracy": null,
+    "transposition_invariant_sequence": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "elapsed_seconds": {
+      "n": 40,
+      "mean": 4.43225,
+      "median": 4.292,
+      "min": 3.345,
+      "max": 5.873,
+      "p10": 3.56,
+      "p90": 5.438
+    },
+    "list_equivalent_usd": {
+      "n": 40,
+      "mean": 0.007734755,
+      "median": 0.007516699999999999,
+      "min": 0.0071242,
+      "max": 0.0122404,
+      "p10": 0.0072032,
+      "p90": 0.0077768
+    },
+    "lyric_line_coverage": {
+      "n": 40,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+    },
+    "conditional_chart_section_accuracy": null,
+    "conditional_chart_transposition_sequence": null,
+    "conditional_chart_reduced_vocabulary": null,
+    "songs_with_missing_sections": 0,
+    "songs_with_extra_sections": 0,
+    "section_order_exact": 0
+  }
+]

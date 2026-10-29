@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_81",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "role": "ceiling",
+  "prompt_sha256": "f0cd252f17837a657af813b6f8ea848fa32cfd54c8feadff457d65116a41282a",
+  "started_utc": "2026-10-29T18:05:21Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"E\",\"mode\":\"major\"},\"capo\":2,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20848,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 123,
+    "reasoning_output_tokens": 87
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 8.63
+}

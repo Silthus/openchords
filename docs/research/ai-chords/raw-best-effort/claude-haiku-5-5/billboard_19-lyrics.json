@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_19",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "6dc6ae3b2f29570205d764b35f4dced1b9b3660a24475f9d259f35781f3405f8",
+  "started_utc": "2026-10-29T18:25:20Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Am\"],[\"Am\"],[\"F\"],[\"G\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"F\",\"Am\"],[\"Am\"],[\"Am\",\"G\"],[\"F\",\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Am\",\"F\"],[\"Am\"],[\"Am\",\"G\"],[\"F\",\"Am\"]],\"repeat\":1},{\"name\":\"other\",\"bars\":[[\"Am\"],[\"Am\",\"G\"],[\"Am\",\"F\"],[\"Am\",\"G\"]],\"repeat\":2},{\"name\":\"bridge\",\"bars\":[[\"F\",\"Am\"],[\"Am\",\"G\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"F\",\"Am\"],[\"Am\"],[\"F\",\"Am\"],[\"F\",\"Am\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"F\"],[\"Am\"]],\"repeat\":3}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Am\"},{\"line\":1,\"word\":0,\"chord\":\"F\"},{\"line\":1,\"word\":4,\"chord\":\"Am\"},{\"line\":2,\"word\":0,\"chord\":\"Am\"},{\"line\":3,\"word\":0,\"chord\":\"Am\"},{\"line\":3,\"word\":4,\"chord\":\"G\"},{\"line\":4,\"word\":0,\"chord\":\"F\"},{\"line\":4,\"word\":2,\"chord\":\"Am\"},{\"line\":6,\"word\":0,\"chord\":\"Am\"},{\"line\":6,\"word\":4,\"chord\":\"F\"},{\"line\":7,\"word\":0,\"chord\":\"Am\"},{\"line\":7,\"word\":4,\"chord\":\"G\"},{\"line\":8,\"word\":0,\"chord\":\"Am\"},{\"line\":9,\"word\":0,\"chord\":\"F\"},{\"line\":9,\"word\":5,\"chord\":\"Am\"},{\"line\":10,\"word\":0,\"chord\":\"F\"},{\"line\":10,\"word\":2,\"chord\":\"Am\"},{\"line\":12,\"word\":0,\"chord\":\"Am\"},{\"line\":12,\"word\":4,\"chord\":\"G\"},{\"line\":13,\"word\":0,\"chord\":\"Am\"},{\"line\":13,\"word\":4,\"chord\":\"F\"},{\"line\":14,\"word\":0,\"chord\":\"Am\"},{\"line\":14,\"word\":4,\"chord\":\"G\"},{\"line\":15,\"word\":0,\"chord\":\"Am\"},{\"line\":15,\"word\":4,\"chord\":\"F\"},{\"line\":16,\"word\":0,\"chord\":\"Am\"},{\"line\":16,\"word\":4,\"chord\":\"G\"},{\"line\":17,\"word\":0,\"chord\":\"Am\"},{\"line\":17,\"word\":2,\"chord\":\"F\"},{\"line\":18,\"word\":0,\"chord\":\"F\"},{\"line\":18,\"word\":4,\"chord\":\"Am\"},{\"line\":19,\"word\":0,\"chord\":\"Am\"},{\"line\":19,\"word\":7,\"chord\":\"G\"},{\"line\":21,\"word\":0,\"chord\":\"Am\"},{\"line\":22,\"word\":0,\"chord\":\"F\"},{\"line\":22,\"word\":2,\"chord\":\"Am\"},{\"line\":23,\"word\":0,\"chord\":\"Am\"},{\"line\":24,\"word\":0,\"chord\":\"F\"},{\"line\":24,\"word\":5,\"chord\":\"Am\"},{\"line\":25,\"word\":0,\"chord\":\"F\"},{\"line\":25,\"word\":2,\"chord\":\"Am\"},{\"line\":27,\"word\":0,\"chord\":\"F\"},{\"line\":27,\"word\":2,\"chord\":\"Am\"},{\"line\":28,\"word\":0,\"chord\":\"F\"},{\"line\":28,\"word\":2,\"chord\":\"Am\"},{\"line\":29,\"word\":0,\"chord\":\"F\"},{\"line\":29,\"word\":2,\"chord\":\"Am\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8446,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 5456,
+    "output_tokens_details": {
+      "thinking_tokens": 4188
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8446
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5456,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8446,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8446,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 5671,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10811,
+      "webSearchRequests": 0,
+      "costUSD": 0.004187275000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 4380,
+      "cacheCreationEphemeral5mInputTokens": 10811,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.004187275000000001,
+  "duration_api_ms": 21750,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 21.031
+}

@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_249",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "b8f2c06b6665a1bcc7918fb52ec0bb6600e63e95c510face8b69b6a34341fb2b",
+  "started_utc": "2026-10-29T18:13:38Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8453,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 938,
+    "output_tokens_details": {
+      "thinking_tokens": 889
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8453
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 938,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8453,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8453,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1534,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10826,
+      "webSearchRequests": 0,
+      "costUSD": 0.00212065,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1461,
+      "cacheCreationEphemeral5mInputTokens": 10826,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.00212065,
+  "duration_api_ms": 9146,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.513
+}

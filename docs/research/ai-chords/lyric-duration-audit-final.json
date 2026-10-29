@@ -1,0 +1,322 @@
+[
+  {
+    "song_id": "billboard_6",
+    "reference_duration": 174.863673469,
+    "lrclib_id": 862193,
+    "lyric_duration": 176.0,
+    "difference_seconds": 1.1363265310000088,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_19",
+    "reference_duration": 126.380408163,
+    "lrclib_id": 946782,
+    "lyric_duration": 126.0,
+    "difference_seconds": 0.38040816299999847,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_26",
+    "reference_duration": 430.680816326,
+    "lrclib_id": 357707,
+    "lyric_duration": 435.0,
+    "difference_seconds": 4.319183673999987,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_34",
+    "reference_duration": 163.57877551,
+    "lrclib_id": 1131564,
+    "lyric_duration": 163.0,
+    "difference_seconds": 0.578775510000014,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_48",
+    "reference_duration": 255.944489795,
+    "lrclib_id": 1562412,
+    "lyric_duration": 253.0,
+    "difference_seconds": 2.9444897950000097,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_53",
+    "reference_duration": 260.545306122,
+    "lrclib_id": 1006173,
+    "lyric_duration": 261.0,
+    "difference_seconds": 0.4546938780000005,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_64",
+    "reference_duration": 274.808163265,
+    "lrclib_id": 37184503,
+    "lyric_duration": 275.0,
+    "difference_seconds": 0.19183673499998122,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_74",
+    "reference_duration": 234.031020408,
+    "lrclib_id": 36977960,
+    "lyric_duration": 234.0,
+    "difference_seconds": 0.031020407999989175,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_79",
+    "reference_duration": 181.514399092,
+    "lrclib_id": 1003130,
+    "lyric_duration": 181.0,
+    "difference_seconds": 0.5143990919999908,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_81",
+    "reference_duration": 286.188299319,
+    "lrclib_id": 9732,
+    "lyric_duration": 286.0,
+    "difference_seconds": 0.1882993190000093,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_87",
+    "reference_duration": 164.418707482,
+    "lrclib_id": 13570,
+    "lyric_duration": 164.0,
+    "difference_seconds": 0.4187074820000021,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_93",
+    "reference_duration": 136.724897959,
+    "lrclib_id": 1432320,
+    "lyric_duration": 135.0,
+    "difference_seconds": 1.7248979590000033,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_103",
+    "reference_duration": 253.236734693,
+    "lrclib_id": 310667,
+    "lyric_duration": 250.0,
+    "difference_seconds": 3.2367346929999883,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_120",
+    "reference_duration": 254.275918367,
+    "lrclib_id": 31056157,
+    "lyric_duration": 265.0,
+    "difference_seconds": 10.724081632999997,
+    "large_mismatch": true
+  },
+  {
+    "song_id": "billboard_121",
+    "reference_duration": 245.733877551,
+    "lrclib_id": 66350,
+    "lyric_duration": 246.0,
+    "difference_seconds": 0.2661224489999938,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_137",
+    "reference_duration": 380.708571428,
+    "lrclib_id": 397745,
+    "lyric_duration": 382.0,
+    "difference_seconds": 1.2914285719999725,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_147",
+    "reference_duration": 150.909387755,
+    "lrclib_id": 19832101,
+    "lyric_duration": 144.132875,
+    "difference_seconds": 6.776512754999999,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_160",
+    "reference_duration": 187.428571428,
+    "lrclib_id": 16441888,
+    "lyric_duration": 187.0,
+    "difference_seconds": 0.4285714279999979,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_179",
+    "reference_duration": 132.649795918,
+    "lrclib_id": 352,
+    "lyric_duration": 131.0,
+    "difference_seconds": 1.6497959179999953,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_190",
+    "reference_duration": 179.644081632,
+    "lrclib_id": 140931,
+    "lyric_duration": 181.0,
+    "difference_seconds": 1.3559183680000046,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_196",
+    "reference_duration": 344.137142857,
+    "lrclib_id": 1311307,
+    "lyric_duration": 341.0,
+    "difference_seconds": 3.137142857000015,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_203",
+    "reference_duration": 266.344489795,
+    "lrclib_id": 1540967,
+    "lyric_duration": 262.0,
+    "difference_seconds": 4.344489795000015,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_216",
+    "reference_duration": 161.436734693,
+    "lrclib_id": 181436,
+    "lyric_duration": 154.0,
+    "difference_seconds": 7.436734693000005,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_220",
+    "reference_duration": 247.299455782,
+    "lrclib_id": 879624,
+    "lyric_duration": 257.0,
+    "difference_seconds": 9.700544218000005,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_224",
+    "reference_duration": 187.977142857,
+    "lrclib_id": 13654376,
+    "lyric_duration": 187.912,
+    "difference_seconds": 0.06514285699998368,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_226",
+    "reference_duration": 195.030204081,
+    "lrclib_id": 35308299,
+    "lyric_duration": 195.0,
+    "difference_seconds": 0.03020408099999372,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_240",
+    "reference_duration": 219.036734693,
+    "lrclib_id": 20758253,
+    "lyric_duration": 218.430113,
+    "difference_seconds": 0.6066216929999939,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_249",
+    "reference_duration": 154.174693877,
+    "lrclib_id": 821638,
+    "lyric_duration": 163.0,
+    "difference_seconds": 8.82530612299999,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_261",
+    "reference_duration": 227.813877551,
+    "lrclib_id": 37200541,
+    "lyric_duration": 227.0,
+    "difference_seconds": 0.8138775509999903,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_265",
+    "reference_duration": 444.499591836,
+    "lrclib_id": 549193,
+    "lyric_duration": 447.0,
+    "difference_seconds": 2.500408164000021,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_273",
+    "reference_duration": 236.930612244,
+    "lrclib_id": 3679,
+    "lyric_duration": 236.0,
+    "difference_seconds": 0.9306122440000024,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_277",
+    "reference_duration": 318.1592517,
+    "lrclib_id": 86065,
+    "lyric_duration": 318.0,
+    "difference_seconds": 0.15925170000002709,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_298",
+    "reference_duration": 189.361632653,
+    "lrclib_id": 1213103,
+    "lyric_duration": 187.0,
+    "difference_seconds": 2.3616326529999867,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_306",
+    "reference_duration": 290.79510204,
+    "lrclib_id": 142345,
+    "lyric_duration": 291.0,
+    "difference_seconds": 0.2048979599999825,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_309",
+    "reference_duration": 315.142857142,
+    "lrclib_id": 37494041,
+    "lyric_duration": 315.0,
+    "difference_seconds": 0.1428571420000253,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_323",
+    "reference_duration": 168.411428571,
+    "lrclib_id": 1004250,
+    "lyric_duration": 169.0,
+    "difference_seconds": 0.5885714290000124,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_344",
+    "reference_duration": 350.19755102,
+    "lrclib_id": 37167400,
+    "lyric_duration": 349.0,
+    "difference_seconds": 1.1975510199999917,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_347",
+    "reference_duration": 283.533061224,
+    "lrclib_id": 10757,
+    "lyric_duration": 284.0,
+    "difference_seconds": 0.46693877600000633,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_368",
+    "reference_duration": 212.166530612,
+    "lrclib_id": 294740,
+    "lyric_duration": 212.0,
+    "difference_seconds": 0.16653061200000252,
+    "large_mismatch": false
+  },
+  {
+    "song_id": "billboard_663",
+    "reference_duration": 125.309387755,
+    "lrclib_id": 540589,
+    "lyric_duration": 120.0,
+    "difference_seconds": 5.309387755000003,
+    "large_mismatch": false
+  }
+]

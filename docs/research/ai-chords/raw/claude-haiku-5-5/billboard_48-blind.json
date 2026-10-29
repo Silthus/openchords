@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_48",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "32c5c31620ffc5e26cb6b6f7776839e1513aad7d6775417b7605b5093bff1ded",
+  "started_utc": "2026-10-29T17:54:42Z",
+  "response_text": "{\"abstain\":true,\"key\":{\"tonic\":\"\",\"mode\":\"\"},\"capo\":0,\"sections\":[],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7794,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 531,
+    "output_tokens_details": {
+      "thinking_tokens": 486
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 7794
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 531,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7794,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 7794,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 810,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9715,
+      "webSearchRequests": 0,
+      "costUSD": 0.001619775,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 743,
+      "cacheCreationEphemeral5mInputTokens": 9715,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.001619775,
+  "duration_api_ms": 6475,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.471
+}

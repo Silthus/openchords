@@ -1,0 +1,25 @@
+{
+  "song_id": "extra_nothing",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "3df2ddf2a9612df6e326cc728558a8371eb678aeb94eafbf3eed8e204e10adce",
+  "started_utc": "2026-10-29T17:58:58Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"E\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"C\"],[\"Am\"],[\"D\"],[\"C\"],[\"Am\"],[\"D\"],[\"Em\"],[\"Em\"]] ,\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"D\"],[\"Em\"],[\"Em\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"D\"],[\"Em\"],[\"Em\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"C\"],[\"D\"],[\"Em\"],[\"Em\"],[\"C\"],[\"D\"],[\"B7\"],[\"B7\"]],\"repeat\":1},{\"name\":\"solo\",\"bars\":[[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"],[\"C\"],[\"D\"],[\"B7\"],[\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C\"],[\"D\"],[\"Em\"],[\"Em\"],[\"C\"],[\"D\"],[\"Em\"],[\"Em\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"],[\"D\"],[\"C\"],[\"G\",\"B7\"],[\"Em\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 19666,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 439,
+    "reasoning_output_tokens": 0
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.596
+}

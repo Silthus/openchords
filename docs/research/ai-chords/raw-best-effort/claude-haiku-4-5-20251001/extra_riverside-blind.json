@@ -1,0 +1,70 @@
+{
+  "song_id": "extra_riverside",
+  "condition": "blind",
+  "provider": "claude",
+  "model": "claude-haiku-4-5-20251001",
+  "effort": "medium",
+  "role": "small-previous-generation",
+  "prompt_sha256": "acb2cbba777c26c57f8763d7f65c713c28d5380224ca5e09dccd5e93730c8e1e",
+  "started_utc": "2026-10-29T18:31:29Z",
+  "response_text": "```json\n{\n  \"abstain\": false,\n  \"key\": {\n    \"tonic\": \"A\",\n    \"mode\": \"minor\"\n  },\n  \"capo\": 0,\n  \"sections\": [\n    {\n      \"name\": \"intro\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 2\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"bridge\",\n      \"bars\": [\n        [\"F\"],\n        [\"F\"],\n        [\"G\"],\n        [\"G\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"F\"],\n        [\"G\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"verse\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"chorus\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"G\"],\n        [\"F\"]\n      ],\n      \"repeat\": 1\n    },\n    {\n      \"name\": \"outro\",\n      \"bars\": [\n        [\"Am\"],\n        [\"Am\"],\n        [\"Am\"],\n        [\"Am\"]\n      ],\n      \"repeat\": 1\n    }\n  ],\n  \"placements\": []\n}\n```",
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 6048,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 5922,
+    "output_tokens_details": {
+      "thinking_tokens": 5259
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6048
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 9,
+        "output_tokens": 5922,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6048,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 6048,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1464,
+      "outputTokens": 5934,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 6048,
+      "webSearchRequests": 0,
+      "costUSD": 0.038694000000000006,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 5259,
+      "cacheCreationEphemeral5mInputTokens": 6048,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.038694000000000006,
+  "duration_api_ms": 41973,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 41.322
+}

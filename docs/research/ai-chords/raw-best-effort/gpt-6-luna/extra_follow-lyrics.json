@@ -1,0 +1,25 @@
+{
+  "song_id": "extra_follow",
+  "condition": "lyrics",
+  "provider": "codex",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "9032b80020435043c8cdf7b0cbb6bd559718fb23876600f8aa0d0cea7263724a",
+  "started_utc": "2026-10-29T18:12:20Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"E\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"],[\"E\"],[\"A\"],[\"E\"],[\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"A\"],[\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"],[\"E\"],[\"A\"],[\"E\"],[\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"A\"],[\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"E\"],[\"A\"],[\"E\"],[\"B7\"],[\"E\"],[\"A\"],[\"E\"],[\"B7\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"C#m\"],[\"A\"],[\"E\"],[\"B7\"],[\"A\"],[\"B7\"],[\"E\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"A\"],[\"B7\"],[\"E\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20248,
+    "cached_input_tokens": 13824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 342,
+    "reasoning_output_tokens": 0
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 5.795
+}

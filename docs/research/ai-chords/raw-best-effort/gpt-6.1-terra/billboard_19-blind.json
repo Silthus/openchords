@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_19",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "8d45d833d21f1c80ea7d9bcf3439697affea616668595652a7455bd227678fdf",
+  "started_utc": "2026-10-29T18:05:36Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"A\",\"mode\":\"minor\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Dm\"],[\"Am\"],[\"Em\"],[\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Dm\"],[\"Am\"],[\"Em\"],[\"Am\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Dm\"],[\"Am\"],[\"Em\"],[\"Am\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Dm\"],[\"Am\"],[\"Em\"],[\"Am\"]],\"repeat\":1},{\"name\":\"outro\",\"bars\":[[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Em\",\"G\"],[\"Am\"],[\"Am\"],[\"Am\"],[\"Em\",\"G\"],[\"Am\"]],\"repeat\":1}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20318,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 394,
+    "reasoning_output_tokens": 57
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 6.577
+}

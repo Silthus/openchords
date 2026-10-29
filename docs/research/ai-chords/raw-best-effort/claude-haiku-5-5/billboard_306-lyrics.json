@@ -1,0 +1,70 @@
+{
+  "song_id": "billboard_306",
+  "condition": "lyrics",
+  "provider": "claude",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "role": "small",
+  "prompt_sha256": "e242086b64e26483a266ae837adcd7b599ffe8647998f05e746ed44a57dfe3b4",
+  "started_utc": "2026-10-29T18:29:26Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"Db\",\"mode\":\"major\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"Db\"],[\"Ab/C\"],[\"Bbm7\"],[\"Gb\"],[\"Db\"],[\"Ab/C\"],[\"Bbm7\"],[\"Gb\",\"Ab\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Db\"],[\"Gb\",\"Ab\"],[\"Bbm7\",\"Ebm7\",\"Ab\"],[\"Db\",\"Ab\"],[\"Gb\",\"Db\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Db\",\"Ebm7\",\"Ab\"],[\"Gb\",\"Db\",\"Ab\"],[\"Db\",\"Bbm7\"],[\"Ebm7\",\"Ab\"],[\"Db\",\"Ab\",\"Db\"]],\"repeat\":1},{\"name\":\"verse\",\"bars\":[[\"Db\",\"Gb\",\"Ab\"],[\"Bbm7\",\"Ebm7\",\"Ab\"],[\"Gb\",\"Db\"],[\"Ab\",\"Db\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Db\",\"Gb\"],[\"Bbm7\",\"Ab\"],[\"Db\",\"Gb\"],[\"Ebm7\",\"Ab\"],[\"Db\",\"Ab\",\"Db\"]],\"repeat\":1},{\"name\":\"bridge\",\"bars\":[[\"Bbm7\",\"Ebm7\",\"Ab\"],[\"Gb\",\"Db\"],[\"Ebm7\",\"Ab\",\"Bbm7\"],[\"Db\",\"Ab\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Db\",\"Gb\",\"Ab\"],[\"Bbm7\",\"Ebm7\"],[\"Gb\",\"Ab\"],[\"Db\",\"Ab\",\"Db\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"Db\",\"Gb\"],[\"Bbm7\",\"Ab\"],[\"Db\",\"Ebm7\",\"Ab\"],[\"Db\",\"Ab\",\"Db\"]],\"repeat\":1}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"Db\"},{\"line\":1,\"word\":0,\"chord\":\"Gb\"},{\"line\":1,\"word\":3,\"chord\":\"Ab\"},{\"line\":2,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":2,\"word\":4,\"chord\":\"Ebm7\"},{\"line\":2,\"word\":6,\"chord\":\"Ab\"},{\"line\":3,\"word\":0,\"chord\":\"Db\"},{\"line\":3,\"word\":3,\"chord\":\"Ab\"},{\"line\":4,\"word\":0,\"chord\":\"Gb\"},{\"line\":4,\"word\":4,\"chord\":\"Db\"},{\"line\":6,\"word\":0,\"chord\":\"Db\"},{\"line\":6,\"word\":3,\"chord\":\"Ebm7\"},{\"line\":6,\"word\":6,\"chord\":\"Ab\"},{\"line\":7,\"word\":0,\"chord\":\"Gb\"},{\"line\":7,\"word\":4,\"chord\":\"Db\"},{\"line\":7,\"word\":6,\"chord\":\"Ab\"},{\"line\":8,\"word\":0,\"chord\":\"Db\"},{\"line\":8,\"word\":3,\"chord\":\"Bbm7\"},{\"line\":9,\"word\":0,\"chord\":\"Ebm7\"},{\"line\":9,\"word\":3,\"chord\":\"Ab\"},{\"line\":10,\"word\":0,\"chord\":\"Db\"},{\"line\":10,\"word\":4,\"chord\":\"Ab\"},{\"line\":10,\"word\":7,\"chord\":\"Db\"},{\"line\":12,\"word\":0,\"chord\":\"Db\"},{\"line\":12,\"word\":3,\"chord\":\"Gb\"},{\"line\":12,\"word\":5,\"chord\":\"Ab\"},{\"line\":13,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":13,\"word\":3,\"chord\":\"Ebm7\"},{\"line\":13,\"word\":6,\"chord\":\"Ab\"},{\"line\":14,\"word\":0,\"chord\":\"Gb\"},{\"line\":14,\"word\":3,\"chord\":\"Db\"},{\"line\":15,\"word\":0,\"chord\":\"Ab\"},{\"line\":15,\"word\":5,\"chord\":\"Db\"},{\"line\":17,\"word\":0,\"chord\":\"Db\"},{\"line\":17,\"word\":3,\"chord\":\"Gb\"},{\"line\":18,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":18,\"word\":3,\"chord\":\"Ab\"},{\"line\":19,\"word\":0,\"chord\":\"Db\"},{\"line\":19,\"word\":2,\"chord\":\"Gb\"},{\"line\":20,\"word\":0,\"chord\":\"Ebm7\"},{\"line\":20,\"word\":3,\"chord\":\"Ab\"},{\"line\":21,\"word\":0,\"chord\":\"Db\"},{\"line\":21,\"word\":4,\"chord\":\"Ab\"},{\"line\":21,\"word\":7,\"chord\":\"Db\"},{\"line\":23,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":23,\"word\":4,\"chord\":\"Ebm7\"},{\"line\":23,\"word\":6,\"chord\":\"Ab\"},{\"line\":24,\"word\":0,\"chord\":\"Gb\"},{\"line\":24,\"word\":3,\"chord\":\"Db\"},{\"line\":25,\"word\":0,\"chord\":\"Ebm7\"},{\"line\":25,\"word\":4,\"chord\":\"Ab\"},{\"line\":25,\"word\":7,\"chord\":\"Bbm7\"},{\"line\":26,\"word\":0,\"chord\":\"Db\"},{\"line\":26,\"word\":4,\"chord\":\"Ab\"},{\"line\":28,\"word\":0,\"chord\":\"Db\"},{\"line\":28,\"word\":3,\"chord\":\"Gb\"},{\"line\":28,\"word\":5,\"chord\":\"Ab\"},{\"line\":29,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":29,\"word\":3,\"chord\":\"Ebm7\"},{\"line\":30,\"word\":0,\"chord\":\"Gb\"},{\"line\":30,\"word\":4,\"chord\":\"Ab\"},{\"line\":31,\"word\":0,\"chord\":\"Db\"},{\"line\":31,\"word\":4,\"chord\":\"Ab\"},{\"line\":31,\"word\":7,\"chord\":\"Db\"},{\"line\":33,\"word\":0,\"chord\":\"Db\"},{\"line\":33,\"word\":3,\"chord\":\"Gb\"},{\"line\":34,\"word\":0,\"chord\":\"Bbm7\"},{\"line\":34,\"word\":4,\"chord\":\"Ab\"},{\"line\":35,\"word\":0,\"chord\":\"Db\"},{\"line\":35,\"word\":4,\"chord\":\"Ebm7\"},{\"line\":35,\"word\":7,\"chord\":\"Ab\"},{\"line\":36,\"word\":0,\"chord\":\"Db\"},{\"line\":36,\"word\":4,\"chord\":\"Ab\"},{\"line\":36,\"word\":7,\"chord\":\"Db\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8493,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 7931,
+    "output_tokens_details": {
+      "thinking_tokens": 5728
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 8493
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7931,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 8493,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 8493,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8527,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 10906,
+      "webSearchRequests": 0,
+      "costUSD": 0.00562715,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 6307,
+      "cacheCreationEphemeral5mInputTokens": 10906,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "list_cost_usd": 0.00562715,
+  "duration_api_ms": 33772,
+  "is_error": false,
+  "tool_calls": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 27.773
+}

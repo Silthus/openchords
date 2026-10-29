@@ -1,0 +1,25 @@
+{
+  "song_id": "billboard_347",
+  "condition": "blind",
+  "provider": "codex",
+  "model": "gpt-6.1-terra",
+  "effort": "medium",
+  "role": "efficient",
+  "prompt_sha256": "3091b8e7444767661338cc3c7fb745a6c254bca8b93b677b8e99780e60b4226a",
+  "started_utc": "2026-10-29T18:10:02Z",
+  "response_text": "{\"abstain\":false,\"key\":{\"tonic\":\"D\",\"mode\":\"mixolydian\"},\"capo\":0,\"sections\":[{\"name\":\"intro\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":4},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":4},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":4},{\"name\":\"solo\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"],[\"D\"],[\"C\"],[\"G\"],[\"G\"],[\"F\"],[\"C\"],[\"D\"],[\"D\"],[\"D\"],[\"C\"],[\"G\"],[\"G\"],[\"D\"],[\"C\"],[\"G\"],[\"G\"],[\"F\"],[\"C\"],[\"D\"],[\"D\"],[\"D\"],[\"C\"],[\"G\"],[\"G\"],[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":1},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":4},{\"name\":\"verse\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8},{\"name\":\"chorus\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8},{\"name\":\"outro\",\"bars\":[[\"D\"],[\"C\"],[\"G\"],[\"G\"]],\"repeat\":8}],\"placements\":[]}",
+  "usage": {
+    "input_tokens": 20465,
+    "cached_input_tokens": 14464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 488,
+    "reasoning_output_tokens": 106
+  },
+  "list_cost_usd": null,
+  "is_error": false,
+  "tool_calls": [],
+  "errors": [],
+  "exit_code": 0,
+  "stderr_present": false,
+  "elapsed_seconds": 9.151
+}
