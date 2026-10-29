@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "convex/react";
 import { useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
-import { parse, type SheetMeta } from "../../sheet";
+import { parse, transpose, type SheetMeta } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordSheetView } from "./ChordSheetView";
@@ -13,12 +13,13 @@ const startingSpeed = 3;
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
   const found = useQuery(api.catalog.index.song, { songId });
   const [speed, setSpeed] = useState(startingSpeed);
+  const [transposition, setTransposition] = useState(0);
   const [settingsOpen, setSettingsOpen] = useState(false);
   if (found === undefined) return null;
   if (found === null) return <PageNotFound />;
 
   const chosen = found.sheets.find((sheet) => sheet.chordSheetId === chordSheetId) ?? found.sheets[0];
-  const sheet = chosen && parse(chosen.chordPro);
+  const sheet = chosen && transpose(parse(chosen.chordPro), transposition);
   return (
     <main className="mx-auto max-w-2xl px-5 pt-2 pb-24">
       <OpenSong songId={found.song.songId} />
@@ -33,6 +34,9 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
               songId={found.song.songId}
               sheets={found.sheets}
               chosenId={chosen.chordSheetId}
+              shownKey={sheet.meta.key}
+              transposition={transposition}
+              onTranspose={setTransposition}
               speed={speed}
               onSpeed={setSpeed}
               onClose={() => setSettingsOpen(false)}

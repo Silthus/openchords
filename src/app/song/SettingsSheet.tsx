@@ -6,17 +6,21 @@ import { SongLink } from "./SongLink";
 
 export type ChordSheetChoice = { chordSheetId: string; name: string; origin: "builtIn"; chordPro: string };
 export const speeds = { slowest: 1, fastest: 10 };
+export const transpositions = { lowest: -11, highest: 11 };
 
 type SettingsSheetProps = {
   songId: string;
   sheets: ChordSheetChoice[];
   chosenId: string;
+  shownKey: string | undefined;
+  transposition: number;
+  onTranspose: (transposition: number) => void;
   speed: number;
   onSpeed: (speed: number) => void;
   onClose: () => void;
 };
 
-export function SettingsSheet({ songId, sheets, chosenId, speed, onSpeed, onClose }: SettingsSheetProps) {
+export function SettingsSheet({ songId, sheets, chosenId, shownKey, transposition, onTranspose, speed, onSpeed, onClose }: SettingsSheetProps) {
   const dialog = useModalDialog();
   const [textSize, setTextSize] = useTextSize();
   const close = () => dialog.current?.close();
@@ -34,6 +38,14 @@ export function SettingsSheet({ songId, sheets, chosenId, speed, onSpeed, onClos
         <ChordSheetCards songId={songId} sheets={sheets} chosenId={chosenId} />
         <div className="mt-4 divide-y divide-line">
           <LookSwitch />
+          <Stepper
+            label="Key"
+            value={shownKey ?? signed(transposition)}
+            hint="Moves the whole song higher or lower to suit your voice."
+            step={(by) => onTranspose(transposition + by)}
+            lowest={transposition <= transpositions.lowest}
+            highest={transposition >= transpositions.highest}
+          />
           <Stepper label="Scroll speed" value={String(speed)} hint="How fast the lyrics move while playing." step={(by) => onSpeed(speed + by)} lowest={speed <= speeds.slowest} highest={speed >= speeds.fastest} />
           <Stepper
             label="Text size"
@@ -74,6 +86,10 @@ function ChordSheetCards({ songId, sheets, chosenId }: { songId: string; sheets:
       })}
     </ul>
   );
+}
+
+function signed(semitones: number) {
+  return semitones > 0 ? `+${semitones}` : String(semitones);
 }
 
 const looks: Array<[Look, string]> = [
