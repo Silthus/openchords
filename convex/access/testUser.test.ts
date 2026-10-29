@@ -18,6 +18,12 @@ afterEach(() => {
   delete process.env.OPENCHORDS_ENV;
 });
 
+function personSignedIn(token: string | undefined) {
+  if (token === undefined) return undefined;
+  const { sub } = JSON.parse(atob(token.split(".")[1]!));
+  return String(sub).split("|")[0];
+}
+
 describe("the TestUser", () => {
   test("signs in where test sign-in is allowed", async () => {
     const backend = await testBackendWith(testSignInAllowed);
@@ -27,9 +33,9 @@ describe("the TestUser", () => {
 
   test("signs in again as the same person", async () => {
     const backend = await testBackendWith(testSignInAllowed);
-    await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
-    await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
-    expect(await backend.run((ctx) => ctx.db.query("users").take(2))).toHaveLength(1);
+    const first = await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
+    const again = await backend.action(api.auth.signIn, { provider: "test-user", params: walker });
+    expect(personSignedIn(again.tokens?.token)).toBe(personSignedIn(first.tokens?.token));
   });
 
   test("signs in only with an email of the test domain", async () => {

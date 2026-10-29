@@ -72,5 +72,6 @@ describe("a test email", () => {
     const backend = testBackend();
     await invite(backend, "walker@test.openchords.invalid");
     await expect(returnFromGoogle(backend, { email: "walker@test.openchords.invalid", email_verified: true })).rejects.toThrow();
+    await expect(returnFromGoogle(backend, { email: "Walker@TEST.OpenChords.invalid", email_verified: true })).rejects.toThrow();
   });
 });

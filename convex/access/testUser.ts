@@ -9,7 +9,7 @@ export function testSignInAllowed() {
 }
 
 export function isTestEmail(email: string) {
-  return email.endsWith(testDomain);
+  return email.toLowerCase().endsWith(testDomain);
 }
 
 export function testUserProviders() {
