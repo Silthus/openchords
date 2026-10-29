@@ -9,7 +9,14 @@ test("The list stays on screen while a search answers", async ({ app, browser, s
   await expect(screen.getByRole("listitem")).toHaveText([/Shenandoah/]);
 
   expect(await browser.evaluate(framesWithNoSongsAfterTyping, "")).toBe(0);
-  await expect(screen.getByRole("heading", "Built-in Songs")).toBeVisible();
+  await expect(screen.getByRole("listitem")).toHaveText([
+    /Amazing Grace/,
+    /House of the Rising Sun/,
+    /Red River Valley/,
+    /Scarborough Fair/,
+    /Shenandoah/,
+    /Wayfaring Stranger/,
+  ]);
 });
 
 async function framesWithNoSongsAfterTyping(query: string) {
