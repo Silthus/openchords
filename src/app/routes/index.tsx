@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 function StartScreen() {
   const navigate = Route.useNavigate();
   const [query, setQuery] = useState(Route.useSearch().q ?? "");
-  const songs = useSongsFor(query.trim());
+  const { searching, songs } = useSongsFor(query.trim());
 
   const changeQuery = (next: string) => {
     setQuery(next);
@@ -36,6 +36,7 @@ function StartScreen() {
         aria-label="Search songs"
         className="mt-8 w-full rounded-xl border border-stone-300 px-4 py-3 text-lg outline-none focus:border-orange-600"
       />
+      {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-stone-500 uppercase">Built-in Songs</h2>}
       {songs?.length === 0 ? (
         <p className="mt-6 text-lg text-stone-600">No Songs found for “{query.trim()}”.</p>
       ) : (
@@ -58,7 +59,7 @@ function useSongsFor(query: string) {
   const searching = query.length >= 2;
   const builtIns = useQuery(api.catalog.index.builtIns, searching ? "skip" : {});
   const found = useLastAnswer(useQuery(api.catalog.index.search, searching ? { query } : "skip"));
-  return searching ? found : builtIns;
+  return { searching, songs: searching ? found : builtIns };
 }
 
 function useLastAnswer<T>(answer: T | undefined) {
