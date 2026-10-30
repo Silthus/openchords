@@ -86,17 +86,26 @@ describe("signing out", () => {
   test("takes every Song and her choices off the phone", async () => {
     const copies = offlineCopies(() => new IDBFactory());
     await keepAll(copies, [copyOf("shenandoah", 1, true), copyOf("amazing-grace", 2)]);
-    await copies.forgetAll();
+    await copies.forgetAllWhile(async () => {});
     expect(await copies.saved()).toEqual([]);
     expect(await openedOffline(copies, "amazing-grace")).toBeUndefined();
   });
 
   test("keeps nothing she opens while she signs out", async () => {
     const copies = offlineCopies(() => new IDBFactory());
-    const forgetting = copies.forgetAll();
+    let signedOut = () => {};
+    const signingOut = copies.forgetAllWhile(() => new Promise<void>((resolve) => (signedOut = resolve)));
     await copies.keep(copyOf("shenandoah", 1, true));
-    await forgetting;
+    signedOut();
+    await signingOut;
     expect(await copies.saved()).toEqual([]);
+  });
+
+  test("keeps Songs again once she has signed out", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    await copies.forgetAllWhile(async () => {});
+    await copies.keep(copyOf("shenandoah", 1, true));
+    expect(await copies.saved()).toHaveLength(1);
   });
 });
 

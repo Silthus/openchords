@@ -24,10 +24,8 @@ export function useKeepOffline(found: FoundSong, library: { entry: LibraryEntry 
   }, [found, entry, loaded]);
 }
 
-export function forgetEverySong() {
-  return onThePhone()
-    .forgetAll()
-    .catch(() => undefined);
+export function forgetEverySongWhile(signOut: () => Promise<void>) {
+  return onThePhone().forgetAllWhile(signOut);
 }
 
 export function useOfflineCopy(songId: string) {

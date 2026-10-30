@@ -10,7 +10,7 @@ const store = "songs";
 
 export function offlineCopies(storage: () => IDBFactory) {
   const database = openDatabase(storage);
-  let signedOut = false;
+  let signingOut = false;
 
   const inStore = async <T>(mode: IDBTransactionMode, work: (songs: IDBObjectStore) => IDBRequest<T> | void) => {
     const transaction = (await database).transaction(store, mode);
@@ -21,7 +21,7 @@ export function offlineCopies(storage: () => IDBFactory) {
 
   const keep = (copy: OfflineCopy) =>
     inStore("readwrite", (songs) => {
-      if (signedOut) return;
+      if (signingOut) return;
       songs.put(copy, copy.found.song.songId);
       const all = songs.getAll();
       all.onsuccess = () => {
@@ -40,9 +40,14 @@ export function offlineCopies(storage: () => IDBFactory) {
   return {
     keep,
     reopen,
-    forgetAll: () => {
-      signedOut = true;
-      return inStore("readwrite", (songs) => songs.clear());
+    forgetAllWhile: async (signOut: () => Promise<void>) => {
+      signingOut = true;
+      try {
+        await inStore("readwrite", (songs) => songs.clear()).catch(() => undefined);
+        await signOut();
+      } finally {
+        signingOut = false;
+      }
     },
     saved: async () => ((await inStore("readonly", (songs) => songs.getAll())) as OfflineCopy[]).filter(isSaved),
   };
