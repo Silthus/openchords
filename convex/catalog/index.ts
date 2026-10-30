@@ -59,14 +59,14 @@ async function rankedSongs(ctx: QueryCtx, query: string) {
     .map(({ song }) => song);
 }
 
-type Rank = { namesArtistAndTitle: boolean; namesEveryWord: boolean; hasSheets: boolean; titledAsTyped: boolean; takes: number };
+type Rank = { namesArtistAndTitle: boolean; namesEveryWord: boolean; isBuiltIn: boolean; titledAsTyped: boolean; takes: number };
 
 function rankOf(song: Doc<"songs">, words: string[]): Rank {
   const placed = words.map((word) => ({ word, inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
   return {
     namesArtistAndTitle: namesArtistAndTitle(placed),
     namesEveryWord: namesEveryWord(placed),
-    hasSheets: song.hasSheets === true,
+    isBuiltIn: song.builtInId !== undefined,
     titledAsTyped: titledAsTyped(song, placed),
     takes: song.takes ?? 0,
   };
@@ -76,7 +76,7 @@ function byRank(a: Rank, b: Rank) {
   return (
     Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) ||
     Number(b.namesEveryWord) - Number(a.namesEveryWord) ||
-    Number(b.hasSheets) - Number(a.hasSheets) ||
+    Number(b.isBuiltIn) - Number(a.isBuiltIn) ||
     Number(b.titledAsTyped) - Number(a.titledAsTyped) ||
     b.takes - a.takes
   );
@@ -110,9 +110,16 @@ function namesEveryWord(placed: PlacedWord[]) {
 }
 
 function titledAsTyped(song: Doc<"songs">, placed: PlacedWord[]) {
-  const typedForTitle = placed.filter(({ inTitle, inArtist }) => inTitle || !inArtist).map(({ word }) => word);
   const titleWords = wordsOf(song.title);
-  return titleWords.length === typedForTitle.length && titleWords.every((titleWord, at) => titleWord === typedForTitle[at]);
+  return placed.some((_, start) => {
+    const typedTitle = placed.slice(start, start + titleWords.length);
+    const typedRest = [...placed.slice(0, start), ...placed.slice(start + titleWords.length)];
+    return (
+      typedTitle.length === titleWords.length &&
+      typedTitle.every(({ word }, at) => word === titleWords[at]) &&
+      typedRest.every(({ inArtist }) => inArtist)
+    );
+  });
 }
 
 function startsAWordOf(text: string, word: string) {
