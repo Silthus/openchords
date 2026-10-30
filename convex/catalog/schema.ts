@@ -13,6 +13,7 @@ const chordSheetProvenance = v.object({ ...provenance.fields, source: v.union(pr
 export const origin = v.union(v.literal("builtIn"), v.literal("ai"), v.literal("person"));
 
 export const chordLayer = v.object({
+  notation: v.optional(v.literal("german")),
   key: v.optional(v.string()),
   capo: v.number(),
   sections: v.array(v.object({ label: v.string(), fromLine: v.number() })),

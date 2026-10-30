@@ -20,7 +20,7 @@ export function ChordEditor({ sheet: shown, onSave, onCancel }: ChordEditorProps
     }
   };
   return (
-    <>
+    <fieldset disabled={saving === "yes"}>
       <p className="mt-4 text-base text-muted">Tap a word to set its chord.</p>
       <EditableLyrics sheet={sheet} onPick={setPicking} />
       <div className="h-48" />
@@ -40,7 +40,7 @@ export function ChordEditor({ sheet: shown, onSave, onCancel }: ChordEditorProps
             <button type="button" onClick={onCancel} className="flex-1 rounded-xl bg-panel py-3 font-semibold">
               Cancel
             </button>
-            <button type="button" disabled={saving === "yes"} onClick={() => void save()} className="flex-1 rounded-xl bg-orange-500 py-3 font-semibold text-white disabled:opacity-40">
+            <button type="button" onClick={() => void save()} className="flex-1 rounded-xl bg-orange-500 py-3 font-semibold text-white disabled:opacity-40">
               Save as my version
             </button>
           </div>
@@ -55,7 +55,7 @@ export function ChordEditor({ sheet: shown, onSave, onCancel }: ChordEditorProps
           onClose={() => setPicking(undefined)}
         />
       )}
-    </>
+    </fieldset>
   );
 }
 

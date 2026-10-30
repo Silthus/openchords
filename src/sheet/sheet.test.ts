@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { InvalidChordLayer, compose, layerOf, lyricsOf, parse, type ChordLayer } from ".";
+import { InvalidChordLayer, compose, layerOf, lyricsOf, parse, transpose, type ChordLayer } from ".";
 
 const risingSun = `{title: House of the Rising Sun}
 {artist: Traditional}
@@ -122,6 +122,14 @@ describe("compose", () => {
   test("gives back the same sheet that layerOf and lyricsOf took apart", () => {
     const sheet = parse(risingSun);
     expect(parse(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta))).toEqual(sheet);
+  });
+
+  test("keeps a German sheet German when no chord shows it, so B stays B flat", () => {
+    const german = parse("{title: Song}\n{artist: Someone}\n[Fis]One [H]two [Cis]three");
+    const transposedDown = transpose(german, -1);
+    const saved = parse(compose(lyricsOf(transposedDown), layerOf(transposedDown), transposedDown.meta));
+    expect(saved.notation).toBe("german");
+    expect(layerOf(saved).lines[0]!.chords.map(({ chord }) => chord)).toEqual(["F", "B", "C"]);
   });
 
   test("keeps brackets, braces and backslashes in her words as words, not chords or directives", () => {

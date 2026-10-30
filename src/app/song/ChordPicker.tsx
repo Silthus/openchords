@@ -64,8 +64,7 @@ export function ChordPicker({ word, current, notation, onPick, onClose }: ChordP
 function pickedFrom(current: string | undefined, notation: Notation): Picked | undefined {
   const chord = current === undefined ? null : readChord(current, notation);
   if (!chord) return undefined;
-  const suffix = qualities.some(([known]) => known === chord.suffix) ? chord.suffix : "";
-  return { root: chord.root, suffix, bass: chord.bass };
+  return { root: chord.root, suffix: chord.suffix, bass: chord.bass };
 }
 
 function nameOf({ root, suffix, bass }: Picked, names: string[]) {
