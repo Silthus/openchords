@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { ChordPicker } from "./ChordPicker";
 
 function pickerFor(current: string | undefined) {
-  return renderToStaticMarkup(<ChordPicker word="grace" current={current} notation="international" onPick={() => {}} onClose={() => {}} />);
+  return renderToStaticMarkup(<ChordPicker word="grace" current={current} notation="international" onPick={() => {}} onRemove={() => {}} onClose={() => {}} />);
 }
 
 describe("the chord picker", () => {
@@ -17,5 +17,13 @@ describe("the chord picker", () => {
 
   test("asks for a root over a word with no chord", () => {
     expect(pickerFor(undefined)).toContain(">Pick a root</button>");
+  });
+
+  test("offers to remove the chord over the word", () => {
+    expect(pickerFor("G7")).toContain(">Remove chord</button>");
+  });
+
+  test("offers no removal over a word with no chord", () => {
+    expect(pickerFor(undefined)).not.toContain("Remove chord");
   });
 });

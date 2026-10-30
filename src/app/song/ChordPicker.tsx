@@ -20,9 +20,16 @@ const qualities: Array<[suffix: string, label: string]> = [
 
 type Picked = { root: number; suffix: string; bass: number | undefined };
 
-type ChordPickerProps = { word: string; current: string | undefined; notation: Notation; onPick: (chord: string) => void; onClose: () => void };
+type ChordPickerProps = {
+  word: string;
+  current: string | undefined;
+  notation: Notation;
+  onPick: (chord: string) => void;
+  onRemove: () => void;
+  onClose: () => void;
+};
 
-export function ChordPicker({ word, current, notation, onPick, onClose }: ChordPickerProps) {
+export function ChordPicker({ word, current, notation, onPick, onRemove, onClose }: ChordPickerProps) {
   const dialog = useModalDialog();
   const [picked, setPicked] = useState(() => pickedFrom(current, notation));
   const names = rootNames[notation];
@@ -53,6 +60,18 @@ export function ChordPicker({ word, current, notation, onPick, onClose }: ChordP
         >
           {chord ? `Set ${chord}` : "Pick a root"}
         </button>
+        {current !== undefined && (
+          <button
+            type="button"
+            onClick={() => {
+              onRemove();
+              close();
+            }}
+            className="mt-2 w-full rounded-xl bg-panel py-3 font-semibold"
+          >
+            Remove chord
+          </button>
+        )}
         <button type="button" onClick={close} className="mt-2 w-full py-3 font-semibold text-muted">
           Back
         </button>
