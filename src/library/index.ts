@@ -35,3 +35,9 @@ function useEntryInMemory(songId: Id<"songs">): EntryForSong {
     save: (choices) => setEntry({ songId, ...choices, updatedAt: Date.now() }),
   };
 }
+
+export function useLibrary(): LibraryEntry[] | undefined {
+  const { isAuthenticated } = useConvexAuth();
+  const entries = useQuery(api.library.index.entries, isAuthenticated ? {} : "skip");
+  return entries?.filter((entry) => entry.saved);
+}

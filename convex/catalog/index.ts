@@ -29,6 +29,16 @@ export const builtIns = query({
   },
 });
 
+export const summaries = query({
+  args: { songIds: v.array(v.id("songs")) },
+  returns: v.array(songSummary),
+  handler: async (ctx, { songIds }) => {
+    await requireInvitedWhileInvitesOn(ctx);
+    const songs = await Promise.all(songIds.map((songId) => ctx.db.get(songId)));
+    return songs.filter((song): song is Doc<"songs"> => song !== null && song.takenDownAt === undefined).map(summaryOf);
+  },
+});
+
 export const search = query({
   args: { query: v.string() },
   returns: v.array(v.object({ ...songSummary.fields, hasSheets: v.boolean() })),
