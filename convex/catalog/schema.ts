@@ -2,7 +2,7 @@ import { defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export const provenance = v.object({
-  source: v.literal("builtIn"),
+  source: v.union(v.literal("builtIn"), v.literal("lrclib")),
   recordId: v.string(),
   licence: v.string(),
   fetchedAt: v.number(),

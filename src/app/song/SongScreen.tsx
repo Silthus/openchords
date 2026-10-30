@@ -5,6 +5,7 @@ import type { Id } from "../../../convex/_generated/dataModel";
 import { easierCapo, parse, shapes, type SheetMeta, type View } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
+import { PlainLyrics } from "./ChordLyrics";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
 import { SettingsSheet } from "./SettingsSheet";
@@ -24,7 +25,11 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
   if (!chosen) {
     return (
       <SongPage songId={found.song.songId} title={found.song.title}>
-        <p className="text-base text-muted">Getting this Song ready…</p>
+        {found.wordsOnly ? (
+          <WordsOnly artist={found.song.artist} lines={found.wordsOnly} />
+        ) : (
+          <p className="text-base text-muted">{found.lyrics === "missing" ? "No lyrics found for this song" : "Fetching the words…"}</p>
+        )}
       </SongPage>
     );
   }
@@ -55,6 +60,15 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
         />
       )}
     </SongPage>
+  );
+}
+
+function WordsOnly({ artist, lines }: { artist: string; lines: string[] }) {
+  return (
+    <>
+      <p className="text-base text-muted">{artist} · No chords yet</p>
+      <PlainLyrics lines={lines} />
+    </>
   );
 }
 

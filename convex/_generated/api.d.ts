@@ -14,6 +14,7 @@ import type * as access_invited from "../access/invited.js";
 import type * as access_invites from "../access/invites.js";
 import type * as access_testUser from "../access/testUser.js";
 import type * as auth from "../auth.js";
+import type * as catalog_fill from "../catalog/fill.js";
 import type * as catalog_index from "../catalog/index.js";
 import type * as http from "../http.js";
 import type * as sources_builtIn_amazingGrace from "../sources/builtIn/amazingGrace.js";
@@ -25,6 +26,7 @@ import type * as sources_builtIn_shenandoah from "../sources/builtIn/shenandoah.
 import type * as sources_builtIn_song from "../sources/builtIn/song.js";
 import type * as sources_builtIn_wayfaringStranger from "../sources/builtIn/wayfaringStranger.js";
 import type * as sources_index from "../sources/index.js";
+import type * as sources_lrclib_index from "../sources/lrclib/index.js";
 import type * as sources_musicbrainz_index from "../sources/musicbrainz/index.js";
 
 import type {
@@ -40,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   "access/invites": typeof access_invites;
   "access/testUser": typeof access_testUser;
   auth: typeof auth;
+  "catalog/fill": typeof catalog_fill;
   "catalog/index": typeof catalog_index;
   http: typeof http;
   "sources/builtIn/amazingGrace": typeof sources_builtIn_amazingGrace;
@@ -51,6 +54,7 @@ declare const fullApi: ApiFromModules<{
   "sources/builtIn/song": typeof sources_builtIn_song;
   "sources/builtIn/wayfaringStranger": typeof sources_builtIn_wayfaringStranger;
   "sources/index": typeof sources_index;
+  "sources/lrclib/index": typeof sources_lrclib_index;
   "sources/musicbrainz/index": typeof sources_musicbrainz_index;
 }>;
 

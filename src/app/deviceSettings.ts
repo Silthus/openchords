@@ -31,7 +31,11 @@ export function useTextSize(): [number, (size: number) => void] {
 }
 
 function useStored(key: string) {
-  return useSyncExternalStore(subscribe, () => forThisVisit.get(key) ?? readFromTheDevice(key));
+  return useSyncExternalStore(
+    subscribe,
+    () => forThisVisit.get(key) ?? readFromTheDevice(key),
+    () => null,
+  );
 }
 
 function readFromTheDevice(key: string) {

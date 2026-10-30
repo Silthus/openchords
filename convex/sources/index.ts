@@ -1,8 +1,9 @@
 import type { ChordLayer } from "../../src/sheet";
 import * as builtIn from "./builtIn";
+import { lrclib } from "./lrclib";
 import { musicbrainz } from "./musicbrainz";
 
-export type Provenance = { source: "builtIn"; recordId: string; licence: string; fetchedAt: number };
+export type Provenance = { source: "builtIn" | "lrclib"; recordId: string; licence: string; fetchedAt: number };
 export type SongHit = { title: string; artist: string; durationSec?: number; builtInId?: string };
 export type Lyrics = { lines: string[]; provenance: Provenance };
 export type ChordDraft = { name: string; layer: ChordLayer; origin: "builtIn"; provenance: Provenance };
@@ -26,7 +27,7 @@ export class SourceUnavailable extends Error {
 
 export const builtIns: Array<SongHit & { builtInId: string }> = builtIn.builtIns;
 
-const outsideSources = ["musicbrainz"];
+const outsideSources = ["musicbrainz", "lrclib"];
 
 export function sourcesFor(env: SourcesEnv): Sources {
   const enabled = (env.OPENCHORDS_SOURCES ?? "builtIn").split(",").map((name) => name.trim());
@@ -35,11 +36,24 @@ export function sourcesFor(env: SourcesEnv): Sources {
   if (enabled.some((name) => outsideSources.includes(name)) && env.OPENCHORDS_INVITES !== "on") {
     throw new Error("Outside sources need OPENCHORDS_INVITES=on, so only invited readers reach them");
   }
+  const lyricSources = [builtIn.lyricsFor, ...(enabled.includes("lrclib") ? [lrclibFrom(env).lyricsFor] : [])];
   return {
     findSongs: enabled.includes("musicbrainz") ? musicbrainz(fetch).findSongs : undefined,
-    lyricsFor: builtIn.lyricsFor,
+    lyricsFor: async (song) => {
+      for (const lyricsFrom of lyricSources) {
+        const lyrics = await lyricsFrom(song);
+        if (lyrics) return lyrics;
+      }
+      return null;
+    },
     chordsFor: builtIn.chordsFor,
   };
+}
+
+function lrclibFrom(env: SourcesEnv) {
+  const { LRCLIB_APP_ID: appId, LRCLIB_API_KEY: apiKey } = env;
+  if (!appId || !apiKey) throw new Error("LRCLIB needs LRCLIB_APP_ID and LRCLIB_API_KEY");
+  return lrclib({ fetch, appId, apiKey });
 }
 
 export function identityKeyOf(song: { title: string; artist: string }) {

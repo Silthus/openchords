@@ -1,11 +1,11 @@
 import { RateLimiter, SECOND } from "@convex-dev/rate-limiter";
 import { ConvexError, v } from "convex/values";
-import { compose } from "../../src/sheet";
 import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import { action, internalMutation, internalQuery, mutation, query, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { requireInvitedWhileInvitesOn } from "../access";
 import { builtIns as builtInHits, identityKeyOf, SourceUnavailable, sourcesFor } from "../sources";
+import { startFill } from "./fill";
 import { origin } from "./schema";
 
 export { catalogTables } from "./schema";
@@ -134,6 +134,8 @@ export const song = query({
     v.object({
       song: songSummary,
       sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
+      lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
+      wordsOnly: v.union(v.null(), v.array(v.string())),
     }),
   ),
   handler: async (ctx, args) => {
@@ -145,12 +147,27 @@ export const song = query({
       .query("chordSheets")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
       .collect();
+    const fill = await ctx.db
+      .query("fills")
+      .withIndex("by_song", (q) => q.eq("songId", song._id))
+      .unique();
+    const lyrics = fill?.lyrics ?? "pending";
     return {
       song: summaryOf(song),
       sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
+      lyrics,
+      wordsOnly: lyrics === "ready" && sheets.length === 0 ? await linesOf(ctx, song) : null,
     };
   },
 });
+
+async function linesOf(ctx: QueryCtx, song: Doc<"songs">) {
+  const lyrics = await ctx.db
+    .query("lyrics")
+    .withIndex("by_song", (q) => q.eq("songId", song._id))
+    .unique();
+  return lyrics?.lines ?? null;
+}
 
 export const open = mutation({
   args: { songId: v.id("songs") },
@@ -183,30 +200,6 @@ async function storeBuiltIn(ctx: MutationCtx, hit: (typeof builtInHits)[number])
 }
 
 async function openSong(ctx: MutationCtx, songId: Id<"songs">) {
-  const song = await ctx.db.get(songId);
-  if (!song) throw new ConvexError({ code: "NOT_FOUND" });
-  const fill = await ctx.db
-    .query("fills")
-    .withIndex("by_song", (q) => q.eq("songId", songId))
-    .unique();
-  if (!fill) await fillSong(ctx, song);
-}
-
-async function fillSong(ctx: MutationCtx, song: Doc<"songs">) {
-  const { lyricsFor, chordsFor } = sourcesFor(process.env);
-  const lyrics = await lyricsFor(song);
-  if (!lyrics) return;
-  const lyricsId = await ctx.db.insert("lyrics", { songId: song._id, ...lyrics });
-  const drafts = await chordsFor(song, lyrics);
-  for (const draft of drafts) {
-    await ctx.db.insert("chordSheets", {
-      songId: song._id,
-      name: draft.name,
-      origin: draft.origin,
-      chordPro: compose(lyrics.lines, draft.layer, song),
-      lyricsId,
-      provenance: draft.provenance,
-    });
-  }
-  await ctx.db.insert("fills", { songId: song._id, state: "done", lyrics: "ready", chords: drafts.length > 0 ? "ready" : "none" });
+  if (!(await ctx.db.get(songId))) throw new ConvexError({ code: "NOT_FOUND" });
+  await startFill(ctx, songId);
 }

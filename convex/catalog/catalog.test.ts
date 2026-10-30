@@ -1,11 +1,18 @@
 import { describe, expect, test } from "bun:test";
 import { api, internal } from "../_generated/api";
+import type { Id } from "../_generated/dataModel";
 import { testBackend } from "../testing.helper";
 
 async function seeded() {
   const backend = testBackend();
   await backend.mutation(internal.catalog.index.seed, {});
+  await backend.finishAllScheduledFunctions(() => {});
   return backend;
+}
+
+async function openAndWait(backend: ReturnType<typeof testBackend>, songId: Id<"songs">) {
+  await backend.mutation(api.catalog.index.open, { songId });
+  await backend.finishAllScheduledFunctions(() => {});
 }
 
 async function risingSunId(backend: ReturnType<typeof testBackend>) {
@@ -49,24 +56,7 @@ describe("Catalog", () => {
     );
     expect((await backend.query(api.catalog.index.song, { songId }))?.sheets).toHaveLength(0);
     await backend.mutation(api.catalog.index.open, { songId });
-    await backend.mutation(api.catalog.index.open, { songId });
-    const song = await backend.query(api.catalog.index.song, { songId });
-    expect(song?.sheets.map((sheet) => sheet.name)).toEqual(["Classic", "Easy shapes", "Bluesy"]);
-  });
-
-  test("a Song opened before its words are known fills when it is opened again", async () => {
-    const backend = testBackend();
-    const songId = await backend.run((ctx) =>
-      ctx.db.insert("songs", {
-        title: "House of the Rising Sun",
-        artist: "Traditional",
-        searchText: "House of the Rising Sun Traditional",
-      }),
-    );
-    await backend.mutation(api.catalog.index.open, { songId });
-    expect((await backend.query(api.catalog.index.song, { songId }))?.sheets).toHaveLength(0);
-    await backend.run((ctx) => ctx.db.patch(songId, { builtInId: "house-of-the-rising-sun" }));
-    await backend.mutation(api.catalog.index.open, { songId });
+    await openAndWait(backend, songId);
     const song = await backend.query(api.catalog.index.song, { songId });
     expect(song?.sheets.map((sheet) => sheet.name)).toEqual(["Classic", "Easy shapes", "Bluesy"]);
   });
@@ -74,8 +64,8 @@ describe("Catalog", () => {
   test("opening a seeded Song again stores nothing twice", async () => {
     const backend = await seeded();
     const songId = await risingSunId(backend);
-    await backend.mutation(api.catalog.index.open, { songId });
-    await backend.mutation(api.catalog.index.open, { songId });
+    await openAndWait(backend, songId);
+    await openAndWait(backend, songId);
     const song = await backend.query(api.catalog.index.song, { songId });
     expect(song?.sheets).toHaveLength(3);
   });
@@ -83,6 +73,7 @@ describe("Catalog", () => {
   test("seeding again keeps one copy of each built-in Song", async () => {
     const backend = await seeded();
     await backend.mutation(internal.catalog.index.seed, {});
+    await backend.finishAllScheduledFunctions(() => {});
     const songs = await backend.query(api.catalog.index.builtIns, {});
     expect(songs).toHaveLength(6);
     const song = await backend.query(api.catalog.index.song, { songId: await risingSunId(backend) });

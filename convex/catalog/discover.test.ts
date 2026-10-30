@@ -33,9 +33,14 @@ async function ringsOfFire(reader: Reader) {
   return found.filter((song) => song.title === "Ring of Fire");
 }
 
+async function seed(backend: Backend) {
+  await backend.mutation(internal.catalog.index.seed, {});
+  await backend.finishAllScheduledFunctions(() => {});
+}
+
 async function readerWithSongSearch() {
   const backend = testBackend();
-  await backend.mutation(internal.catalog.index.seed, {});
+  await seed(backend);
   return await invitedReader(backend);
 }
 
@@ -73,7 +78,7 @@ describe("searching beyond the built-in Songs", () => {
       Response.json({ recordings: [{ title: "House of the Rising Sun", length: 270000, "artist-credit": [{ name: "Traditional" }] }] }),
     );
     const backend = testBackend();
-    await backend.mutation(internal.catalog.index.seed, {});
+    await seed(backend);
     await backend.run(async (ctx) => {
       for (const song of await ctx.db.query("songs").collect()) await ctx.db.patch(song._id, { identityKey: undefined });
     });
@@ -89,11 +94,11 @@ describe("searching beyond the built-in Songs", () => {
     const backend = testBackend();
     const risings = Array.from({ length: 25 }, (_, n) => ({ title: `Rising ${n}`, artist: "Rising" }));
     await backend.mutation(internal.catalog.index.storeHits, { hits: risings });
-    await backend.mutation(internal.catalog.index.seed, {});
+    await seed(backend);
     await backend.run(async (ctx) => {
       for (const song of await ctx.db.query("songs").collect()) await ctx.db.patch(song._id, { hasSheets: undefined });
     });
-    await backend.mutation(internal.catalog.index.seed, {});
+    await seed(backend);
     const reader = await invitedReader(backend);
     const [first] = await reader.query(api.catalog.index.search, { query: "rising" });
     expect(first).toMatchObject({ title: "House of the Rising Sun", hasSheets: true });
