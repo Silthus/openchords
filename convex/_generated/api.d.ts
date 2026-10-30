@@ -18,6 +18,7 @@ import type * as catalog_fill from "../catalog/fill.js";
 import type * as catalog_index from "../catalog/index.js";
 import type * as catalog_takedown from "../catalog/takedown.js";
 import type * as http from "../http.js";
+import type * as library_index from "../library/index.js";
 import type * as sources_ai_index from "../sources/ai/index.js";
 import type * as sources_ai_prompt from "../sources/ai/prompt.js";
 import type * as sources_builtIn_amazingGrace from "../sources/builtIn/amazingGrace.js";
@@ -49,6 +50,7 @@ declare const fullApi: ApiFromModules<{
   "catalog/index": typeof catalog_index;
   "catalog/takedown": typeof catalog_takedown;
   http: typeof http;
+  "library/index": typeof library_index;
   "sources/ai/index": typeof sources_ai_index;
   "sources/ai/prompt": typeof sources_ai_prompt;
   "sources/builtIn/amazingGrace": typeof sources_builtIn_amazingGrace;
