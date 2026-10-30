@@ -1,5 +1,5 @@
 import { isChord, type ChordLayer } from "../../../src/sheet";
-import { SourceUnavailable, type ChordDraft, type Lyrics, type SongHit } from "..";
+import { SourceUnavailable, type ChordDraft, type DraftRequest, type Lyrics, type SongHit } from "..";
 import { promptTemplate } from "./prompt";
 
 const completionsUrl = "https://ai-gateway.convex.dev/v1/chat/completions";
@@ -25,9 +25,9 @@ export function ai({ fetch, token }: { fetch: Fetch; token: () => Promise<string
   }
 
   return {
-    async chordsFor(song: SongHit, lyrics: Lyrics): Promise<ChordDraft[]> {
+    async chordsFor(song: SongHit, lyrics: Lyrics, { retrying = false }: DraftRequest = {}): Promise<ChordDraft[]> {
       const prompt = promptFor(song, lyrics.lines);
-      for (let attempt = 0; attempt < attempts; attempt++) {
+      for (let attempt = 0; attempt < (retrying ? 1 : attempts); attempt++) {
         const layer = layerFrom(await ask(prompt), lyrics.lines);
         if (layer) return [{ name: "AI draft", layer, origin: "ai", provenance: await provenance() }];
       }
@@ -88,8 +88,8 @@ function sectionOn(section: unknown, lines: string[]): Section | null {
 
 function placementOn(placement: unknown, lines: string[]): Placement | null {
   if (!isRecord(placement) || !isChordName(placement.chord) || !isIndexBelow(placement.line, lines.length)) return null;
-  const words = lines[placement.line]!.split(/\s+/).filter((text) => text !== "");
-  return isIndexBelow(placement.word, words.length) ? { line: placement.line, word: placement.word, chord: placement.chord } : null;
+  const afterTheLastWord = lines[placement.line]!.split(/\s+/).filter((text) => text !== "").length;
+  return isIndexBelow(placement.word, afterTheLastWord + 1) ? { line: placement.line, word: placement.word, chord: placement.chord } : null;
 }
 
 function isSectionName(value: unknown): value is string {

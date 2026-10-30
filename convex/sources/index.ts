@@ -8,12 +8,13 @@ import { musicbrainz } from "./musicbrainz";
 export type Provenance = { source: "builtIn" | "lrclib" | "ai"; recordId: string; licence: string; fetchedAt: number };
 export type SongHit = { title: string; artist: string; durationSec?: number; takes?: number; builtInId?: string };
 export type Lyrics = { lines: string[]; verseStarts?: number[]; provenance: Provenance };
+export type DraftRequest = { retrying?: boolean };
 export type ChordDraft = { name: string; layer: ChordLayer; origin: "builtIn" | "ai"; provenance: Provenance };
 
 export type Sources = {
   findSongs?: (query: string) => Promise<SongHit[]>;
   lyricsFor: (song: SongHit) => Promise<Lyrics | null>;
-  chordsFor: (song: SongHit, lyrics: Lyrics) => Promise<ChordDraft[]>;
+  chordsFor: (song: SongHit, lyrics: Lyrics, request?: DraftRequest) => Promise<ChordDraft[]>;
   chordSources: string[];
 };
 
@@ -50,9 +51,9 @@ export function sourcesFor(env: SourcesEnv): Sources {
       }
       return null;
     },
-    chordsFor: async (song, lyrics) => {
+    chordsFor: async (song, lyrics, request) => {
       for (const chordsFrom of Object.values(chordSources)) {
-        const drafts = await chordsFrom(song, lyrics);
+        const drafts = await chordsFrom(song, lyrics, request);
         if (drafts.length > 0) return drafts;
       }
       return [];

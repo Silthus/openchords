@@ -61,6 +61,7 @@ export const catalogTables = {
     error: v.optional(v.string()),
     runId: v.optional(v.string()),
     chordSourcesAsked: v.optional(v.array(v.string())),
+    draftRetried: v.optional(v.boolean()),
   })
     .index("by_song", ["songId"])
     .index("by_run", ["runId"]),
