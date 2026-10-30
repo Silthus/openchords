@@ -91,6 +91,13 @@ describe("taking a Song down", () => {
     expect(found.map((song) => song.songId)).not.toContain(songId);
   });
 
+  test("the start screen no longer lists a built-in Song taken down", async () => {
+    const { backend, songId } = await aSeededBuiltIn();
+    await backend.mutation(internal.catalog.takedown.song, { songId });
+    const builtIns = await (await invitedReader(backend)).query(api.catalog.index.builtIns, {});
+    expect(builtIns.map((song) => song.songId)).not.toContain(songId);
+  });
+
   test("opening it again never fetches its words again", async () => {
     const { backend, songId } = await aSongWithItsWords();
     await backend.mutation(internal.catalog.takedown.song, { songId });

@@ -25,7 +25,7 @@ export const builtIns = query({
       .query("songs")
       .withIndex("by_builtIn", (q) => q.gt("builtInId", ""))
       .collect();
-    return songs.map(summaryOf);
+    return songs.filter((song) => song.takenDownAt === undefined).map(summaryOf);
   },
 });
 

@@ -66,7 +66,7 @@ To take a Song down, for example after a rights holder asks, run:
 bunx convex run --prod catalog/takedown:song '{"songId": "<song id from its link>"}'
 ```
 
-It deletes the Song's words, Chord sheets and fill, and marks it taken down: its link shows no words, search leaves it out, and opening it never fetches its words again.
+It deletes the Song's words, Chord sheets and fill, and marks it taken down: its link shows no words, search and the start screen leave it out, and opening it never fetches its words again.
 
 ## On her phone
 
