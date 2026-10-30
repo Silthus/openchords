@@ -1,6 +1,5 @@
 import { RateLimiter, SECOND } from "@convex-dev/rate-limiter";
 import { ConvexError, v } from "convex/values";
-import { compose, type ChordLayer } from "../../src/sheet";
 import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import { action, internalMutation, internalQuery, mutation, query, type MutationCtx, type QueryCtx } from "../_generated/server";
@@ -136,7 +135,7 @@ export const song = query({
       song: songSummary,
       sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
       lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
-      wordsOnly: v.union(v.null(), v.string()),
+      wordsOnly: v.union(v.null(), v.array(v.string())),
     }),
   ),
   handler: async (ctx, args) => {
@@ -157,19 +156,17 @@ export const song = query({
       song: summaryOf(song),
       sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
       lyrics,
-      wordsOnly: lyrics === "ready" && sheets.length === 0 ? await wordsOnlyOf(ctx, song) : null,
+      wordsOnly: lyrics === "ready" && sheets.length === 0 ? await linesOf(ctx, song) : null,
     };
   },
 });
 
-const noChords: ChordLayer = { capo: 0, sections: [], lines: [] };
-
-async function wordsOnlyOf(ctx: QueryCtx, song: Doc<"songs">) {
+async function linesOf(ctx: QueryCtx, song: Doc<"songs">) {
   const lyrics = await ctx.db
     .query("lyrics")
     .withIndex("by_song", (q) => q.eq("songId", song._id))
     .unique();
-  return lyrics && compose(lyrics.lines, noChords, song);
+  return lyrics?.lines ?? null;
 }
 
 export const open = mutation({

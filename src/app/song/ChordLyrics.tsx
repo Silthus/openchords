@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { ParsedSheet } from "../../sheet";
 import { useTextSize } from "../deviceSettings";
 
@@ -5,10 +6,30 @@ const lyricsRemAtFullSize = 1.5;
 
 const blank = " ";
 
-export function ChordLyrics({ sheet, onChord }: { sheet: ParsedSheet; onChord: (written: string) => void }) {
+export function PlainLyrics({ lines }: { lines: string[] }) {
+  return (
+    <LyricsAtHerTextSize>
+      {lines.map((line, lineIndex) => (
+        <p key={lineIndex} className="mb-2 leading-snug">
+          {line}
+        </p>
+      ))}
+    </LyricsAtHerTextSize>
+  );
+}
+
+function LyricsAtHerTextSize({ children }: { children: ReactNode }) {
   const [textSize] = useTextSize();
   return (
     <div data-lyrics className="mt-6" style={{ fontSize: `${(lyricsRemAtFullSize * textSize) / 100}rem` }}>
+      {children}
+    </div>
+  );
+}
+
+export function ChordLyrics({ sheet, onChord }: { sheet: ParsedSheet; onChord: (written: string) => void }) {
+  return (
+    <LyricsAtHerTextSize>
       {sheet.sections.map((section, sectionIndex) => (
         <section key={sectionIndex} aria-label={section.label || undefined} className="mb-8">
           {section.lines.map((line, lineIndex) => (
@@ -38,6 +59,6 @@ export function ChordLyrics({ sheet, onChord }: { sheet: ParsedSheet; onChord: (
           ))}
         </section>
       ))}
-    </div>
+    </LyricsAtHerTextSize>
   );
 }

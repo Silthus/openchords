@@ -66,8 +66,15 @@ describe("opening a song nobody opened before", () => {
     await openAndWait(backend, reader, songId);
     const song = await reader.query(api.catalog.index.song, { songId });
     expect(song).toMatchObject({ lyrics: "ready", sheets: [] });
-    expect(song?.wordsOnly).toContain("{title: Amazing Grace}");
-    expect(song?.wordsOnly).toContain("Amazing grace, how sweet the sound\nThat saved a wretch like me");
+    expect(song?.wordsOnly?.slice(0, 2)).toEqual(["Amazing grace, how sweet the sound", "That saved a wretch like me"]);
+  });
+
+  test("shows words with brackets and braces as she would sing them, not as chords", async () => {
+    const words = ["[Chorus]", "I fell into a [burning] ring", "{spoken: come home}"];
+    lrclibAnswers(() => Response.json({ ...amazingGrace, plainLyrics: words.join("\n") }));
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await openAndWait(backend, reader, songId);
+    expect((await reader.query(api.catalog.index.song, { songId }))?.wordsOnly).toEqual(words);
   });
 
   test("keeps where the words came from", async () => {
