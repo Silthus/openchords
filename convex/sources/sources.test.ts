@@ -1,6 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { compose } from "../../src/sheet";
-import { builtIns, chordsFor, lyricsFor, sourcesFor } from ".";
+import { builtIns, sourcesFor } from ".";
+
+const { lyricsFor, chordsFor } = sourcesFor({});
 
 const risingSun = builtIns.find((song) => song.builtInId === "house-of-the-rising-sun")!;
 

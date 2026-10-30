@@ -25,8 +25,6 @@ export class SourceUnavailable extends Error {
 }
 
 export const builtIns: Array<SongHit & { builtInId: string }> = builtIn.builtIns;
-export const lyricsFor: Sources["lyricsFor"] = builtIn.lyricsFor;
-export const chordsFor: Sources["chordsFor"] = builtIn.chordsFor;
 
 const outsideSources = ["musicbrainz"];
 
@@ -39,8 +37,8 @@ export function sourcesFor(env: SourcesEnv): Sources {
   }
   return {
     findSongs: enabled.includes("musicbrainz") ? musicbrainz(fetch).findSongs : undefined,
-    lyricsFor,
-    chordsFor,
+    lyricsFor: builtIn.lyricsFor,
+    chordsFor: builtIn.chordsFor,
   };
 }
 

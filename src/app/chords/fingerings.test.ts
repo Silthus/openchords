@@ -1,7 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { builtIns, chordsFor, lyricsFor } from "../../../convex/sources";
+import { builtIns, sourcesFor } from "../../../convex/sources";
 import { chordSuffixes, chordsIn, compose, parse, readChord, transpose, type Chord, type Notation } from "../../sheet";
 import { barresOf, fingeringFor, playsChord } from "./fingerings";
+
+const { lyricsFor, chordsFor } = sourcesFor({});
 
 function fingeringOf(written: string, notation?: Notation) {
   return fingeringFor(readChord(written, notation)!);

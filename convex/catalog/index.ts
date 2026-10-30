@@ -5,7 +5,7 @@ import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import { action, internalMutation, internalQuery, mutation, query, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { requireInvitedWhileInvitesOn } from "../access";
-import { builtIns as builtInHits, chordsFor, identityKeyOf, lyricsFor, SourceUnavailable, sourcesFor } from "../sources";
+import { builtIns as builtInHits, identityKeyOf, SourceUnavailable, sourcesFor } from "../sources";
 import { origin } from "./schema";
 
 export { catalogTables } from "./schema";
@@ -172,6 +172,7 @@ async function openSong(ctx: MutationCtx, songId: Id<"songs">) {
 }
 
 async function fillSong(ctx: MutationCtx, song: Doc<"songs">) {
+  const { lyricsFor, chordsFor } = sourcesFor(process.env);
   const lyrics = await lyricsFor(song);
   if (!lyrics) {
     await ctx.db.insert("fills", { songId: song._id, state: "done", lyrics: "missing", chords: "none" });
