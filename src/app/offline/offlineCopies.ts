@@ -47,9 +47,18 @@ export function offlineCopies(storage: () => IDBFactory) {
 
   const forgetAll = () => inStore("readwrite", (songs) => songs.clear()).catch(() => undefined);
 
+  const dropRemoved = async (answerFor: AnswerFor) => {
+    const kept = (await inStore("readonly", (songs) => songs.getAllKeys())) as string[];
+    const removed = await Promise.all(kept.map((songId) => isRemoved(songId, answerFor)));
+    await inStore("readwrite", (songs) => {
+      for (const songId of kept.filter((_, index) => removed[index])) songs.delete(songId);
+    });
+  };
+
   return {
     keep,
     reopen,
+    dropRemoved,
     forgetAllWhile: async (signOut: () => Promise<void>) => {
       signingOut = true;
       try {
@@ -62,6 +71,17 @@ export function offlineCopies(storage: () => IDBFactory) {
     },
     saved: async () => ((await inStore("readonly", (songs) => songs.getAll())) as OfflineCopy[]).filter(isSaved),
   };
+}
+
+type AnswerFor = (songId: string) => Promise<FoundSong | null>;
+
+async function isRemoved(songId: string, answerFor: AnswerFor) {
+  try {
+    const answer = await answerFor(songId);
+    return answer === null || answer.lyrics === "missing";
+  } catch {
+    return false;
+  }
 }
 
 function letGo(copies: OfflineCopy[]) {
