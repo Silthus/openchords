@@ -113,6 +113,7 @@ export const storeChordSheets = internalMutation({
       .withIndex("by_song", (q) => q.eq("songId", songId))
       .first();
     if (!stored) for (const sheet of sheets) await ctx.db.insert("chordSheets", { songId, lyricsId, ...sheet });
+    if (sheets.length > 0) await ctx.db.patch(songId, { hasSheets: true });
     await patchFill(ctx, songId, { state: "done", chords: sheets.length > 0 ? "ready" : "none", chordSourcesAsked });
     return null;
   },

@@ -113,6 +113,13 @@ describe("compose", () => {
     expect(parse(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta))).toEqual(sheet);
   });
 
+  test("keeps brackets, braces and backslashes in her words as words, not chords or directives", () => {
+    const words = ["[Chorus]", "I fell into a [burning] ring", "{spoken: come home}", "back\\slash"];
+    const sheet = parse(compose(words, { capo: 0, sections: [], lines: [{ lyricLine: 1, chords: [{ word: 0, chord: "G" }] }] }, meta));
+    expect(lyricsOf(sheet)).toEqual(words);
+    expect(layerOf(sheet).lines.flatMap((line) => line.chords)).toEqual([{ word: 0, chord: "G" }]);
+  });
+
   test.each([
     ["a line past the lyrics", { lyricLine: 2, chords: [] }],
     ["a word past the end of its line", { lyricLine: 1, chords: [{ word: 7, chord: "D" }] }],

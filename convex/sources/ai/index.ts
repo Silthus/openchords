@@ -5,6 +5,7 @@ import { promptTemplate } from "./prompt";
 const completionsUrl = "https://ai-gateway.convex.dev/v1/chat/completions";
 const model = "openai/gpt-6.1-terra";
 const attempts = 2;
+const sectionNames = ["intro", "verse", "pre-chorus", "chorus", "bridge", "solo", "interlude", "outro", "other"];
 
 type Fetch = (url: string, init: RequestInit) => Promise<Response>;
 type Placement = { line: number; word: number; chord: string };
@@ -81,7 +82,7 @@ function everyOrNothing<T>(items: unknown, decode: (item: unknown) => T | null):
 }
 
 function sectionOn(section: unknown, lines: string[]): Section | null {
-  if (!isRecord(section) || typeof section.name !== "string" || !isIndexBelow(section.line, lines.length)) return null;
+  if (!isRecord(section) || !isSectionName(section.name) || !isIndexBelow(section.line, lines.length)) return null;
   return { name: section.name, line: section.line };
 }
 
@@ -89,6 +90,10 @@ function placementOn(placement: unknown, lines: string[]): Placement | null {
   if (!isRecord(placement) || !isChordName(placement.chord) || !isIndexBelow(placement.line, lines.length)) return null;
   const words = lines[placement.line]!.split(/\s+/).filter((text) => text !== "");
   return isIndexBelow(placement.word, words.length) ? { line: placement.line, word: placement.word, chord: placement.chord } : null;
+}
+
+function isSectionName(value: unknown): value is string {
+  return typeof value === "string" && sectionNames.includes(value);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

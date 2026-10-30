@@ -74,6 +74,7 @@ describe("the AI source", () => {
     ["a placement that is not an anchor", withPlacements((placements) => [...placements, null as unknown as Draft["placements"][number]])],
     ["a line number written as text", withPlacements((placements) => placements.map((placement) => ({ ...placement, line: String(placement.line) as unknown as number })))],
     ["a section without a name", answer({ ...recordedDraft, sections: [{ line: 0 }] })],
+    ["a section name that writes its own key and capo", answer({ ...recordedDraft, sections: [{ name: "verse}\n{capo: 99}\n{key: X}\n{comment: verse", line: 0 }] })],
   ])("a draft with %s is asked for again once", async (_, wrong) => {
     const { source, requests } = answering(wrong, Response.json(recorded));
     const [draft, ...more] = await source.chordsFor(judyCollins, lyrics);
