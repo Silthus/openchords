@@ -1,7 +1,5 @@
-import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
-import type { Id } from "../_generated/dataModel";
-import { mutation, query, type QueryCtx } from "../_generated/server";
+import { mutation, query } from "../_generated/server";
 import { requireInvited } from "../access";
 import { choices } from "./schema";
 
@@ -13,11 +11,10 @@ export const entries = query({
   args: {},
   returns: v.array(libraryEntry),
   handler: async (ctx) => {
-    const owner = await ownerWhileSignedIn(ctx);
-    if (owner === null) return [];
+    const { userId } = await requireInvited(ctx);
     const stored = await ctx.db
       .query("libraryEntries")
-      .withIndex("by_user_song", (q) => q.eq("userId", owner))
+      .withIndex("by_user_song", (q) => q.eq("userId", userId))
       .collect();
     return stored.map(({ songId, chordSheetId, transpose, capo, speed, saved, updatedAt }) => ({ songId, chordSheetId, transpose, capo, speed, saved, updatedAt }));
   },
@@ -39,8 +36,3 @@ export const save = mutation({
   },
 });
 
-async function ownerWhileSignedIn(ctx: QueryCtx): Promise<Id<"users"> | null> {
-  const invitesOff = process.env.OPENCHORDS_INVITES !== "on";
-  if (invitesOff && (await getAuthUserId(ctx)) === null) return null;
-  return (await requireInvited(ctx)).userId;
-}

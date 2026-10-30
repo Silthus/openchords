@@ -75,14 +75,10 @@ describe("her Library", () => {
     expect(await him.query(api.library.index.entries, {})).toEqual([expect.objectContaining({ transpose: -3 })]);
   });
 
-  test("is empty for a signed-out visitor while invites are off", async () => {
-    const backend = await seeded();
-    expect(await backend.query(api.library.index.entries, {})).toEqual([]);
-  });
-
-  test("asks a signed-out visitor to sign in before saving, even while invites are off", async () => {
+  test("asks a signed-out visitor to sign in, even while invites are off", async () => {
     const backend = await seeded();
     const sheet = await aSheet(backend);
+    await expect(backend.query(api.library.index.entries, {})).rejects.toThrow(/SIGN_IN_REQUIRED/);
     await expect(backend.mutation(api.library.index.save, choices(sheet))).rejects.toThrow(/SIGN_IN_REQUIRED/);
   });
 });
