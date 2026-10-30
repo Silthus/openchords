@@ -40,6 +40,16 @@ bunx convex env set --prod OPENCHORDS_INVITES on
 
 Previews and dev also offer "Sign in as the test user", which needs no invite. Their deployments set `OPENCHORDS_ALLOW_TEST_SIGNIN=1` (previews get it from the project's preview defaults, with their own key pair), and their app is built with `VITE_TEST_SIGN_IN=1`. Production sets `OPENCHORDS_ENV=production` and refuses to start with test sign-in on.
 
+## Real songs
+
+Search finds songs beyond the built-in ones on [MusicBrainz](https://musicbrainz.org/doc/MusicBrainz_API), at most one request a second for the whole app. `OPENCHORDS_SOURCES` lists the sources a deployment uses, and is `builtIn` when unset. Outside sources need `OPENCHORDS_INVITES=on`, so only invited readers reach them:
+
+```sh
+bunx convex env set OPENCHORDS_SOURCES builtIn,musicbrainz   # dev
+```
+
+Previews and production stay on `builtIn` until production has invites on.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.
@@ -61,3 +71,5 @@ APP_URL=https://<preview>.convex.site bunx e2e run   # against a pull request's 
 The install check needs a build with its service worker, so it runs only with `APP_URL` set.
 
 Where the app offers "Sign in as the test user" (dev and previews), each walk signs in with it first; on production, which offers none, the walks read signed out.
+
+The real-song walk (`tests/real-song.e2e.ts`) needs outside sources, so it runs only against the local app on dev. The other walks expect only the built-in Songs, so run them against a preview.

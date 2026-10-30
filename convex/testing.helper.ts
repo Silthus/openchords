@@ -1,21 +1,41 @@
-import { convexTest } from "convex-test";
+import { convexTest, type TestConvex } from "convex-test";
+import { dirname } from "node:path";
 import schema from "./schema";
 
 const convexDir = import.meta.dir;
 
-const modules = Object.fromEntries(
-  [...new Bun.Glob("**/*.{ts,js}").scanSync(convexDir)]
-    .filter((path) => !path.endsWith(".d.ts") && !/\.(test|helper)\.ts$/.test(path))
-    .map((path) => [`./${path}`, () => import(`${convexDir}/${path}`)]),
-);
+function modulesIn(dir: string, prefix = ".") {
+  return Object.fromEntries(
+    [...new Bun.Glob("**/*.{ts,js}").scanSync(dir)]
+      .filter((path) => !path.endsWith(".d.ts") && !/\.(test|helper)\.ts$/.test(path))
+      .map((path) => [`${prefix}/${path}`, () => import(`${dir}/${path}`)]),
+  );
+}
+
+const modules = modulesIn(convexDir);
+
+async function componentFrom(packageName: string) {
+  const componentDir = `${dirname(Bun.resolveSync(`${packageName}/package.json`, convexDir))}/src/component`;
+  const { default: componentSchema } = await import(`${componentDir}/schema.ts`);
+  return { schema: componentSchema, modules: modulesIn(componentDir, "./component") };
+}
+
+const rateLimiter = await componentFrom("@convex-dev/rate-limiter");
+const batchWorker = await componentFrom("@convex-dev/batch-worker");
+
+function withComponents(backend: TestConvex<typeof schema>) {
+  backend.registerComponent("rateLimiter", rateLimiter.schema, rateLimiter.modules);
+  backend.registerComponent("rateLimiter/batchWorker", batchWorker.schema, batchWorker.modules);
+  return backend;
+}
 
 export function testBackend() {
-  return convexTest(schema, modules);
+  return withComponents(convexTest(schema, modules));
 }
 
 export async function testBackendWith(env: Record<string, string>) {
   Object.assign(process.env, env);
   const authLoadedWithEnv = `${convexDir}/auth.ts?${new URLSearchParams(env)}`;
   await import(authLoadedWithEnv);
-  return convexTest(schema, { ...modules, "./auth.ts": () => import(authLoadedWithEnv) });
+  return withComponents(convexTest(schema, { ...modules, "./auth.ts": () => import(authLoadedWithEnv) }));
 }

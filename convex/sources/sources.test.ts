@@ -1,6 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { compose } from "../../src/sheet";
-import { builtIns, chordsFor, lyricsFor } from ".";
+import { builtIns, sourcesFor } from ".";
+
+const { lyricsFor, chordsFor } = sourcesFor({});
 
 const risingSun = builtIns.find((song) => song.builtInId === "house-of-the-rising-sun")!;
 
@@ -42,5 +44,15 @@ describe("the builtIn source", () => {
       expect(() => compose(lyrics.lines, draft.layer, song)).not.toThrow();
       expect(draft.layer.lines.length).toBe(lyrics.lines.length);
     }
+  });
+});
+
+describe("sourcesFor", () => {
+  test("refuses outside sources while invites are off, so a public link never reaches them", () => {
+    expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,musicbrainz" })).toThrow(/OPENCHORDS_INVITES/);
+  });
+
+  test("refuses a source it does not know", () => {
+    expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,musicbrianz", OPENCHORDS_INVITES: "on" })).toThrow(/musicbrianz/);
   });
 });

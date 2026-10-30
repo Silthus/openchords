@@ -10,7 +10,7 @@ test("She finds a built-in Song and opens it at its own link", async ({ agent, a
   await app.screenshot("The start screen lists the built-in Songs");
 
   await agent.act("Type Rising into the search field");
-  await expect(screen.getByRole("listitem")).toHaveText([/House of the Rising Sun/]);
+  await expect(screen.getByRole("listitem").first()).toHaveText(/House of the Rising Sun/);
   await app.screenshot("Search finds a Song from part of its title");
 
   await agent.act("Open House of the Rising Sun from the results");
