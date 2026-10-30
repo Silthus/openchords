@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, setSystemTime, test } from "bun:test";
 import { discoveryOf, type Discovery } from "./discovery";
 
-type Answer = { complete: boolean; retryAt?: number };
+type Answer = { complete: boolean; found?: number; retryAt?: number };
 
 function aDiscovery(...answers: Array<Answer | Error>) {
   const shown: Discovery[] = [];
@@ -32,22 +32,28 @@ afterEach(() => {
 });
 
 describe("discovering more songs", () => {
-  test("asks once she stops typing, and is done when the answer is complete", async () => {
-    const discovery = aDiscovery({ complete: true });
+  test("asks once she stops typing, and has found songs when the complete answer brings some", async () => {
+    const discovery = aDiscovery({ complete: true, found: 3 });
     expect(discovery.asked()).toBe(0);
     expect(discovery.delays).toEqual([400]);
     await discovery.wait();
-    expect(discovery.shown).toEqual(["done"]);
+    expect(discovery.shown).toEqual(["found"]);
+  });
+
+  test("has found nothing only when the complete answer brings no songs", async () => {
+    const discovery = aDiscovery({ complete: true, found: 0 });
+    await discovery.wait();
+    expect(discovery.shown).toEqual(["nothingFound"]);
   });
 
   test("a busy answer brings more results at retryAt, once", async () => {
     setSystemTime(new Date("2026-10-30T08:00:00Z"));
-    const discovery = aDiscovery({ complete: false, retryAt: Date.now() + 800 }, { complete: true });
+    const discovery = aDiscovery({ complete: false, retryAt: Date.now() + 800 }, { complete: true, found: 2 });
     await discovery.wait();
     expect(discovery.shown).toEqual(["moreComing"]);
     expect(discovery.delays).toEqual([400, 800]);
     await discovery.wait();
-    expect(discovery.shown).toEqual(["moreComing", "done"]);
+    expect(discovery.shown).toEqual(["moreComing", "found"]);
     expect(discovery.asked()).toBe(2);
   });
 
@@ -68,7 +74,7 @@ describe("discovering more songs", () => {
   });
 
   test("a search she typed over before it asked asks nothing", () => {
-    const discovery = aDiscovery({ complete: true });
+    const discovery = aDiscovery({ complete: true, found: 1 });
     discovery.cancel();
     expect(discovery.pending()).toBe(0);
     expect(discovery.asked()).toBe(0);

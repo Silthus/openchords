@@ -40,7 +40,7 @@ function StartScreen() {
       />
       {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length === 0 ? (
-        discoveryEnded(discovery) && <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
+        foundNothing(discovery) && <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
       ) : (
         <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
@@ -56,7 +56,7 @@ function StartScreen() {
           ))}
         </ul>
       )}
-      {discovery !== "done" && <p className="mt-4 text-base text-muted">{discoveryMessages[discovery]}</p>}
+      <DiscoveryLine discovery={discovery} listIsEmpty={songs?.length === 0} />
     </main>
   );
 }
@@ -68,14 +68,16 @@ function useSongsFor(query: string) {
   return { searching, songs: useLastAnswer(searching ? found : builtIns) };
 }
 
-const discoveryMessages = {
-  looking: "Looking for more songs…",
-  moreComing: "More results in a moment",
-  gaveUp: "No more results right now. Try again in a moment.",
-};
+function DiscoveryLine({ discovery, listIsEmpty }: { discovery: Discovery; listIsEmpty: boolean }) {
+  const stillLooking = discovery === "looking" || (discovery === "found" && listIsEmpty);
+  if (stillLooking) return <p className="mt-4 text-base text-muted motion-safe:animate-pulse">Looking for more songs…</p>;
+  if (discovery === "moreComing") return <p className="mt-4 text-base text-muted">More results in a moment</p>;
+  if (discovery === "gaveUp") return <p className="mt-4 text-base text-muted">No more results right now. Try again in a moment.</p>;
+  return null;
+}
 
-function discoveryEnded(discovery: Discovery) {
-  return discovery === "done" || discovery === "gaveUp";
+function foundNothing(discovery: Discovery) {
+  return discovery === "nothingFound" || discovery === "gaveUp";
 }
 
 function useDiscovery(query: string): Discovery {
@@ -95,7 +97,7 @@ function useDiscovery(query: string): Discovery {
     });
   }, [discover, query, searching]);
 
-  if (!searching) return "done";
+  if (!searching) return "found";
   return shown?.query === query ? shown.discovery : "looking";
 }
 
