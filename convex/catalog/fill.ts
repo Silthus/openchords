@@ -7,20 +7,22 @@ import { internalAction, internalMutation, internalQuery, type MutationCtx } fro
 import { sourcesFor } from "../sources";
 import { origin, provenance } from "./schema";
 
-const threeAttempts = { initialBackoffMs: 1000, base: 4, maxFailures: 2 };
+const threeAttemptsAboutOneAndFourSecondsApart = { initialBackoffMs: 250, base: 4, maxFailures: 2 };
 const retryAfterFailureMs = 60 * 60 * 1000;
 
 export async function startFill(ctx: MutationCtx, songId: Id<"songs">) {
   const fill = await fillOf(ctx, songId);
   if (fill && !mayRetry(fill)) return;
-  const retrier = new ActionRetrier(components.actionRetrier, threeAttempts);
+  const retrier = new ActionRetrier(components.actionRetrier, threeAttemptsAboutOneAndFourSecondsApart);
   const runId = await retrier.run(ctx, internal.catalog.fill.run, { songId }, { onComplete: internal.catalog.fill.finished });
   if (fill) await ctx.db.patch(fill._id, { state: "running", retryAt: undefined, error: undefined, runId });
   else await ctx.db.insert("fills", { songId, state: "running", lyrics: "pending", chords: "pending", runId });
 }
 
 function mayRetry(fill: Doc<"fills">) {
-  return fill.state === "failed" && Date.now() >= (fill.retryAt ?? 0);
+  const failedLongEnoughAgo = fill.state === "failed" && Date.now() >= (fill.retryAt ?? 0);
+  const leftRunningByAnEarlierVersion = fill.state === "running" && fill.runId === undefined;
+  return failedLongEnoughAgo || leftRunningByAnEarlierVersion;
 }
 
 export const run = internalAction({
@@ -98,7 +100,11 @@ export const storeChordSheets = internalMutation({
   },
   returns: v.null(),
   handler: async (ctx, { songId, lyricsId, sheets }) => {
-    for (const sheet of sheets) await ctx.db.insert("chordSheets", { songId, lyricsId, ...sheet });
+    const stored = await ctx.db
+      .query("chordSheets")
+      .withIndex("by_song", (q) => q.eq("songId", songId))
+      .first();
+    if (!stored) for (const sheet of sheets) await ctx.db.insert("chordSheets", { songId, lyricsId, ...sheet });
     await patchFill(ctx, songId, { state: "done", chords: sheets.length > 0 ? "ready" : "none" });
     return null;
   },

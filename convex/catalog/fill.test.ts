@@ -168,6 +168,24 @@ describe("when the lyrics service cannot be reached", () => {
     expect(lrclibRequests).toBe(1);
   });
 
+  test("a fill an earlier version left running without a run recovers on the next open", async () => {
+    lrclibAnswers(() => Response.json(amazingGrace));
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await backend.run((ctx) => ctx.db.insert("fills", { songId, state: "running", lyrics: "pending", chords: "pending" }));
+    await openAndRetry(backend, reader, songId);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready" });
+  });
+
+  test("a run that is replayed after it stored everything adds no Chord sheets twice", async () => {
+    const backend = testBackend();
+    await backend.mutation(internal.catalog.index.seed, {});
+    await backend.finishAllScheduledFunctions(() => jest.runAllTimers());
+    const reader = await invitedReader(backend);
+    const [risingSun] = await reader.query(api.catalog.index.search, { query: "rising sun" });
+    await backend.action(internal.catalog.fill.run, { songId: risingSun!.songId });
+    expect((await reader.query(api.catalog.index.song, { songId: risingSun!.songId }))?.sheets).toHaveLength(3);
+  });
+
   test("a new run does not ask LRCLIB again for words it already stored", async () => {
     const { backend, reader, songId } = await aSongNobodyOpened();
     const stored = ["Amazing grace, how sweet the sound", "That saved a wretch like me"];
