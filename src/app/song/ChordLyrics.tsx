@@ -9,13 +9,26 @@ const blank = " ";
 export function PlainLyrics({ lines }: { lines: string[] }) {
   return (
     <LyricsAtHerTextSize>
-      {lines.map((line, lineIndex) => (
-        <p key={lineIndex} className="mb-2 leading-snug">
-          {line}
-        </p>
+      {versesOf(lines).map((verse, verseIndex) => (
+        <section key={verseIndex} className="mb-8">
+          {verse.map((line, lineIndex) => (
+            <p key={lineIndex} className="mb-2 leading-snug">
+              {line}
+            </p>
+          ))}
+        </section>
       ))}
     </LyricsAtHerTextSize>
   );
+}
+
+function versesOf(lines: string[]) {
+  const verses: string[][] = [[]];
+  for (const line of lines) {
+    if (line === "") verses.push([]);
+    else verses[verses.length - 1]!.push(line);
+  }
+  return verses.filter((verse) => verse.length > 0);
 }
 
 function LyricsAtHerTextSize({ children }: { children: ReactNode }) {

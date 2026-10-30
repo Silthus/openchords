@@ -48,7 +48,7 @@ export const run = internalAction({
     }
     const lyricsId = storedLyrics?._id ?? (await ctx.runMutation(internal.catalog.fill.storeLyrics, { songId, ...lyrics }));
     const drafts = await chordsFor(song, lyrics);
-    const sheets = drafts.map(({ name, origin, provenance, layer }) => ({ name, origin, provenance, chordPro: compose(lyrics.lines, layer, song) }));
+    const sheets = drafts.map(({ name, origin, provenance, layer }) => ({ name, origin, provenance, chordPro: compose(lyrics.lines, layer, song, lyrics.verseStarts) }));
     await ctx.runMutation(internal.catalog.fill.storeChordSheets, { songId, lyricsId, sheets, chordSourcesAsked: chordSources });
     return null;
   },
@@ -90,7 +90,7 @@ export const noLyrics = internalMutation({
 });
 
 export const storeLyrics = internalMutation({
-  args: { songId: v.id("songs"), lines: v.array(v.string()), provenance },
+  args: { songId: v.id("songs"), lines: v.array(v.string()), verseStarts: v.optional(v.array(v.number())), provenance },
   returns: v.id("lyrics"),
   handler: async (ctx, lyrics) => {
     await patchFill(ctx, lyrics.songId, { lyrics: "ready" });

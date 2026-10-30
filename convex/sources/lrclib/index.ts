@@ -20,19 +20,28 @@ export function lrclib({ fetch, appId, apiKey }: { fetch: Fetch; appId: string; 
       if (!response.ok) throw new Error(`LRCLIB answered ${response.status}`);
       const record = (await response.json()) as Record;
       if (Math.abs(record.duration - song.durationSec) > durationToleranceSec) return null;
-      const lines = linesOf(record);
+      const { lines, verseStarts } = versesOf(record);
       if (lines.length === 0) return null;
-      return { lines, provenance: { source: "lrclib", recordId: String(record.id), licence: "lrclib-api", fetchedAt: Date.now() } };
+      return { lines, verseStarts, provenance: { source: "lrclib", recordId: String(record.id), licence: "lrclib-api", fetchedAt: Date.now() } };
     },
   };
 }
 
-function linesOf(record: Record) {
-  if (record.instrumental || !record.plainLyrics) return [];
-  return record.plainLyrics
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line !== "");
+function versesOf(record: Record) {
+  const lines: string[] = [];
+  const verseStarts: number[] = [];
+  if (record.instrumental || !record.plainLyrics) return { lines, verseStarts };
+  let afterBlankLine = false;
+  for (const line of record.plainLyrics.split("\n").map((raw) => raw.trim())) {
+    if (line === "") {
+      afterBlankLine = true;
+      continue;
+    }
+    if (afterBlankLine && lines.length > 0) verseStarts.push(lines.length);
+    lines.push(line);
+    afterBlankLine = false;
+  }
+  return { lines, verseStarts };
 }
 
 function retryAfterMs(response: Response) {
