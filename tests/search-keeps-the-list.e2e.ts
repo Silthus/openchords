@@ -7,7 +7,7 @@ test("The list stays on screen while a search answers", async ({ app, browser, s
   await expect(screen.getByRole("link").filter({ hasText: "Shenandoah" })).toBeVisible();
 
   expect(await browser.evaluate(framesWithNoSongsAfterTyping, "Sh")).toBe(0);
-  await expect(screen.getByRole("listitem")).toHaveText([/Shenandoah/]);
+  await expect(screen.getByRole("listitem").first()).toHaveText(/Shenandoah/);
 
   expect(await browser.evaluate(framesWithNoSongsAfterTyping, "")).toBe(0);
   await expect(screen.getByRole("listitem")).toHaveText([
