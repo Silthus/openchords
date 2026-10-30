@@ -20,4 +20,9 @@ test("She fixes a draft and keeps it as her version", { skip: productionOffersNo
   await expect(screen.getByRole("dialog", "Settings").getByRole("link", /^Test's version/)).toHaveAttribute("aria-current", "page");
   await expect(screen.getByRole("region", "Verse 1").getByRole("button").first()).toHaveText("D");
   await app.screenshot("Her version is saved and picked");
+
+  await screen.getByRole("dialog", "Settings").getByRole("button", "Done").click();
+  await screen.getByRole("link", /Search$/).click();
+  await screen.getByRole("link").filter({ hasText: "Amazing Grace" }).click();
+  await expect(screen.getByText("John Newton · Test's version · Key G · No capo")).toBeVisible();
 });

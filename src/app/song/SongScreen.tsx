@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
 import { useEffect, useState, type ReactNode } from "react";
@@ -38,6 +39,7 @@ type FoundSong = NonNullable<FunctionReturnType<typeof api.catalog.index.song>>;
 function SongWithChords({ found, linked }: { found: FoundSong; linked: string | undefined }) {
   const library = useLibraryEntry(found.song.songId);
   const saveVersion = useMutation(api.catalog.index.saveVersion);
+  const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [fixing, setFixing] = useState(false);
   const opening = library && openingChoices(found.sheets, { linked, entry: library.entry });
@@ -53,6 +55,7 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
     const chordSheetId = await saveVersion({ from: chosen.chordSheetId, layer });
     choose({ chordSheetId, transpose: 0 });
     setFixing(false);
+    await navigate({ to: "/songs/$songId/sheets/$chordSheetId", params: { songId: found.song.songId, chordSheetId }, replace: true });
   };
   return (
     <SongPage songId={found.song.songId} title={found.song.title} save={<SaveToggle saved={stored.saved} onToggle={() => choose({ saved: !stored.saved })} />}>
