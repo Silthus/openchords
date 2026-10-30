@@ -54,15 +54,15 @@ describe("her Library", () => {
   });
 
   test("lets her latest write win, stamped with the server's time", async () => {
+    setSystemTime(new Date("2026-10-30T08:00:00Z"));
     const backend = await seeded();
     const sheet = await aSheet(backend);
     const her = await signedIn(backend, anna);
-    setSystemTime(new Date("2026-10-30T08:00:00Z"));
     await her.mutation(api.library.index.save, choices(sheet, { speed: 8 }));
-    setSystemTime(new Date("2026-10-30T09:00:00Z"));
+    setSystemTime(new Date("2026-10-30T08:30:00Z"));
     await her.mutation(api.library.index.save, choices(sheet, { speed: 2 }));
     expect(await her.query(api.library.index.entries, {})).toEqual([
-      expect.objectContaining({ speed: 2, updatedAt: Date.parse("2026-10-30T09:00:00Z") }),
+      expect.objectContaining({ speed: 2, updatedAt: Date.parse("2026-10-30T08:30:00Z") }),
     ]);
   });
 
