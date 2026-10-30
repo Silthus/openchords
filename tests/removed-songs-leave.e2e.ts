@@ -20,7 +20,7 @@ test("A Song she finds gone leaves her phone", { skip: productionOffersNoTestUse
 async function openInTheApp(browser: Browser, path: string) {
   await browser.evaluate((to) => {
     history.pushState({}, "", to);
-    dispatchEvent(new PopStateEvent("popstate"));
+    return dispatchEvent(new PopStateEvent("popstate"));
   }, path);
 }
 
@@ -28,7 +28,7 @@ async function songIdsOnThePhone() {
   const opening = indexedDB.open("openchords-offline");
   const database = await new Promise<IDBDatabase>((resolve) => (opening.onsuccess = () => resolve(opening.result)));
   const keys = database.transaction("songs").objectStore("songs").getAllKeys();
-  return new Promise<IDBValidKey[]>((resolve) => (keys.onsuccess = () => resolve(keys.result)));
+  return new Promise<string[]>((resolve) => (keys.onsuccess = () => resolve(keys.result.map(String))));
 }
 
 async function keepACopyUnder(songId: string) {
@@ -37,7 +37,7 @@ async function keepACopyUnder(songId: string) {
   const transaction = database.transaction("songs", "readwrite");
   const all = transaction.objectStore("songs").getAll();
   type Kept = { found: { song: { songId: string } } };
-  const [kept] = await new Promise<Kept[]>((resolve) => (all.onsuccess = () => resolve(all.result)));
+  const [kept] = await new Promise<[Kept]>((resolve) => (all.onsuccess = () => resolve(all.result as [Kept])));
   transaction.objectStore("songs").put({ ...kept, found: { ...kept.found, song: { ...kept.found.song, songId } } }, songId);
-  await new Promise((resolve) => (transaction.oncomplete = resolve));
+  return new Promise<string>((resolve) => (transaction.oncomplete = () => resolve(songId)));
 }
