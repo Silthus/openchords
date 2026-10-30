@@ -8,24 +8,24 @@ async function openFromStart(app: App, screen: Screen, title: string) {
   await expect(screen.getByRole("heading", title)).toBeVisible();
 }
 
-async function pressKeyPlus(screen: Screen) {
+async function pressPlus(screen: Screen, settings: string[]) {
   await screen.getByRole("button", "Settings").click();
   const sheet = screen.getByRole("dialog", "Settings");
-  await sheet.getByRole("button", "Key +").click();
+  for (const setting of settings) await sheet.getByRole("button", `${setting} +`).click();
   await sheet.getByRole("button", "Done").click();
 }
 
-test("Your Library lists only the Songs she saved, and lets one go without losing her key", async ({ app, browser, screen }) => {
+test("Your Library lists only the Songs she saved, and lets one go without losing her choices", async ({ app, browser, screen }) => {
   await openAsReader(app, screen, "/");
   await openFromStart(app, screen, "Shenandoah");
-  await pressKeyPlus(screen);
+  await pressPlus(screen, ["Key", "Capo", "Scroll speed"]);
   await screen.getByRole("button", "☆ Save").click();
   await expect(screen.getByRole("button", "★ Saved")).toBeVisible();
   await openFromStart(app, screen, "Scarborough Fair");
   await screen.getByRole("button", "☆ Save").click();
   await expect(screen.getByRole("button", "★ Saved")).toBeVisible();
   await openFromStart(app, screen, "Red River Valley");
-  await pressKeyPlus(screen);
+  await pressPlus(screen, ["Key"]);
   await expect(screen.getByText("Traditional · Classic · Key Ab · No capo")).toBeVisible();
 
   await app.open("/");
@@ -38,8 +38,9 @@ test("Your Library lists only the Songs she saved, and lets one go without losin
   await expect(screen.getByRole("button", "☆ Save")).toBeVisible();
   await browser.reload();
   await expect(screen.getByRole("button", "☆ Save")).toBeVisible();
-  await expect(screen.getByText("Traditional · Classic · Key Eb · No capo")).toBeVisible();
-  await app.screenshot("Taken out of her Library, Shenandoah keeps her key");
+  await expect(screen.getByText("Traditional · Classic · Key Eb · Capo on fret 1")).toBeVisible();
+  await expect(screen.getByText("Scroll speed 4")).toBeVisible();
+  await app.screenshot("Taken out of her Library, Shenandoah keeps her key, capo and speed");
 
   await app.open("/");
   await expect(screen.getByRole("region", "Your Library").getByRole("link")).toHaveText([/^Scarborough Fair/]);
