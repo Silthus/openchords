@@ -10,7 +10,9 @@ import { origin, provenance } from "./schema";
 const threeAttemptsAboutOneAndFourSecondsApart = { initialBackoffMs: 250, base: 4, maxFailures: 2 };
 const retryAfterFailureMs = 60 * 60 * 1000;
 
-export async function startFill(ctx: MutationCtx, songId: Id<"songs">) {
+export async function startFill(ctx: MutationCtx, song: Doc<"songs">) {
+  if (song.takenDownAt !== undefined) return;
+  const songId = song._id;
   const fill = await fillOf(ctx, songId);
   if (fill && !mayRetry(fill)) return;
   const retrier = new ActionRetrier(components.actionRetrier, threeAttemptsAboutOneAndFourSecondsApart);

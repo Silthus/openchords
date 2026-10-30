@@ -54,6 +54,14 @@ bunx convex env set OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib   # dev
 
 Previews and production stay on `builtIn` until production has invites on.
 
+To take a Song down, for example after a rights holder asks, run:
+
+```sh
+bunx convex run --prod catalog/takedown:song '{"songId": "<song id from its link>"}'
+```
+
+It deletes the Song's words, Chord sheets and fill, and marks it taken down: its link shows no words, search leaves it out, and opening it never fetches its words again.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.

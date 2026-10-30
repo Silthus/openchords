@@ -18,6 +18,7 @@ export const catalogTables = {
     identityKey: v.optional(v.string()),
     builtInId: v.optional(v.string()),
     hasSheets: v.optional(v.boolean()),
+    takenDownAt: v.optional(v.number()),
     searchText: v.string(),
   })
     .index("by_identity", ["identityKey"])
