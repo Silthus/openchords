@@ -96,7 +96,7 @@ function namesArtistAndTitle(placed: PlacedWord[]) {
 function titledAsTyped(song: Doc<"songs">, placed: PlacedWord[]) {
   const typedForTitle = placed.filter(({ inTitle, inArtist }) => inTitle || !inArtist).map(({ word }) => word);
   const titleWords = wordsOf(song.title);
-  return titleWords.length === typedForTitle.length && titleWords.every((titleWord, at) => titleWord.startsWith(typedForTitle[at]!));
+  return titleWords.length === typedForTitle.length && titleWords.every((titleWord, at) => titleWord === typedForTitle[at]);
 }
 
 function startsAWordOf(text: string, word: string) {

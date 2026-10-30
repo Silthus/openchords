@@ -138,6 +138,12 @@ describe("Catalog search", () => {
     expect((await titlesFound(backend, "Agnes Obel Philharmonics"))[0]).toBe("Philharmonics");
   });
 
+  test("a title that only starts with her words is no exact match", async () => {
+    const backend = await seeded();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Homes", artist: "Ola Gjeilo" }, { title: "Home", artist: "Phillip Phillips" }] });
+    expect(await titlesFound(backend, "home")).toEqual(["Home", "Homes"]);
+  });
+
   test("answers only queries of 2 to 100 characters", async () => {
     const backend = await seeded();
     expect(await titlesFound(backend, " S ")).toEqual([]);
