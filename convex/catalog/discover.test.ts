@@ -68,6 +68,23 @@ describe("searching beyond the built-in Songs", () => {
     expect(risingSun).toMatchObject({ title: "House of the Rising Sun", hasSheets: true });
   });
 
+  test("a Song stored before Songs had an identity is still found, not stored twice", async () => {
+    musicbrainzAnswers(() =>
+      Response.json({ recordings: [{ title: "House of the Rising Sun", length: 270000, "artist-credit": [{ name: "Traditional" }] }] }),
+    );
+    const backend = testBackend();
+    await backend.mutation(internal.catalog.index.seed, {});
+    await backend.run(async (ctx) => {
+      for (const song of await ctx.db.query("songs").collect()) await ctx.db.patch(song._id, { identityKey: undefined });
+    });
+    const reader = await invitedReader(backend);
+    await reader.action(api.catalog.index.discover, { query: "house of the rising sun" });
+    const found = await reader.query(api.catalog.index.search, { query: "rising sun" });
+    expect(found.filter((song) => song.title === "House of the Rising Sun")).toEqual([
+      expect.objectContaining({ artist: "Traditional", hasSheets: true }),
+    ]);
+  });
+
   test("searching the same song again keeps one Song for it", async () => {
     const reader = await readerWithSongSearch();
     await reader.action(api.catalog.index.discover, { query: "ring of fire johnny cash" });

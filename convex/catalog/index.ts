@@ -81,6 +81,7 @@ export const storeHits = internalMutation({
   args: { hits: v.array(v.object({ title: v.string(), artist: v.string(), durationSec: v.optional(v.number()) })) },
   returns: v.null(),
   handler: async (ctx, { hits }) => {
+    await keySongsStoredWithoutIdentity(ctx);
     for (const hit of hits) {
       const identityKey = identityKeyOf(hit);
       const known = await ctx.db
@@ -92,6 +93,14 @@ export const storeHits = internalMutation({
     return null;
   },
 });
+
+async function keySongsStoredWithoutIdentity(ctx: MutationCtx) {
+  const unkeyed = await ctx.db
+    .query("songs")
+    .withIndex("by_identity", (q) => q.eq("identityKey", undefined))
+    .collect();
+  for (const song of unkeyed) await ctx.db.patch(song._id, { identityKey: identityKeyOf(song) });
+}
 
 function searchable(query: string) {
   const trimmed = query.trim();
@@ -174,10 +183,7 @@ async function openSong(ctx: MutationCtx, songId: Id<"songs">) {
 async function fillSong(ctx: MutationCtx, song: Doc<"songs">) {
   const { lyricsFor, chordsFor } = sourcesFor(process.env);
   const lyrics = await lyricsFor(song);
-  if (!lyrics) {
-    await ctx.db.insert("fills", { songId: song._id, state: "done", lyrics: "missing", chords: "none" });
-    return;
-  }
+  if (!lyrics) return;
   const lyricsId = await ctx.db.insert("lyrics", { songId: song._id, ...lyrics });
   const drafts = await chordsFor(song, lyrics);
   for (const draft of drafts) {
