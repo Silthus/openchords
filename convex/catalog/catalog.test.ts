@@ -123,6 +123,21 @@ describe("Catalog search", () => {
     expect(titles).toEqual(["Zombie", "Zombie Jamboree"]);
   });
 
+  test("the Song titled as she typed comes before the songs of a band named so", async () => {
+    const backend = await seeded();
+    const bandSongs = ["Saint Fire", "Face the Fire", "Land of Illusion", "King of Fools", "Circle of Time"].map((title) => ({ title, artist: "Ring of Fire" }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [...bandSongs, { title: "Ring of Fire", artist: "Johnny Cash" }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("the studio title comes before its live and remixed takes", async () => {
+    const backend = await seeded();
+    const takes = ["Philharmonics (live at DR Koncerthuset)", "Philharmonics (Tom Furse remix)", "Philharmonics"].map((title) => ({ title, artist: "Agnes Obel" }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: takes });
+    expect((await titlesFound(backend, "Agnes Obel Philharmonics"))[0]).toBe("Philharmonics");
+  });
+
   test("answers only queries of 2 to 100 characters", async () => {
     const backend = await seeded();
     expect(await titlesFound(backend, " S ")).toEqual([]);

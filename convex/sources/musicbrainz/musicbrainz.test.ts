@@ -55,6 +55,14 @@ describe("the MusicBrainz source", () => {
     );
   });
 
+  test("asks for as many recordings as MusicBrainz gives at once, those titled with her very words weighed most", async () => {
+    const { fetch, requests } = answering(Response.json({ recordings: [] }));
+    await musicbrainz(fetch).findSongs("Ring of Fire");
+    const params = new URL(requests[0]!.url).searchParams;
+    expect(params.get("query")).toContain(' OR recording:"ring of fire"^8 OR ');
+    expect(params.get("limit")).toBe("100");
+  });
+
   test("an AND she types is a word, not an operator", async () => {
     const { fetch, requests } = answering(Response.json({ recordings: [] }));
     await musicbrainz(fetch).findSongs("Simon AND Garfunkel");

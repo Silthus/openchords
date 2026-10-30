@@ -15,7 +15,7 @@ type Recording = {
 export function musicbrainz(fetch: Fetch) {
   return {
     async findSongs(query: string): Promise<SongHit[]> {
-      const response = await fetch(`${searchUrl}?${new URLSearchParams({ query: searchFor(query), fmt: "json", limit: "25" })}`, {
+      const response = await fetch(`${searchUrl}?${new URLSearchParams({ query: searchFor(query), fmt: "json", limit: "100" })}`, {
         headers: { "User-Agent": userAgent, Accept: "application/json" },
       });
       if (response.status === 503 || response.status === 429 || response.status >= 500) {
@@ -30,7 +30,7 @@ export function musicbrainz(fetch: Fetch) {
 
 function searchFor(query: string) {
   const words = query.replace(/[+\-&|!(){}[\]^"~*?:\\/]+/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
-  return `${everyWordInTitleOrArtist(words)}^4 OR recording:(${words}) OR artist:(${words})`;
+  return `${everyWordInTitleOrArtist(words)}^4 OR recording:"${words}"^8 OR recording:(${words}) OR artist:(${words})`;
 }
 
 function everyWordInTitleOrArtist(words: string) {

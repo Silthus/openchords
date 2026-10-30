@@ -52,9 +52,22 @@ const candidateLimit = 100;
 async function rankedSongs(ctx: QueryCtx, query: string) {
   const songs = await songsWithSheetsFirst(ctx, query);
   const words = wordsOf(query);
-  const naming = songs.filter((song) => namesArtistAndTitle(song, words));
-  const rest = songs.filter((song) => !naming.includes(song));
-  return [...naming, ...rest].slice(0, searchLimit);
+  return songs
+    .map((song) => ({ song, match: matchOf(song, words) }))
+    .sort((a, b) => byCloserMatch(a.match, b.match))
+    .slice(0, searchLimit)
+    .map(({ song }) => song);
+}
+
+type Match = { namesArtistAndTitle: boolean; titledAsTyped: boolean };
+
+function matchOf(song: Doc<"songs">, words: string[]): Match {
+  const placed = words.map((word) => ({ word, inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
+  return { namesArtistAndTitle: namesArtistAndTitle(placed), titledAsTyped: titledAsTyped(song, placed) };
+}
+
+function byCloserMatch(a: Match, b: Match) {
+  return Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) || Number(b.titledAsTyped) - Number(a.titledAsTyped);
 }
 
 async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
@@ -70,13 +83,20 @@ async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
   return [...withSheets, ...all.filter((song) => !seen.has(song._id))];
 }
 
-function namesArtistAndTitle(song: Doc<"songs">, words: string[]) {
-  const placed = words.map((word) => ({ inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
+type PlacedWord = { word: string; inTitle: boolean; inArtist: boolean };
+
+function namesArtistAndTitle(placed: PlacedWord[]) {
   return (
     placed.every(({ inTitle, inArtist }) => inTitle || inArtist) &&
     placed.some(({ inTitle, inArtist }) => inTitle && !inArtist) &&
     placed.some(({ inTitle, inArtist }) => inArtist && !inTitle)
   );
+}
+
+function titledAsTyped(song: Doc<"songs">, placed: PlacedWord[]) {
+  const typedForTitle = placed.filter(({ inTitle, inArtist }) => inTitle || !inArtist).map(({ word }) => word);
+  const titleWords = wordsOf(song.title);
+  return titleWords.length === typedForTitle.length && titleWords.every((titleWord, at) => titleWord.startsWith(typedForTitle[at]!));
 }
 
 function startsAWordOf(text: string, word: string) {
