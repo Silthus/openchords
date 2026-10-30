@@ -12,6 +12,7 @@ const signInFunctions = "auth.ts";
 const signedOutCalls: Record<string, (backend: Backend, songId: Id<"songs">) => Promise<unknown>> = {
   "catalog/index:builtIns": (backend) => backend.query(api.catalog.index.builtIns, {}),
   "catalog/index:search": (backend) => backend.query(api.catalog.index.search, { query: "Rising" }),
+  "catalog/index:discover": (backend) => backend.action(api.catalog.index.discover, { query: "Rising" }),
   "catalog/index:song": (backend, songId) => backend.query(api.catalog.index.song, { songId }),
   "catalog/index:open": (backend, songId) => backend.mutation(api.catalog.index.open, { songId }),
 };

@@ -14,9 +14,12 @@ export const catalogTables = {
   songs: defineTable({
     title: v.string(),
     artist: v.string(),
+    durationSec: v.optional(v.number()),
+    identityKey: v.optional(v.string()),
     builtInId: v.optional(v.string()),
     searchText: v.string(),
   })
+    .index("by_identity", ["identityKey"])
     .index("by_builtIn", ["builtInId"])
     .searchIndex("search", { searchField: "searchText" }),
 

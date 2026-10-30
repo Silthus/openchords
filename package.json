@@ -13,6 +13,7 @@
   "dependencies": {
     "@auth/core": "^0.41.1",
     "@convex-dev/auth": "^0.0.96",
+    "@convex-dev/rate-limiter": "^0.4.3",
     "@convex-dev/static-hosting": "^0.2.1",
     "@tanstack/react-router": "^1.170.46",
     "convex": "^1.48.0",

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "convex/react";
-import { useState } from "react";
+import { useAction, useQuery } from "convex/react";
+import { useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import { Logo } from "../Logo";
 import { SongLink } from "../song/SongLink";
@@ -17,6 +17,7 @@ function StartScreen() {
   const navigate = Route.useNavigate();
   const [query, setQuery] = useState(Route.useSearch().q ?? "");
   const { searching, songs } = useSongsFor(query.trim());
+  const { looking, moreComing } = useDiscovery(query.trim());
 
   const changeQuery = (next: string) => {
     setQuery(next);
@@ -38,19 +39,24 @@ function StartScreen() {
       />
       {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length === 0 ? (
-        <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
+        !looking && <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
       ) : (
         <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
             <li key={song.songId}>
               <SongLink songId={song.songId} className="block py-3">
                 <span className="block text-lg font-semibold">{song.title}</span>
-                <span className="block text-muted">{song.artist}</span>
+                <span className="block text-muted">
+                  {song.artist}
+                  {"hasSheets" in song && !song.hasSheets && " · Words only"}
+                </span>
               </SongLink>
             </li>
           ))}
         </ul>
       )}
+      {looking && <p className="mt-4 text-base text-muted">Looking for more songs…</p>}
+      {moreComing && <p className="mt-4 text-base text-muted">More results in a moment</p>}
     </main>
   );
 }
@@ -60,6 +66,34 @@ function useSongsFor(query: string) {
   const builtIns = useQuery(api.catalog.index.builtIns, searching ? "skip" : {});
   const found = useQuery(api.catalog.index.search, searching ? { query } : "skip");
   return { searching, songs: useLastAnswer(searching ? found : builtIns) };
+}
+
+const typingPauseMs = 400;
+
+function useDiscovery(query: string) {
+  const discover = useAction(api.catalog.index.discover);
+  const [answer, setAnswer] = useState<{ query: string; complete: boolean }>();
+  const searching = query.length >= 2;
+
+  useEffect(() => {
+    if (!searching) return;
+    let stale = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const ask = async (isRepeat: boolean) => {
+      const { complete, retryAt } = await discover({ query }).catch(() => ({ complete: true, retryAt: undefined }));
+      if (stale) return;
+      setAnswer({ query, complete });
+      if (!complete && !isRepeat && retryAt) timer = setTimeout(() => void ask(true), retryAt - Date.now());
+    };
+    timer = setTimeout(() => void ask(false), typingPauseMs);
+    return () => {
+      stale = true;
+      clearTimeout(timer);
+    };
+  }, [discover, query, searching]);
+
+  const answered = answer?.query === query;
+  return { looking: searching && !answered, moreComing: searching && answered && !answer.complete };
 }
 
 function useLastAnswer<T>(answer: T | undefined) {

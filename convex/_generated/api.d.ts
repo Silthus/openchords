@@ -25,6 +25,7 @@ import type * as sources_builtIn_shenandoah from "../sources/builtIn/shenandoah.
 import type * as sources_builtIn_song from "../sources/builtIn/song.js";
 import type * as sources_builtIn_wayfaringStranger from "../sources/builtIn/wayfaringStranger.js";
 import type * as sources_index from "../sources/index.js";
+import type * as sources_musicbrainz_index from "../sources/musicbrainz/index.js";
 
 import type {
   ApiFromModules,
@@ -50,6 +51,7 @@ declare const fullApi: ApiFromModules<{
   "sources/builtIn/song": typeof sources_builtIn_song;
   "sources/builtIn/wayfaringStranger": typeof sources_builtIn_wayfaringStranger;
   "sources/index": typeof sources_index;
+  "sources/musicbrainz/index": typeof sources_musicbrainz_index;
 }>;
 
 /**
@@ -80,4 +82,5 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   staticHosting: import("@convex-dev/static-hosting/_generated/component.js").ComponentApi<"staticHosting">;
+  rateLimiter: import("@convex-dev/rate-limiter/_generated/component.js").ComponentApi<"rateLimiter">;
 };
