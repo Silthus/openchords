@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test";
 import amazingGrace from "../fixtures/lrclibAmazingGrace.json";
 import { api, internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
+import { parse } from "../../src/sheet";
 import { sourcesFor } from "../sources";
 import { invitedReader, testBackend } from "../testing.helper";
 
@@ -93,6 +94,13 @@ describe("opening a song nobody opened before", () => {
     const song = await reader.query(api.catalog.index.song, { songId });
     expect(song).toMatchObject({ lyrics: "ready", sheets: [] });
     expect(song?.wordsOnly?.slice(0, 2)).toEqual(["Amazing grace, how sweet the sound", "That saved a wretch like me"]);
+  });
+
+  test("shows her the words with a gap between verses", async () => {
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await openAndWait(backend, reader, songId);
+    const song = await reader.query(api.catalog.index.song, { songId });
+    expect(song?.wordsOnly?.slice(3, 6)).toEqual(["Was blind but now I see", "", "Through many dangers, toils and snares"]);
   });
 
   test("shows words with brackets and braces as she would sing them, not as chords", async () => {
@@ -241,6 +249,27 @@ describe("when the lyrics service cannot be reached", () => {
     await openAndRetry(backend, reader, songId);
     expect((await reader.query(api.catalog.index.song, { songId }))?.wordsOnly).toEqual(stored);
     expect(lrclibRequests).toBe(0);
+  });
+
+  test("a new run writes chords over her stored words and keeps the gaps between her verses", async () => {
+    const backend = testBackend();
+    const reader = await invitedReader(backend);
+    const risingSun = { title: "House of the Rising Sun", artist: "Traditional", builtInId: "house-of-the-rising-sun" };
+    const words = (await sourcesFor({}).lyricsFor(risingSun))!;
+    const songId = await backend.run(async (ctx) => {
+      const songId = await ctx.db.insert("songs", { ...risingSun, searchText: "House of the Rising Sun Traditional" });
+      await ctx.db.insert("lyrics", { songId, ...words, verseStarts: [1] });
+      await ctx.db.insert("fills", { songId, state: "failed", lyrics: "ready", chords: "pending", retryAt: Date.now() });
+      return songId;
+    });
+    await openAndRetry(backend, reader, songId);
+    const [sheet] = (await reader.query(api.catalog.index.song, { songId }))!.sheets;
+    const verses = parse(sheet!.chordPro).sections.slice(0, 3);
+    expect(verses.map((section) => [section.label, section.lines.length])).toEqual([
+      ["Verse 1", 1],
+      ["", 3],
+      ["Verse 2", 4],
+    ]);
   });
 
   test("a new run keeps the words an earlier run stored and brings what is still missing", async () => {

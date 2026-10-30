@@ -28,6 +28,7 @@ export const catalogTables = {
   lyrics: defineTable({
     songId: v.id("songs"),
     lines: v.array(v.string()),
+    verseStarts: v.optional(v.array(v.number())),
     provenance,
   }).index("by_song", ["songId"]),
 

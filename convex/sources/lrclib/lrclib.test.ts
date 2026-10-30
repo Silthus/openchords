@@ -29,6 +29,14 @@ describe("the LRCLIB source", () => {
     expect(lyrics?.provenance).toMatchObject({ source: "lrclib", recordId: "19200992", licence: "lrclib-api" });
   });
 
+  test("keeps where each verse starts, apart from the lines themselves", async () => {
+    const plainLyrics = "\n Verse one\nstill one\n\n  \n\nVerse two\n\nVerse three\n\n";
+    const { source } = answering(Response.json({ ...amazingGrace, plainLyrics }));
+    const lyrics = await source.lyricsFor(judyCollins);
+    expect(lyrics?.lines).toEqual(["Verse one", "still one", "Verse two", "Verse three"]);
+    expect(lyrics?.verseStarts).toEqual([2, 3]);
+  });
+
   test("asks by title, artist and duration as the registered OpenChords app", async () => {
     const { source, requests } = answering(Response.json(amazingGrace));
     await source.lyricsFor(judyCollins);

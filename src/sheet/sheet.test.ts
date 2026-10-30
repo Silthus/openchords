@@ -108,6 +108,17 @@ describe("compose", () => {
     );
   });
 
+  test("starts an unlabelled section at each verse her words start", () => {
+    const words = ["One", "Still one", "Two", "Three"];
+    const chorusAtLastLine: ChordLayer = { capo: 0, sections: [{ label: "Chorus", fromLine: 3 }], lines: [] };
+    const sections = parse(compose(words, chorusAtLastLine, meta, [2, 3])).sections;
+    expect(sections.map((section) => [section.label, section.lines.length])).toEqual([
+      ["", 2],
+      ["", 1],
+      ["Chorus", 1],
+    ]);
+  });
+
   test("gives back the same sheet that layerOf and lyricsOf took apart", () => {
     const sheet = parse(risingSun);
     expect(parse(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta))).toEqual(sheet);

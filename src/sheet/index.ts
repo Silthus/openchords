@@ -96,7 +96,7 @@ function linesOf(sheet: ParsedSheet): SheetLine[] {
   return sheet.sections.flatMap((section) => section.lines);
 }
 
-export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { title: string; artist: string }): string {
+export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { title: string; artist: string }, verseStarts: readonly number[] = []): string {
   const chordsByLine = new Map(layer.lines.map((line) => [line.lyricLine, line.chords]));
   const outOfRange = layer.lines.find((line) => line.lyricLine < 0 || line.lyricLine >= lyrics.length);
   if (outOfRange) throw new InvalidChordLayer(`Line ${outOfRange.lyricLine} is past the ${lyrics.length} lyric lines`);
@@ -110,7 +110,7 @@ export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { ti
   ];
   const body = lyrics.flatMap((text, index) => {
     const line = placeChords(text, chordsByLine.get(index) ?? []);
-    const label = labels.get(index);
+    const label = labels.get(index) ?? (verseStarts.includes(index) ? "" : undefined);
     return label === undefined ? [line] : ["", `{comment: ${label}}`, line];
   });
   return [...header, ...body, ""].join("\n");

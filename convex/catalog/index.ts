@@ -207,7 +207,11 @@ async function linesOf(ctx: QueryCtx, song: Doc<"songs">) {
     .query("lyrics")
     .withIndex("by_song", (q) => q.eq("songId", song._id))
     .unique();
-  return lyrics?.lines ?? null;
+  return lyrics ? withVerseBreaks(lyrics) : null;
+}
+
+function withVerseBreaks({ lines, verseStarts = [] }: Doc<"lyrics">) {
+  return lines.flatMap((line, index) => (verseStarts.includes(index) ? ["", line] : [line]));
 }
 
 export const open = mutation({
