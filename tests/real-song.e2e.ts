@@ -10,6 +10,11 @@ test("She opens a song nobody opened before and gets words, then chords", { skip
   await expect(screen.getByRole("link").filter({ hasText: "Ring of Fire" }).first()).toContainText("Johnny Cash · Words only");
   await agent.assert("a result for Ring of Fire by Johnny Cash is shown");
   await app.screenshot("Search finds a real song");
+
+  await agent.act("Open Ring of Fire by Johnny Cash");
+  await agent.waitFor("the words of Ring of Fire are shown");
+  await expect(screen.getByText("Johnny Cash · No chords yet")).toBeVisible();
+  await app.screenshot("The words arrive for a song opened the first time");
 });
 
 test("A second search within a second brings its results a moment later", { skip: outsideSourcesAreOff }, async ({ app, browser, screen }) => {

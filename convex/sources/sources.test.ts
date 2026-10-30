@@ -56,3 +56,9 @@ describe("sourcesFor", () => {
     expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,musicbrianz", OPENCHORDS_INVITES: "on" })).toThrow(/musicbrianz/);
   });
 });
+
+describe("sourcesFor with LRCLIB", () => {
+  test("refuses LRCLIB without its app id and key", () => {
+    expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,lrclib", OPENCHORDS_INVITES: "on" })).toThrow(/LRCLIB_APP_ID/);
+  });
+});
