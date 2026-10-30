@@ -44,7 +44,7 @@ Previews and dev also offer "Sign in as the test user", which needs no invite. T
 
 Search finds songs beyond the built-in ones on [MusicBrainz](https://musicbrainz.org/doc/MusicBrainz_API), at most one request a second for the whole app. `OPENCHORDS_SOURCES` lists the sources a deployment uses, and is `builtIn` when unset. Outside sources need `OPENCHORDS_INVITES=on`, so only invited readers reach them:
 
-The words of a Song come from [LRCLIB](https://lrclib.net/docs) when she opens it the first time, matched by title, artist and a duration within 2 seconds. LRCLIB needs an app id and key in the Convex env, never in the repo:
+The words of a Song come from [LRCLIB](https://lrclib.net/docs) when she opens it the first time, matched by title, artist and a duration within 2 seconds. When LRCLIB cannot be reached, the fill tries three times with backoff, then again the next time someone opens the Song an hour or more later. LRCLIB needs an app id and key in the Convex env, never in the repo:
 
 ```sh
 bunx convex env set LRCLIB_APP_ID <app id>

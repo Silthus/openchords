@@ -28,7 +28,7 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
         {found.wordsOnly ? (
           <WordsOnly artist={found.song.artist} lines={found.wordsOnly} />
         ) : (
-          <p className="text-base text-muted">{found.lyrics === "missing" ? "No lyrics found for this song" : "Fetching the words…"}</p>
+          <p className="text-base text-muted">{lyricsMessages[found.lyrics]}</p>
         )}
       </SongPage>
     );
@@ -62,6 +62,13 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
     </SongPage>
   );
 }
+
+const lyricsMessages = {
+  pending: "Fetching the words…",
+  ready: "Fetching the words…",
+  missing: "No lyrics found for this song",
+  unreachable: "Couldn't reach the lyrics service. Trying again soon.",
+};
 
 function WordsOnly({ artist, lines }: { artist: string; lines: string[] }) {
   return (
