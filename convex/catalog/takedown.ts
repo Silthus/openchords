@@ -9,7 +9,7 @@ export const song = internalMutation({
     await deleteAllOf(ctx, "lyrics", songId);
     await deleteAllOf(ctx, "chordSheets", songId);
     await deleteAllOf(ctx, "fills", songId);
-    await ctx.db.patch(songId, { takenDownAt: Date.now(), hasSheets: false });
+    await ctx.db.patch(songId, { takenDownAt: Date.now(), hasSheets: false, searchText: "" });
     return null;
   },
 });

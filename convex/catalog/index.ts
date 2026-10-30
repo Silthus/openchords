@@ -53,9 +53,7 @@ async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
     .withSearchIndex("search", (q) => q.search("searchText", query))
     .take(searchLimit);
   const seen = new Set(withSheets.map((song) => song._id));
-  return [...withSheets, ...all.filter((song) => !seen.has(song._id))]
-    .filter((song) => song.takenDownAt === undefined)
-    .slice(0, searchLimit);
+  return [...withSheets, ...all.filter((song) => !seen.has(song._id))].slice(0, searchLimit);
 }
 
 const rateLimiter = new RateLimiter(components.rateLimiter, {

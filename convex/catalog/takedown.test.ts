@@ -47,6 +47,19 @@ afterEach(() => {
   globalThis.fetch = realFetch;
 });
 
+function lrclibThatAnswersWhenReleased() {
+  let markAsked = () => {};
+  let release = () => {};
+  const asked = new Promise<void>((resolve) => (markAsked = resolve));
+  const released = new Promise<void>((resolve) => (release = resolve));
+  globalThis.fetch = (async () => {
+    markAsked();
+    await released;
+    return Response.json(amazingGrace);
+  }) as unknown as typeof fetch;
+  return { asked, release };
+}
+
 async function songAfterTakedown(backend: Backend, songId: Id<"songs">) {
   return await backend.run(async (ctx) => {
     const song = await ctx.db.get(songId);
@@ -84,6 +97,20 @@ describe("taking a Song down", () => {
     await open(backend, songId);
     expect(lrclibRequests).toBe(1);
     expect(await songAfterTakedown(backend, songId)).toMatchObject({ lyrics: 0, fills: 0 });
+  });
+
+  test("a fill still fetching when the Song is taken down stores nothing", async () => {
+    const backend = testBackend();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Amazing Grace", artist: "Judy Collins", durationSec: 234 }] });
+    const [song] = await backend.run((ctx) => ctx.db.query("songs").take(1));
+    const lrclib = lrclibThatAnswersWhenReleased();
+    await (await invitedReader(backend)).mutation(api.catalog.index.open, { songId: song!._id });
+    const filling = backend.finishAllScheduledFunctions(() => {});
+    await lrclib.asked;
+    await backend.mutation(internal.catalog.takedown.song, { songId: song!._id });
+    lrclib.release();
+    await filling;
+    expect(await songAfterTakedown(backend, song!._id)).toEqual({ takenDown: true, lyrics: 0, sheets: 0, fills: 0 });
   });
 
   test("a built-in Song taken down stays down when the seed runs again", async () => {

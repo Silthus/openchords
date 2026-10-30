@@ -52,7 +52,7 @@ export const songToFill = internalQuery({
   args: { songId: v.id("songs") },
   handler: async (ctx, { songId }): Promise<{ song: Doc<"songs">; storedLyrics: Doc<"lyrics"> | null } | null> => {
     const song = await ctx.db.get(songId);
-    if (!song) return null;
+    if (!song || song.takenDownAt !== undefined || !(await fillOf(ctx, songId))) return null;
     const storedLyrics = await lyricsOf(ctx, songId);
     return { song, storedLyrics };
   },
@@ -113,10 +113,11 @@ export const storeChordSheets = internalMutation({
 
 async function patchFill(ctx: MutationCtx, songId: Id<"songs">, changes: Partial<{ state: "done"; lyrics: "ready" | "missing"; chords: "ready" | "none" }>) {
   const fill = await fillOf(ctx, songId);
-  if (fill) await ctx.db.patch(fill._id, changes);
+  if (!fill) throw new Error(`The fill of Song ${songId} is gone, so the Song was taken down while it ran`);
+  await ctx.db.patch(fill._id, changes);
 }
 
-async function fillOf(ctx: MutationCtx, songId: Id<"songs">) {
+async function fillOf(ctx: QueryCtx, songId: Id<"songs">) {
   return await ctx.db
     .query("fills")
     .withIndex("by_song", (q) => q.eq("songId", songId))
