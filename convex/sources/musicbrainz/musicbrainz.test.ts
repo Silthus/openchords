@@ -17,10 +17,10 @@ function recording(title: string, artist: string, length: number) {
 }
 
 describe("the MusicBrainz source", () => {
-  test("folds every recording of a song into one Song, with the duration most recordings share", async () => {
+  test("folds every recording of a song into one Song, with the duration most recordings share and how many recordings it has", async () => {
     const { fetch } = answering(Response.json(ringOfFire));
     expect(await musicbrainz(fetch).findSongs("ring of fire johnny cash")).toEqual([
-      { title: "Ring of Fire", artist: "Johnny Cash", durationSec: 156 },
+      { title: "Ring of Fire", artist: "Johnny Cash", durationSec: 156, takes: 24 },
     ]);
   });
 
@@ -53,6 +53,14 @@ describe("the MusicBrainz source", () => {
     expect(new URL(requests[0]!.url).searchParams.get("query")).toStartWith(
       "((recording:cranberries OR artist:cranberries) AND (recording:zombie OR artist:zombie))^4 OR ",
     );
+  });
+
+  test("asks for as many recordings as MusicBrainz gives at once, those titled with her very words weighed most", async () => {
+    const { fetch, requests } = answering(Response.json({ recordings: [] }));
+    await musicbrainz(fetch).findSongs("Ring of Fire");
+    const params = new URL(requests[0]!.url).searchParams;
+    expect(params.get("query")).toContain(' OR recording:"ring of fire"^8 OR ');
+    expect(params.get("limit")).toBe("100");
   });
 
   test("an AND she types is a word, not an operator", async () => {

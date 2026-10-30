@@ -52,9 +52,34 @@ const candidateLimit = 100;
 async function rankedSongs(ctx: QueryCtx, query: string) {
   const songs = await songsWithSheetsFirst(ctx, query);
   const words = wordsOf(query);
-  const naming = songs.filter((song) => namesArtistAndTitle(song, words));
-  const rest = songs.filter((song) => !naming.includes(song));
-  return [...naming, ...rest].slice(0, searchLimit);
+  return songs
+    .map((song) => ({ song, rank: rankOf(song, words) }))
+    .sort((a, b) => byRank(a.rank, b.rank))
+    .slice(0, searchLimit)
+    .map(({ song }) => song);
+}
+
+type Rank = { namesArtistAndTitle: boolean; namesEveryWord: boolean; isBuiltIn: boolean; titledAsTyped: boolean; takes: number };
+
+function rankOf(song: Doc<"songs">, words: string[]): Rank {
+  const placed = words.map((word) => ({ word, inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
+  return {
+    namesArtistAndTitle: namesArtistAndTitle(placed),
+    namesEveryWord: namesEveryWord(placed),
+    isBuiltIn: song.builtInId !== undefined,
+    titledAsTyped: titledAsTyped(song, placed),
+    takes: song.takes ?? 0,
+  };
+}
+
+function byRank(a: Rank, b: Rank) {
+  return (
+    Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) ||
+    Number(b.namesEveryWord) - Number(a.namesEveryWord) ||
+    Number(b.isBuiltIn) - Number(a.isBuiltIn) ||
+    Number(b.titledAsTyped) - Number(a.titledAsTyped) ||
+    b.takes - a.takes
+  );
 }
 
 async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
@@ -70,13 +95,31 @@ async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
   return [...withSheets, ...all.filter((song) => !seen.has(song._id))];
 }
 
-function namesArtistAndTitle(song: Doc<"songs">, words: string[]) {
-  const placed = words.map((word) => ({ inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
+type PlacedWord = { word: string; inTitle: boolean; inArtist: boolean };
+
+function namesArtistAndTitle(placed: PlacedWord[]) {
   return (
-    placed.every(({ inTitle, inArtist }) => inTitle || inArtist) &&
+    namesEveryWord(placed) &&
     placed.some(({ inTitle, inArtist }) => inTitle && !inArtist) &&
     placed.some(({ inTitle, inArtist }) => inArtist && !inTitle)
   );
+}
+
+function namesEveryWord(placed: PlacedWord[]) {
+  return placed.every(({ inTitle, inArtist }) => inTitle || inArtist);
+}
+
+function titledAsTyped(song: Doc<"songs">, placed: PlacedWord[]) {
+  const titleWords = wordsOf(song.title);
+  return placed.some((_, start) => {
+    const typedTitle = placed.slice(start, start + titleWords.length);
+    const typedRest = [...placed.slice(0, start), ...placed.slice(start + titleWords.length)];
+    return (
+      typedTitle.length === titleWords.length &&
+      typedTitle.every(({ word }, at) => word === titleWords[at]) &&
+      typedRest.every(({ inArtist }) => inArtist)
+    );
+  });
 }
 
 function startsAWordOf(text: string, word: string) {
@@ -123,7 +166,7 @@ export const mayRead = internalQuery({
 });
 
 export const storeHits = internalMutation({
-  args: { hits: v.array(v.object({ title: v.string(), artist: v.string(), durationSec: v.optional(v.number()) })) },
+  args: { hits: v.array(v.object({ title: v.string(), artist: v.string(), durationSec: v.optional(v.number()), takes: v.optional(v.number()) })) },
   returns: v.null(),
   handler: async (ctx, { hits }) => {
     await keySongsStoredWithoutIdentity(ctx);
@@ -134,6 +177,7 @@ export const storeHits = internalMutation({
         .withIndex("by_identity", (q) => q.eq("identityKey", identityKey))
         .first();
       if (!known) await ctx.db.insert("songs", { ...hit, identityKey, searchText: `${hit.title} ${hit.artist}` });
+      else if ((hit.takes ?? 0) > (known.takes ?? 0)) await ctx.db.patch(known._id, { takes: hit.takes });
     }
     return null;
   },

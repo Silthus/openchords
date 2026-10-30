@@ -123,6 +123,72 @@ describe("Catalog search", () => {
     expect(titles).toEqual(["Zombie", "Zombie Jamboree"]);
   });
 
+  test("the Song titled as she typed comes before the songs of a band named so", async () => {
+    const backend = await seeded();
+    const bandSongs = ["Saint Fire", "Face the Fire", "Land of Illusion", "King of Fools", "Circle of Time"].map((title) => ({ title, artist: "Ring of Fire" }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [...bandSongs, { title: "Ring of Fire", artist: "Johnny Cash" }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("the studio title comes before its live and remixed takes", async () => {
+    const backend = await seeded();
+    const takes = ["Philharmonics (live at DR Koncerthuset)", "Philharmonics (Tom Furse remix)", "Philharmonics"].map((title) => ({ title, artist: "Agnes Obel" }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: takes });
+    expect((await titlesFound(backend, "Agnes Obel Philharmonics"))[0]).toBe("Philharmonics");
+  });
+
+  test("among Songs titled as she typed, the one MusicBrainz has shown most recordings of comes first", async () => {
+    const backend = await seeded();
+    const covers = Array.from({ length: 25 }, (_, n) => ({ title: "Ring of Fire", artist: `Cover Band ${n}`, takes: 2 }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [...covers, { title: "Ring of Fire", artist: "Johnny Cash", takes: 18 }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("a Song stored before keeps the most recordings one MusicBrainz search has shown of it", async () => {
+    const backend = await seeded();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash" }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Wall of Voodoo", takes: 3 }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash", takes: 18 }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash", takes: 1 }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("a built-in Song comes before however many songs are titled as she typed", async () => {
+    const backend = await seeded();
+    const risings = Array.from({ length: 25 }, (_, n) => ({ title: "Rising", artist: `Band ${n}`, takes: 5 }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: risings });
+    expect((await titlesFound(backend, "rising"))[0]).toBe("House of the Rising Sun");
+  });
+
+  test("a word of the title that is also in the artist still counts for the title", async () => {
+    const backend = await seeded();
+    const takes = [{ title: "The End (live)", artist: "The Beatles", takes: 2 }, { title: "The End", artist: "The Beatles", takes: 1 }];
+    await backend.mutation(internal.catalog.index.storeHits, { hits: takes });
+    expect((await titlesFound(backend, "The Beatles The End"))[0]).toBe("The End");
+  });
+
+  test("a Song she opened before, with drafted Chord sheets, leads no search for another Song's title", async () => {
+    const backend = await seeded();
+    await backend.mutation(internal.catalog.index.storeHits, {
+      hits: [{ title: "Ring of Fire", artist: "Wall of Voodoo", takes: 3 }, { title: "Ring of Fire", artist: "Johnny Cash", takes: 18 }],
+    });
+    await backend.run(async (ctx) => {
+      const opened = await ctx.db.query("songs").withIndex("by_identity", (q) => q.eq("identityKey", "wall of voodoo|ring of fire")).unique();
+      await ctx.db.patch(opened!._id, { hasSheets: true });
+    });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("a title that only starts with her words is no exact match", async () => {
+    const backend = await seeded();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Homes", artist: "Ola Gjeilo" }, { title: "Home", artist: "Phillip Phillips" }] });
+    expect(await titlesFound(backend, "home")).toEqual(["Home", "Homes"]);
+  });
+
   test("answers only queries of 2 to 100 characters", async () => {
     const backend = await seeded();
     expect(await titlesFound(backend, " S ")).toEqual([]);

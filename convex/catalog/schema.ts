@@ -15,6 +15,7 @@ export const catalogTables = {
     title: v.string(),
     artist: v.string(),
     durationSec: v.optional(v.number()),
+    takes: v.optional(v.number()),
     identityKey: v.optional(v.string()),
     builtInId: v.optional(v.string()),
     hasSheets: v.optional(v.boolean()),

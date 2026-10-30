@@ -6,7 +6,7 @@ import { lrclib } from "./lrclib";
 import { musicbrainz } from "./musicbrainz";
 
 export type Provenance = { source: "builtIn" | "lrclib" | "ai"; recordId: string; licence: string; fetchedAt: number };
-export type SongHit = { title: string; artist: string; durationSec?: number; builtInId?: string };
+export type SongHit = { title: string; artist: string; durationSec?: number; takes?: number; builtInId?: string };
 export type Lyrics = { lines: string[]; verseStarts?: number[]; provenance: Provenance };
 export type ChordDraft = { name: string; layer: ChordLayer; origin: "builtIn" | "ai"; provenance: Provenance };
 
