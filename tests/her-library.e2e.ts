@@ -6,9 +6,9 @@ test("Her choices for a Song follow her to another device", async ({ agent, app,
   const her = `library-${crypto.randomUUID()}`;
   await openAsReader(app, screen, "/?q=amazing", her);
   await agent.act("Open Amazing Grace");
-  await expect(screen.getByText("John Newton · Amazing Grace · Key G · No capo")).toBeVisible();
+  await expect(screen.getByText("John Newton · Classic · Key G · No capo")).toBeVisible();
   await agent.act("Open the settings sheet, press Key + once and Scroll speed + once, then Done");
-  await expect(screen.getByText("John Newton · Amazing Grace · Key Ab · No capo")).toBeVisible();
+  await expect(screen.getByText("John Newton · Classic · Key Ab · No capo")).toBeVisible();
   await expect(screen.getByText("Scroll speed 4")).toBeVisible();
   await agent.act("Press Save on the title line");
   await expect(screen.getByRole("button", "★ Saved")).toHaveAttribute("aria-pressed", "true");
@@ -22,7 +22,7 @@ test("Her choices for a Song follow her to another device", async ({ agent, app,
   await app.screenshot("Her Library is there on a fresh device");
 
   await agent.act("Open Amazing Grace from Your Library");
-  await expect(screen.getByText("John Newton · Amazing Grace · Key Ab · No capo")).toBeVisible();
+  await expect(screen.getByText("John Newton · Classic · Key Ab · No capo")).toBeVisible();
   await expect(screen.getByText("Scroll speed 4")).toBeVisible();
   await app.screenshot("The Song opens with the key she chose");
 });
