@@ -156,6 +156,13 @@ describe("Catalog search", () => {
     expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
   });
 
+  test("a Song with Chord sheets comes before however many songs are titled as she typed", async () => {
+    const backend = await seeded();
+    const risings = Array.from({ length: 25 }, (_, n) => ({ title: "Rising", artist: `Band ${n}`, takes: 5 }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: risings });
+    expect((await titlesFound(backend, "rising"))[0]).toBe("House of the Rising Sun");
+  });
+
   test("a title that only starts with her words is no exact match", async () => {
     const backend = await seeded();
     await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Homes", artist: "Ola Gjeilo" }, { title: "Home", artist: "Phillip Phillips" }] });

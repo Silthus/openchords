@@ -59,14 +59,15 @@ async function rankedSongs(ctx: QueryCtx, query: string) {
     .map(({ song }) => song);
 }
 
-type Rank = { namesArtistAndTitle: boolean; titledAsTyped: boolean; hasSheets: boolean; takes: number };
+type Rank = { namesArtistAndTitle: boolean; namesEveryWord: boolean; hasSheets: boolean; titledAsTyped: boolean; takes: number };
 
 function rankOf(song: Doc<"songs">, words: string[]): Rank {
   const placed = words.map((word) => ({ word, inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
   return {
     namesArtistAndTitle: namesArtistAndTitle(placed),
-    titledAsTyped: titledAsTyped(song, placed),
+    namesEveryWord: namesEveryWord(placed),
     hasSheets: song.hasSheets === true,
+    titledAsTyped: titledAsTyped(song, placed),
     takes: song.takes ?? 0,
   };
 }
@@ -74,8 +75,9 @@ function rankOf(song: Doc<"songs">, words: string[]): Rank {
 function byRank(a: Rank, b: Rank) {
   return (
     Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) ||
-    Number(b.titledAsTyped) - Number(a.titledAsTyped) ||
+    Number(b.namesEveryWord) - Number(a.namesEveryWord) ||
     Number(b.hasSheets) - Number(a.hasSheets) ||
+    Number(b.titledAsTyped) - Number(a.titledAsTyped) ||
     b.takes - a.takes
   );
 }
@@ -97,10 +99,14 @@ type PlacedWord = { word: string; inTitle: boolean; inArtist: boolean };
 
 function namesArtistAndTitle(placed: PlacedWord[]) {
   return (
-    placed.every(({ inTitle, inArtist }) => inTitle || inArtist) &&
+    namesEveryWord(placed) &&
     placed.some(({ inTitle, inArtist }) => inTitle && !inArtist) &&
     placed.some(({ inTitle, inArtist }) => inArtist && !inTitle)
   );
+}
+
+function namesEveryWord(placed: PlacedWord[]) {
+  return placed.every(({ inTitle, inArtist }) => inTitle || inArtist);
 }
 
 function titledAsTyped(song: Doc<"songs">, placed: PlacedWord[]) {
