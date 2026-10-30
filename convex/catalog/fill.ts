@@ -3,7 +3,7 @@ import { v } from "convex/values";
 import { compose } from "../../src/sheet";
 import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
-import { internalAction, internalMutation, internalQuery, type MutationCtx } from "../_generated/server";
+import { internalAction, internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { sourcesFor } from "../sources";
 import { origin, provenance } from "./schema";
 
@@ -51,10 +51,7 @@ export const songToFill = internalQuery({
   handler: async (ctx, { songId }): Promise<{ song: Doc<"songs">; storedLyrics: Doc<"lyrics"> | null } | null> => {
     const song = await ctx.db.get(songId);
     if (!song) return null;
-    const storedLyrics = await ctx.db
-      .query("lyrics")
-      .withIndex("by_song", (q) => q.eq("songId", songId))
-      .unique();
+    const storedLyrics = await lyricsOf(ctx, songId);
     return { song, storedLyrics };
   },
 });
@@ -88,7 +85,8 @@ export const storeLyrics = internalMutation({
   returns: v.id("lyrics"),
   handler: async (ctx, lyrics) => {
     await patchFill(ctx, lyrics.songId, { lyrics: "ready" });
-    return await ctx.db.insert("lyrics", lyrics);
+    const stored = await lyricsOf(ctx, lyrics.songId);
+    return stored?._id ?? (await ctx.db.insert("lyrics", lyrics));
   },
 });
 
@@ -118,6 +116,13 @@ async function patchFill(ctx: MutationCtx, songId: Id<"songs">, changes: Partial
 async function fillOf(ctx: MutationCtx, songId: Id<"songs">) {
   return await ctx.db
     .query("fills")
+    .withIndex("by_song", (q) => q.eq("songId", songId))
+    .unique();
+}
+
+async function lyricsOf(ctx: QueryCtx, songId: Id<"songs">) {
+  return await ctx.db
+    .query("lyrics")
     .withIndex("by_song", (q) => q.eq("songId", songId))
     .unique();
 }
