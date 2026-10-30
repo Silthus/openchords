@@ -132,6 +132,12 @@ describe("compose", () => {
     expect(layerOf(saved).lines[0]!.chords.map(({ chord }) => chord)).toEqual(["F", "B", "C"]);
   });
 
+  test("gives back a German sheet whose chords show it as it was written", () => {
+    const written = compose(["One two three"], { capo: 0, sections: [], lines: [{ lyricLine: 0, chords: [{ word: 0, chord: "H" }, { word: 2, chord: "Fis" }] }] }, meta);
+    const sheet = parse(written);
+    expect(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta)).toBe(written);
+  });
+
   test("keeps brackets, braces and backslashes in her words as words, not chords or directives", () => {
     const words = ["[Chorus]", "I fell into a [burning] ring", "{spoken: come home}", "back\\slash"];
     const sheet = parse(compose(words, { capo: 0, sections: [], lines: [{ lyricLine: 1, chords: [{ word: 0, chord: "G" }] }] }, meta));

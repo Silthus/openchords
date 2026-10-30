@@ -116,7 +116,7 @@ export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { ti
   const header = [
     `{title: ${meta.title}}`,
     `{artist: ${meta.artist}}`,
-    ...(layer.notation === "german" ? ["{notation: german}"] : []),
+    ...(germanUnseen(layer) ? ["{notation: german}"] : []),
     ...(layer.key === undefined ? [] : [`{key: ${layer.key}}`]),
     `{capo: ${layer.capo}}`,
   ];
@@ -126,6 +126,11 @@ export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { ti
     return label === undefined ? [line] : ["", `{comment: ${label}}`, line];
   });
   return [...header, ...body, ""].join("\n");
+}
+
+function germanUnseen({ notation, key, lines }: ChordLayer) {
+  const written = [...(key === undefined ? [] : [key]), ...lines.flatMap((line) => line.chords.map(({ chord }) => chord))];
+  return notation === "german" && notationOf(written) !== "german";
 }
 
 const highestCapo = 11;
