@@ -22,11 +22,8 @@ export function offlineCopies(storage: () => IDBFactory) {
   const keep = (copy: OfflineCopy) =>
     inStore("readwrite", (songs) => {
       if (signingOut) return;
-      songs.put(copy, copy.found.song.songId);
-      const all = songs.getAll();
-      all.onsuccess = () => {
-        for (const old of letGo([...(all.result as OfflineCopy[])])) songs.delete(old.found.song.songId);
-      };
+      if (hasNoWords(copy.found)) songs.delete(copy.found.song.songId);
+      else putLettingOldOnesGo(songs, copy);
     });
 
   const markOpened = (songId: string, openedAt: number) =>
@@ -47,9 +44,22 @@ export function offlineCopies(storage: () => IDBFactory) {
 
   const forgetAll = () => inStore("readwrite", (songs) => songs.clear()).catch(() => undefined);
 
+  const dropRemoved = async (answerFor: AnswerFor) => {
+    const kept = (await inStore("readonly", (songs) => songs.getAllKeys())) as string[];
+    await Promise.all(kept.map((songId) => dropIfRemoved(songId, answerFor)));
+  };
+
+  const drop = (songId: string) => inStore("readwrite", (songs) => songs.delete(songId));
+
+  const dropIfRemoved = async (songId: string, answerFor: AnswerFor) => {
+    if (await isRemoved(songId, answerFor)) await drop(songId);
+  };
+
   return {
     keep,
     reopen,
+    drop,
+    dropRemoved,
     forgetAllWhile: async (signOut: () => Promise<void>) => {
       signingOut = true;
       try {
@@ -62,6 +72,29 @@ export function offlineCopies(storage: () => IDBFactory) {
     },
     saved: async () => ((await inStore("readonly", (songs) => songs.getAll())) as OfflineCopy[]).filter(isSaved),
   };
+}
+
+type AnswerFor = (songId: string) => Promise<FoundSong | null>;
+
+async function isRemoved(songId: string, answerFor: AnswerFor) {
+  try {
+    const answer = await answerFor(songId);
+    return answer === null || hasNoWords(answer);
+  } catch {
+    return false;
+  }
+}
+
+function putLettingOldOnesGo(songs: IDBObjectStore, copy: OfflineCopy) {
+  songs.put(copy, copy.found.song.songId);
+  const all = songs.getAll();
+  all.onsuccess = () => {
+    for (const old of letGo([...(all.result as OfflineCopy[])])) songs.delete(old.found.song.songId);
+  };
+}
+
+function hasNoWords(found: FoundSong) {
+  return found.lyrics === "missing";
 }
 
 function letGo(copies: OfflineCopy[]) {

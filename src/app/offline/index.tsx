@@ -1,5 +1,6 @@
-import { useConvexConnectionState } from "convex/react";
+import { useConvex, useConvexAuth, useConvexConnectionState } from "convex/react";
 import { useEffect, useState } from "react";
+import { api } from "../../../convex/_generated/api";
 import type { LibraryEntry } from "../../library";
 import { isOffline } from "./connection";
 import { offlineCopies, type FoundSong } from "./offlineCopies";
@@ -22,6 +23,27 @@ export function useKeepOffline(found: FoundSong, library: { entry: LibraryEntry 
       .keep({ found, entry, openedAt: Date.now() })
       .catch(() => undefined);
   }, [found, entry, loaded]);
+}
+
+export function useDropOffline(songId: string) {
+  useEffect(() => {
+    onThePhone()
+      .drop(songId)
+      .catch(() => undefined);
+  }, [songId]);
+}
+
+export function useDropRemovedSongs() {
+  const convex = useConvex();
+  const { isLoading } = useConvexAuth();
+  const { isWebSocketConnected, connectionCount } = useConvexConnectionState();
+  const ready = isWebSocketConnected && !isLoading;
+  useEffect(() => {
+    if (!ready) return;
+    onThePhone()
+      .dropRemoved((songId) => convex.query(api.catalog.index.song, { songId }))
+      .catch(() => undefined);
+  }, [convex, ready, connectionCount]);
 }
 
 export function forgetEverySongWhile(signOut: () => Promise<void>) {

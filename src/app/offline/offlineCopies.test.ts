@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { IDBFactory } from "fake-indexeddb";
 import type { Id } from "../../../convex/_generated/dataModel";
-import { offlineCopies, type OfflineCopy } from "./offlineCopies";
+import { offlineCopies, type FoundSong, type OfflineCopy } from "./offlineCopies";
 
 const copyOf = (name: string, openedAt: number, saved = false): OfflineCopy => {
   const songId = name as Id<"songs">;
@@ -142,6 +142,64 @@ describe("signing out", () => {
   });
 });
 
+describe("Songs removed while she was away", () => {
+  const answers = (byId: Record<string, FoundSong | null | Error>) => async (songId: string) => {
+    const answer = byId[songId];
+    if (answer instanceof Error) throw answer;
+    return answer ?? null;
+  };
+  const takenDown = (copy: OfflineCopy): FoundSong => ({ ...copy.found, sheets: [], lyrics: "missing", wordsOnly: null });
+  const wordsOnly = (copy: OfflineCopy): FoundSong => ({ ...copy.found, sheets: [], wordsOnly: ["Oh Shenandoah"] });
+
+  test("leave her phone when the Song no longer exists or was taken down", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const [gone, takenDownSong] = [copyOf("gone", 1, true), copyOf("taken-down", 2, true)];
+    await keepAll(copies, [gone, takenDownSong]);
+    await copies.dropRemoved(answers({ gone: null, "taken-down": takenDown(takenDownSong) }));
+    expect(await copies.saved()).toEqual([]);
+  });
+
+  test("stay while the Song still has words to read", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const [withChords, wordsOnlySong] = [copyOf("with-chords", 1, true), copyOf("words-only", 2, true)];
+    await keepAll(copies, [withChords, wordsOnlySong]);
+    await copies.dropRemoved(answers({ "with-chords": withChords.found, "words-only": wordsOnly(wordsOnlySong) }));
+    expect((await copies.saved()).map((copy) => copy.found.song.title).toSorted()).toEqual(["with-chords", "words-only"]);
+  });
+
+  test("leave her phone when the Song is taken down while she reads it", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const shenandoah = copyOf("shenandoah", 1, true);
+    await copies.keep(shenandoah);
+    await copies.keep({ ...shenandoah, found: takenDown(shenandoah), openedAt: 2 });
+    expect(await openedOffline(copies, shenandoah.found.song.songId)).toBeUndefined();
+  });
+
+  test("leave her phone when she finds the Song gone", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const shenandoah = copyOf("shenandoah", 1, true);
+    await copies.keep(shenandoah);
+    await copies.drop(shenandoah.found.song.songId);
+    expect(await openedOffline(copies, shenandoah.found.song.songId)).toBeUndefined();
+  });
+
+  test("leave her phone without waiting for a Song whose answer has not come yet", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const [gone, unanswered] = [copyOf("gone", 1, true), copyOf("unanswered", 2, true)];
+    await keepAll(copies, [gone, unanswered]);
+    void copies.dropRemoved((songId) => (songId === "gone" ? Promise.resolve(null) : new Promise(() => {})));
+    await until(async () => (await copies.saved()).length === 1);
+    expect((await copies.saved()).map((copy) => copy.found.song.title)).toEqual(["unanswered"]);
+  });
+
+  test("stay when asking about the Song fails", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    await copies.keep(copyOf("shenandoah", 1, true));
+    await copies.dropRemoved(answers({ shenandoah: new Error("no connection") }));
+    expect(await copies.saved()).toHaveLength(1);
+  });
+});
+
 describe("a phone that cannot write", () => {
   test("still opens a kept Song with her choices", async () => {
     const factory = new IDBFactory();
@@ -178,4 +236,8 @@ function refusingWrites(factory: IDBFactory) {
       return opening;
     },
   } as IDBFactory;
+}
+
+async function until(holds: () => Promise<boolean>) {
+  for (let attempt = 0; attempt < 100 && !(await holds()); attempt++) await Bun.sleep(1);
 }
