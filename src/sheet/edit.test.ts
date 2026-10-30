@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { layerOf, parse, setChord } from ".";
+import { clearChords, layerOf, parse, removeChord, setChord } from ".";
 
 const sheet = parse(`{title: Amazing Grace}
 {artist: John Newton}
@@ -45,5 +45,31 @@ describe("setChord", () => {
   test("leaves the sheet it was given as it was", () => {
     setChord(sheet, { section: 0, line: 0, word: 0, chord: 0 }, "D");
     expect(chordsOfLine(sheet, 0)[0]).toEqual({ word: 0, chord: "G" });
+  });
+});
+
+describe("removeChord", () => {
+  test("takes the chord off a word", () => {
+    const changed = removeChord(sheet, { section: 0, line: 0, word: 1, chord: 0 });
+    expect(chordsOfLine(changed, 0)).toEqual([
+      { word: 0, chord: "G" },
+      { word: 3, chord: "C" },
+      { word: 5, chord: "G" },
+    ]);
+  });
+
+  test("takes one of two chords off a word and keeps the other", () => {
+    const changed = removeChord(sheet, { section: 0, line: 1, word: 5, chord: 0 });
+    expect(chordsOfLine(changed, 1)).toEqual([{ word: 5, chord: "D7" }]);
+  });
+});
+
+describe("clearChords", () => {
+  test("takes every chord off every word and keeps the words, sections and key", () => {
+    const cleared = clearChords(sheet);
+    expect(layerOf(cleared).lines.flatMap((line) => line.chords)).toEqual([]);
+    expect(cleared.sections.map((section) => section.label)).toEqual(["Verse 1"]);
+    expect(cleared.meta.key).toBe("G");
+    expect(cleared.sections[0]!.lines[1]!.words.map((word) => word.text)).toEqual(["That", "saved", "a", "wretch", "like", "me"]);
   });
 });

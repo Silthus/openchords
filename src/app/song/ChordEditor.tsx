@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { layerOf, setChord, transpose, type ChordLayer, type ChordSpot, type ParsedSheet } from "../../sheet";
+import { clearChords, layerOf, removeChord, setChord, transpose, type ChordLayer, type ChordSpot, type ParsedSheet } from "../../sheet";
 import { ChordPicker } from "./ChordPicker";
 import { LyricsAtHerTextSize } from "./ChordLyrics";
 
@@ -27,14 +27,19 @@ export function ChordEditor({ sheet: shown, onSave, onCancel }: ChordEditorProps
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-page px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto max-w-2xl">
           {saving === "failed" && <p role="alert" className="mb-2 text-sm text-accent">Couldn't save your version. Try again.</p>}
-          <div className="mb-3 flex items-center justify-center gap-3">
-            <KeyButton label="Key −" onClick={() => setSheet(transpose(sheet, -1))}>
-              −
-            </KeyButton>
-            <span className="w-28 text-center font-bold">Key {sheet.meta.key ?? ""}</span>
-            <KeyButton label="Key +" onClick={() => setSheet(transpose(sheet, 1))}>
-              +
-            </KeyButton>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <button type="button" onClick={() => setSheet(clearChords(sheet))} className="rounded-xl px-2 py-2 text-sm font-semibold text-muted">
+              Clear all chords
+            </button>
+            <div className="flex items-center gap-3">
+              <KeyButton label="Key −" onClick={() => setSheet(transpose(sheet, -1))}>
+                −
+              </KeyButton>
+              <span className="w-20 text-center font-bold">Key {sheet.meta.key ?? ""}</span>
+              <KeyButton label="Key +" onClick={() => setSheet(transpose(sheet, 1))}>
+                +
+              </KeyButton>
+            </div>
           </div>
           <div className="flex gap-2">
             <button type="button" onClick={onCancel} className="flex-1 rounded-xl bg-panel py-3 font-semibold">
@@ -52,6 +57,7 @@ export function ChordEditor({ sheet: shown, onSave, onCancel }: ChordEditorProps
           current={wordAt(sheet, picking).chords[picking.chord]}
           notation={sheet.notation}
           onPick={(chord) => setSheet(setChord(sheet, picking, chord))}
+          onRemove={() => setSheet(removeChord(sheet, picking))}
           onClose={() => setPicking(undefined)}
         />
       )}
