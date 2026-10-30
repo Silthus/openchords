@@ -15,6 +15,9 @@ const signedOutCalls: Record<string, (backend: Backend, songId: Id<"songs">) => 
   "catalog/index:discover": (backend) => backend.action(api.catalog.index.discover, { query: "Rising" }),
   "catalog/index:song": (backend, songId) => backend.query(api.catalog.index.song, { songId }),
   "catalog/index:open": (backend, songId) => backend.mutation(api.catalog.index.open, { songId }),
+  "library/index:entries": (backend) => backend.query(api.library.index.entries, {}),
+  "library/index:save": async (backend, songId) =>
+    backend.mutation(api.library.index.save, { songId, chordSheetId: await aChordSheetId(backend), transpose: 0, capo: 0, speed: 3, saved: false }),
 };
 
 afterEach(() => {
@@ -43,6 +46,12 @@ async function aSongId(backend: Backend) {
   await backend.mutation(internal.catalog.index.seed, {});
   const songs = await backend.run((ctx) => ctx.db.query("songs").take(1));
   return songs[0]!._id;
+}
+
+async function aChordSheetId(backend: Backend) {
+  await backend.finishAllScheduledFunctions(() => {});
+  const sheets = await backend.run((ctx) => ctx.db.query("chordSheets").take(1));
+  return sheets[0]!._id;
 }
 
 describe("every public function outside sign-in", () => {

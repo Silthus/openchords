@@ -8,11 +8,12 @@ type SongLinkProps = {
   chordSheetId?: string;
   inPlace?: boolean;
   current?: boolean;
+  onClick?: () => void;
   className?: string;
   children: ReactNode;
 };
 
-export function SongLink({ songId, chordSheetId, inPlace, current, className, children }: SongLinkProps) {
+export function SongLink({ songId, chordSheetId, inPlace, current, onClick, className, children }: SongLinkProps) {
   const convex = useConvex();
   const prewarm = () => convex.prewarmQuery({ query: api.catalog.index.song, args: { songId } });
   return (
@@ -25,6 +26,7 @@ export function SongLink({ songId, chordSheetId, inPlace, current, className, ch
       onTouchStart={prewarm}
       onMouseEnter={prewarm}
       onFocus={prewarm}
+      onClick={onClick}
       aria-current={current ? "page" : undefined}
       className={className}
     >

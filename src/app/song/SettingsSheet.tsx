@@ -10,10 +10,11 @@ export const speeds = { slowest: 1, fastest: 10 };
 export const transpositions = { lowest: -11, highest: 11 };
 export const capos = { none: 0, highest: 11 };
 
-type SettingsSheetProps = {
+type SettingsSheetProps<Sheet extends ChordSheetChoice> = {
   songId: string;
-  sheets: ChordSheetChoice[];
+  sheets: Sheet[];
   chosenId: string;
+  onChordSheet: (picked: Sheet) => void;
   shownKey: string | undefined;
   view: View;
   easierCapo: number | null;
@@ -23,7 +24,19 @@ type SettingsSheetProps = {
   onClose: () => void;
 };
 
-export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easierCapo, onView, speed, onSpeed, onClose }: SettingsSheetProps) {
+export function SettingsSheet<Sheet extends ChordSheetChoice>({
+  songId,
+  sheets,
+  chosenId,
+  onChordSheet,
+  shownKey,
+  view,
+  easierCapo,
+  onView,
+  speed,
+  onSpeed,
+  onClose,
+}: SettingsSheetProps<Sheet>) {
   const dialog = useModalDialog();
   const [textSize, setTextSize] = useTextSize();
   const close = () => dialog.current?.close();
@@ -38,7 +51,7 @@ export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easier
       <div className="rounded-t-3xl bg-page p-5">
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-line" />
         <h2 className="mb-2 text-sm font-bold tracking-wide text-muted uppercase">Chord sheet</h2>
-        <ChordSheetCards songId={songId} sheets={sheets} chosenId={chosenId} />
+        <ChordSheetCards songId={songId} sheets={sheets} chosenId={chosenId} onPick={onChordSheet} />
         <div className="mt-4 divide-y divide-line">
           <LookSwitch />
           <Stepper
@@ -81,7 +94,9 @@ export function SettingsSheet({ songId, sheets, chosenId, shownKey, view, easier
   );
 }
 
-function ChordSheetCards({ songId, sheets, chosenId }: { songId: string; sheets: ChordSheetChoice[]; chosenId: string }) {
+type ChordSheetCardsProps<Sheet> = { songId: string; sheets: Sheet[]; chosenId: string; onPick: (picked: Sheet) => void };
+
+function ChordSheetCards<Sheet extends ChordSheetChoice>({ songId, sheets, chosenId, onPick }: ChordSheetCardsProps<Sheet>) {
   return (
     <ul className="flex flex-col gap-2">
       {sheets.map((sheet) => {
@@ -93,6 +108,7 @@ function ChordSheetCards({ songId, sheets, chosenId }: { songId: string; sheets:
               chordSheetId={sheet.chordSheetId}
               inPlace
               current={chosen}
+              onClick={() => onPick(sheet)}
               className={`block rounded-xl border p-3 ${chosen ? "border-accent bg-accent/10" : "border-line"}`}
             >
               <span className="block font-semibold">{sheet.name}</span>

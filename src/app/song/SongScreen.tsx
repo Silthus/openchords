@@ -1,28 +1,23 @@
 import { useMutation, useQuery } from "convex/react";
+import type { FunctionReturnType } from "convex/server";
 import { useEffect, useState, type ReactNode } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
-import { easierCapo, parse, shapes, type SheetMeta, type View } from "../../sheet";
+import { useLibraryEntry, type Choices } from "../../library";
+import { easierCapo, parse, shapes, type SheetMeta } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
+import { openingChoices, writtenCapo } from "./openingChoices";
 import { SettingsSheet } from "./SettingsSheet";
 import { UnverifiedMark, WordsOnly } from "./SongStates";
 
-const startingSpeed = 3;
-
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
   const found = useQuery(api.catalog.index.song, { songId });
-  const [speed, setSpeed] = useState(startingSpeed);
-  const [transposition, setTransposition] = useState(0);
-  const [capoBySheet, setCapoBySheet] = useState<Record<string, number>>({});
-  const [settingsOpen, setSettingsOpen] = useState(false);
   if (found === undefined) return null;
   if (found === null) return <PageNotFound />;
-
-  const chosen = found.sheets.find((sheet) => sheet.chordSheetId === chordSheetId) ?? found.sheets[0];
-  if (!chosen) {
+  if (found.sheets.length === 0) {
     return (
       <SongPage songId={found.song.songId} title={found.song.title}>
         {found.wordsOnly ? (
@@ -33,14 +28,22 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
       </SongPage>
     );
   }
+  return <SongWithChords found={found} linked={chordSheetId} />;
+}
 
+type FoundSong = NonNullable<FunctionReturnType<typeof api.catalog.index.song>>;
+
+function SongWithChords({ found, linked }: { found: FoundSong; linked: string | undefined }) {
+  const library = useLibraryEntry(found.song.songId);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const opening = library && openingChoices(found.sheets, { linked, entry: library.entry });
+  if (!library || !opening) return null;
+
+  const { sheet: chosen, view, speed } = opening;
   const written = parse(chosen.chordPro);
-  const view = { transpose: transposition, capo: capoBySheet[chosen.chordSheetId] ?? written.meta.capo };
   const sheet = shapes(written, view);
-  const changeView = (changed: View) => {
-    setTransposition(changed.transpose);
-    setCapoBySheet({ ...capoBySheet, [chosen.chordSheetId]: changed.capo });
-  };
+  const choose = (changed: Partial<Choices>) =>
+    library.save({ chordSheetId: chosen.chordSheetId, ...view, speed, saved: library.entry?.saved ?? false, ...changed });
   return (
     <SongPage songId={found.song.songId} title={found.song.title}>
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
@@ -51,12 +54,13 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
           songId={found.song.songId}
           sheets={found.sheets}
           chosenId={chosen.chordSheetId}
+          onChordSheet={(picked) => choose({ chordSheetId: picked.chordSheetId, capo: writtenCapo(picked) })}
           shownKey={sheet.meta.key}
           view={view}
           easierCapo={easierCapo(written, view)}
-          onView={changeView}
+          onView={choose}
           speed={speed}
-          onSpeed={setSpeed}
+          onSpeed={(changed) => choose({ speed: changed })}
           onClose={() => setSettingsOpen(false)}
         />
       )}
