@@ -25,6 +25,14 @@ export function useKeepOffline(found: FoundSong, library: { entry: LibraryEntry 
   }, [found, entry, loaded]);
 }
 
+export function useDropOffline(songId: string) {
+  useEffect(() => {
+    onThePhone()
+      .drop(songId)
+      .catch(() => undefined);
+  }, [songId]);
+}
+
 export function useDropRemovedSongs() {
   const convex = useConvex();
   const { isLoading } = useConvexAuth();

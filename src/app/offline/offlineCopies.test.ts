@@ -175,6 +175,14 @@ describe("Songs removed while she was away", () => {
     expect(await openedOffline(copies, shenandoah.found.song.songId)).toBeUndefined();
   });
 
+  test("leave her phone when she finds the Song gone", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const shenandoah = copyOf("shenandoah", 1, true);
+    await copies.keep(shenandoah);
+    await copies.drop(shenandoah.found.song.songId);
+    expect(await openedOffline(copies, shenandoah.found.song.songId)).toBeUndefined();
+  });
+
   test("leave her phone without waiting for a Song whose answer has not come yet", async () => {
     const copies = offlineCopies(() => new IDBFactory());
     const [gone, unanswered] = [copyOf("gone", 1, true), copyOf("unanswered", 2, true)];

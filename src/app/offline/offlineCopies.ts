@@ -49,13 +49,16 @@ export function offlineCopies(storage: () => IDBFactory) {
     await Promise.all(kept.map((songId) => dropIfRemoved(songId, answerFor)));
   };
 
+  const drop = (songId: string) => inStore("readwrite", (songs) => songs.delete(songId));
+
   const dropIfRemoved = async (songId: string, answerFor: AnswerFor) => {
-    if (await isRemoved(songId, answerFor)) await inStore("readwrite", (songs) => songs.delete(songId));
+    if (await isRemoved(songId, answerFor)) await drop(songId);
   };
 
   return {
     keep,
     reopen,
+    drop,
     dropRemoved,
     forgetAllWhile: async (signOut: () => Promise<void>) => {
       signingOut = true;

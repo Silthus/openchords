@@ -5,7 +5,7 @@ import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { useEntryInMemory, useLibraryEntry, type Choices, type EntryForSong } from "../../library";
 import { easierCapo, parse, shapes, type ChordLayer, type SheetMeta, type View } from "../../sheet";
-import { OfflineBadge, useKeepOffline, useOffline, useOfflineCopy, type FoundSong, type OfflineCopy } from "../offline";
+import { OfflineBadge, useDropOffline, useKeepOffline, useOffline, useOfflineCopy, type FoundSong, type OfflineCopy } from "../offline";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordEditor } from "./ChordEditor";
@@ -20,8 +20,13 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
   const found = useQuery(api.catalog.index.song, { songId });
   const offline = useOffline();
   if (found === undefined) return offline ? <KeptSong songId={songId} linked={chordSheetId} /> : null;
-  if (found === null) return <PageNotFound />;
+  if (found === null) return <GoneSong songId={songId} />;
   return <OnlineSong found={found} linked={chordSheetId} />;
+}
+
+function GoneSong({ songId }: { songId: string }) {
+  useDropOffline(songId);
+  return <PageNotFound />;
 }
 
 type SongProps = { found: FoundSong; linked: string | undefined };
