@@ -14,6 +14,10 @@ describe("describeChordSheet", () => {
     expect(describeChordSheet("ai", { key: "G", capo: 0 })).toBe("AI draft · unverified · G");
   });
 
+  test("says a person's version was fixed by hand", () => {
+    expect(describeChordSheet("person", { key: "C", capo: 0 })).toBe("Fixed by hand · C");
+  });
+
   test("leaves out a key the sheet does not name", () => {
     expect(describeChordSheet("builtIn", { capo: 2 })).toBe("Built in · capo 2");
   });

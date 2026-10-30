@@ -1,7 +1,8 @@
-import { notationOf, writtenChordsOf, type Notation } from "./chords";
+import { isChord, notationOf, writtenChordsOf, type Notation } from "./chords";
 
 export { chordSuffixes, chordsIn, chordTones, essentialTones, isChord, notationOf, readChord, type Chord, type Notation } from "./chords";
 export { easierCapo, shapes, type View } from "./shapes";
+export { setChord, type ChordSpot } from "./edit";
 export { transpose } from "./transpose";
 
 export type SheetMeta = { title: string; artist: string; key?: string; capo: number };
@@ -97,6 +98,7 @@ function linesOf(sheet: ParsedSheet): SheetLine[] {
 }
 
 export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { title: string; artist: string }, verseStarts: readonly number[] = []): string {
+  refuseUnplayable(layer);
   const chordsByLine = new Map(layer.lines.map((line) => [line.lyricLine, line.chords]));
   const outOfRange = layer.lines.find((line) => line.lyricLine < 0 || line.lyricLine >= lyrics.length);
   if (outOfRange) throw new InvalidChordLayer(`Line ${outOfRange.lyricLine} is past the ${lyrics.length} lyric lines`);
@@ -114,6 +116,22 @@ export function compose(lyrics: readonly string[], layer: ChordLayer, meta: { ti
     return label === undefined ? [line] : ["", `{comment: ${label}}`, line];
   });
   return [...header, ...body, ""].join("\n");
+}
+
+const highestCapo = 11;
+
+function refuseUnplayable({ key, capo, sections, lines }: ChordLayer) {
+  const chords = lines.flatMap((line) => line.chords);
+  refuseUnless(key === undefined || isChord(key), `The key ${key} is no chord`);
+  refuseUnless(Number.isInteger(capo) && capo >= 0 && capo <= highestCapo, `A capo on fret ${capo} is no fret`);
+  refuseUnless(sections.every(({ label }) => !/[\r\n]/.test(label)), "A section label breaks its line");
+  refuseUnless(lines.every(({ lyricLine }) => Number.isInteger(lyricLine)), "A line lies between two lyric lines");
+  refuseUnless(chords.every(({ word }) => Number.isInteger(word)), "A chord lies between two words");
+  refuseUnless(chords.every(({ chord }) => isChord(chord)), "A chord is no chord");
+}
+
+function refuseUnless(playable: boolean, reason: string) {
+  if (!playable) throw new InvalidChordLayer(reason);
 }
 
 function placeChords(text: string, chords: ChordLayer["lines"][number]["chords"]): string {

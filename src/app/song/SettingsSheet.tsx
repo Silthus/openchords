@@ -1,11 +1,12 @@
+import { useConvexAuth } from "convex/react";
 import { parse, type View } from "../../sheet";
 import { SignOutButton } from "../signIn";
 import { textSizes, useLook, useTextSize, type Look } from "../deviceSettings";
 import { useModalDialog } from "../useModalDialog";
-import { describeCapo, describeChordSheet } from "./describeChordSheet";
+import { describeCapo, describeChordSheet, type Origin } from "./describeChordSheet";
 import { SongLink } from "./SongLink";
 
-export type ChordSheetChoice = { chordSheetId: string; name: string; origin: "builtIn" | "ai"; chordPro: string };
+export type ChordSheetChoice = { chordSheetId: string; name: string; origin: Origin; chordPro: string };
 export const speeds = { slowest: 1, fastest: 10 };
 export const transpositions = { lowest: -11, highest: 11 };
 export const capos = { none: 0, highest: 11 };
@@ -21,6 +22,7 @@ type SettingsSheetProps<Sheet extends ChordSheetChoice> = {
   onView: (view: View) => void;
   speed: number;
   onSpeed: (speed: number) => void;
+  onFixChords: () => void;
   onClose: () => void;
 };
 
@@ -35,6 +37,7 @@ export function SettingsSheet<Sheet extends ChordSheetChoice>({
   onView,
   speed,
   onSpeed,
+  onFixChords,
   onClose,
 }: SettingsSheetProps<Sheet>) {
   const dialog = useModalDialog();
@@ -52,6 +55,7 @@ export function SettingsSheet<Sheet extends ChordSheetChoice>({
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-line" />
         <h2 className="mb-2 text-sm font-bold tracking-wide text-muted uppercase">Chord sheet</h2>
         <ChordSheetCards songId={songId} sheets={sheets} chosenId={chosenId} onPick={onChordSheet} />
+        <FixChordsButton onClick={onFixChords} />
         <div className="mt-4 divide-y divide-line">
           <LookSwitch />
           <Stepper
@@ -118,6 +122,16 @@ function ChordSheetCards<Sheet extends ChordSheetChoice>({ songId, sheets, chose
         );
       })}
     </ul>
+  );
+}
+
+function FixChordsButton({ onClick }: { onClick: () => void }) {
+  const { isAuthenticated } = useConvexAuth();
+  if (!isAuthenticated) return null;
+  return (
+    <button type="button" onClick={onClick} className="mt-2 w-full rounded-xl border border-line py-3 font-semibold">
+      Fix chords
+    </button>
   );
 }
 

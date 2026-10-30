@@ -134,7 +134,20 @@ describe("compose", () => {
   test.each([
     ["a line past the lyrics", { lyricLine: 2, chords: [] }],
     ["a word past the end of its line", { lyricLine: 1, chords: [{ word: 7, chord: "D" }] }],
+    ["a line between two lyric lines", { lyricLine: 0.5, chords: [{ word: 0, chord: "D" }] }],
+    ["a word between two words", { lyricLine: 1, chords: [{ word: 1.5, chord: "D" }] }],
+    ["a chord that is no chord", { lyricLine: 1, chords: [{ word: 0, chord: "Xyz" }] }],
+    ["a chord that closes its own brackets", { lyricLine: 1, chords: [{ word: 0, chord: "G]That" }] }],
   ])("refuses %s", (_, line) => {
     expect(() => compose(lyrics, { ...layer, lines: [line] }, meta)).toThrow(InvalidChordLayer);
+  });
+
+  test.each([
+    ["a key that is no chord", { key: "G}\n{title: Other" }],
+    ["a capo past the eleventh fret", { capo: 12 }],
+    ["a capo between two frets", { capo: 1.5 }],
+    ["a section label that starts a new line", { sections: [{ label: "Verse\n{title: Other}", fromLine: 0 }] }],
+  ])("refuses %s", (_, changed) => {
+    expect(() => compose(lyrics, { ...layer, ...changed }, meta)).toThrow(InvalidChordLayer);
   });
 });
