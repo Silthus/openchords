@@ -57,6 +57,24 @@ describe("sourcesFor", () => {
   });
 });
 
+describe("sourcesFor with the AI", () => {
+  const withTheAi = { OPENCHORDS_SOURCES: "builtIn,ai", OPENCHORDS_INVITES: "on" };
+
+  test("refuses the AI while invites are off, so a public link never spends on a draft", () => {
+    expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,ai" })).toThrow(/OPENCHORDS_INVITES/);
+  });
+
+  test("asks the AI for chords only while ai is in OPENCHORDS_SOURCES", () => {
+    expect(sourcesFor({}).chordSources).toEqual(["builtIn"]);
+    expect(sourcesFor(withTheAi).chordSources).toEqual(["builtIn", "ai"]);
+  });
+
+  test("a built-in Song keeps its own Chord sheets and never reaches the AI", async () => {
+    const drafts = await sourcesFor(withTheAi).chordsFor(risingSun, (await lyricsFor(risingSun))!);
+    expect(drafts.map((draft) => draft.origin)).toEqual(["builtIn", "builtIn", "builtIn"]);
+  });
+});
+
 describe("sourcesFor with LRCLIB", () => {
   test("refuses LRCLIB without its app id and key", () => {
     expect(() => sourcesFor({ OPENCHORDS_SOURCES: "builtIn,lrclib", OPENCHORDS_INVITES: "on" })).toThrow(/LRCLIB_APP_ID/);

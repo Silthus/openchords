@@ -5,10 +5,10 @@ import type { Id } from "../../../convex/_generated/dataModel";
 import { easierCapo, parse, shapes, type SheetMeta, type View } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
-import { PlainLyrics } from "./ChordLyrics";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
 import { SettingsSheet } from "./SettingsSheet";
+import { UnverifiedMark, WordsOnly } from "./SongStates";
 
 const startingSpeed = 3;
 
@@ -26,7 +26,7 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
     return (
       <SongPage songId={found.song.songId} title={found.song.title}>
         {found.wordsOnly ? (
-          <WordsOnly artist={found.song.artist} lines={found.wordsOnly} />
+          <WordsOnly artist={found.song.artist} lines={found.wordsOnly} writingChords={found.writingChords} />
         ) : (
           <p className="text-base text-muted">{lyricsMessages[found.lyrics]}</p>
         )}
@@ -44,6 +44,7 @@ export function SongScreen({ songId, chordSheetId }: { songId: string; chordShee
   return (
     <SongPage songId={found.song.songId} title={found.song.title}>
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
+      <UnverifiedMark origin={chosen.origin} />
       <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
       {settingsOpen && (
         <SettingsSheet
@@ -69,15 +70,6 @@ const lyricsMessages = {
   missing: "No lyrics found for this song",
   unreachable: "Couldn't reach the lyrics service. Trying again soon.",
 };
-
-function WordsOnly({ artist, lines }: { artist: string; lines: string[] }) {
-  return (
-    <>
-      <p className="text-base text-muted">{artist} · No chords yet</p>
-      <PlainLyrics lines={lines} />
-    </>
-  );
-}
 
 function SongPage({ songId, title, children }: { songId: Id<"songs">; title: string; children: ReactNode }) {
   return (

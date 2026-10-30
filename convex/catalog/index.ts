@@ -169,6 +169,7 @@ export const song = query({
       sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
       lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing"), v.literal("unreachable")),
       wordsOnly: v.union(v.null(), v.array(v.string())),
+      writingChords: v.boolean(),
     }),
   ),
   handler: async (ctx, args) => {
@@ -190,6 +191,7 @@ export const song = query({
       sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
       lyrics,
       wordsOnly: lyrics === "ready" && sheets.length === 0 ? await linesOf(ctx, song) : null,
+      writingChords: fill?.state === "running" && fill.lyrics === "ready" && fill.chords === "pending",
     };
   },
 });

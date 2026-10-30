@@ -60,6 +60,17 @@ bunx convex env set --prod LRCLIB_API_KEY <api key>
 bunx convex env set --prod OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib
 ```
 
+## AI-drafted chords
+
+A Song with words and no Chord sheet gets one AI draft the first time she opens it: `gpt-6.1-terra` at medium effort, through the [Convex AI gateway](https://docs.convex.dev/ai-gateway), so no provider key is needed. It sends only the title, the artist and the words, takes about 15 seconds, and costs about one to two cents a Song. The song screen says "Writing chords…" meanwhile, and the stored Chord sheet "AI draft" carries the mark "AI draft: unverified, chords may be wrong". A draft with a chord that is no chord, or a chord off the words, is asked for once more, then the Song stays words-only. Each Song is drafted once; a Song that got its words before `ai` was on gets its draft on its next open.
+
+`ai` in `OPENCHORDS_SOURCES` turns drafting on, and like the other outside sources it needs `OPENCHORDS_INVITES=on`. Taking `ai` out again stops new drafts at once and keeps the stored ones:
+
+```sh
+bunx convex env set OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib,ai          # dev
+bunx convex env set --prod OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib,ai   # production
+```
+
 To take a Song down, for example after a rights holder asks, run:
 
 ```sh

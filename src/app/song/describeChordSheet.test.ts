@@ -10,6 +10,10 @@ describe("describeChordSheet", () => {
     expect(describeChordSheet("builtIn", { key: "Am", capo: 0 })).toBe("Built in · Am");
   });
 
+  test("marks an AI draft as unverified", () => {
+    expect(describeChordSheet("ai", { key: "G", capo: 0 })).toBe("AI draft · unverified · G");
+  });
+
   test("leaves out a key the sheet does not name", () => {
     expect(describeChordSheet("builtIn", { capo: 2 })).toBe("Built in · capo 2");
   });

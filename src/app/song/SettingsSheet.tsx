@@ -5,7 +5,7 @@ import { useModalDialog } from "../useModalDialog";
 import { describeCapo, describeChordSheet } from "./describeChordSheet";
 import { SongLink } from "./SongLink";
 
-export type ChordSheetChoice = { chordSheetId: string; name: string; origin: "builtIn"; chordPro: string };
+export type ChordSheetChoice = { chordSheetId: string; name: string; origin: "builtIn" | "ai"; chordPro: string };
 export const speeds = { slowest: 1, fastest: 10 };
 export const transpositions = { lowest: -11, highest: 11 };
 export const capos = { none: 0, highest: 11 };
