@@ -14,10 +14,10 @@ export async function startFill(ctx: MutationCtx, song: Doc<"songs">) {
   if (song.takenDownAt !== undefined) return;
   const songId = song._id;
   const fill = await fillOf(ctx, songId);
-  if (fill && !mayRetry(fill)) return;
+  if (fill && !mayRetry(fill) && !mayDraftChords(fill)) return;
   const retrier = new ActionRetrier(components.actionRetrier, threeAttemptsAboutOneAndFourSecondsApart);
   const runId = await retrier.run(ctx, internal.catalog.fill.run, { songId }, { onComplete: internal.catalog.fill.finished });
-  if (fill) await ctx.db.patch(fill._id, { state: "running", retryAt: undefined, error: undefined, runId });
+  if (fill) await ctx.db.patch(fill._id, { state: "running", chords: "pending", retryAt: undefined, error: undefined, runId });
   else await ctx.db.insert("fills", { songId, state: "running", lyrics: "pending", chords: "pending", runId });
 }
 
@@ -27,6 +27,12 @@ function mayRetry(fill: Doc<"fills">) {
   return failedLongEnoughAgo || leftRunningByAnEarlierVersion;
 }
 
+function mayDraftChords(fill: Doc<"fills">) {
+  if (fill.state !== "done" || fill.lyrics !== "ready" || fill.chords !== "none") return false;
+  const asked = fill.chordSourcesAsked ?? ["builtIn"];
+  return sourcesFor(process.env).chordSources.some((source) => !asked.includes(source));
+}
+
 export const run = internalAction({
   args: { songId: v.id("songs") },
   returns: v.null(),
@@ -34,7 +40,7 @@ export const run = internalAction({
     const toFill = await ctx.runQuery(internal.catalog.fill.songToFill, { songId });
     if (!toFill) return null;
     const { song, storedLyrics } = toFill;
-    const { lyricsFor, chordsFor } = sourcesFor(process.env);
+    const { lyricsFor, chordsFor, chordSources } = sourcesFor(process.env);
     const lyrics = storedLyrics ?? (await lyricsFor(song));
     if (!lyrics) {
       await ctx.runMutation(internal.catalog.fill.noLyrics, { songId });
@@ -43,7 +49,7 @@ export const run = internalAction({
     const lyricsId = storedLyrics?._id ?? (await ctx.runMutation(internal.catalog.fill.storeLyrics, { songId, ...lyrics }));
     const drafts = await chordsFor(song, lyrics);
     const sheets = drafts.map(({ name, origin, provenance, layer }) => ({ name, origin, provenance, chordPro: compose(lyrics.lines, layer, song) }));
-    await ctx.runMutation(internal.catalog.fill.storeChordSheets, { songId, lyricsId, sheets });
+    await ctx.runMutation(internal.catalog.fill.storeChordSheets, { songId, lyricsId, sheets, chordSourcesAsked: chordSources });
     return null;
   },
 });
@@ -98,20 +104,22 @@ export const storeChordSheets = internalMutation({
     songId: v.id("songs"),
     lyricsId: v.id("lyrics"),
     sheets: v.array(v.object({ name: v.string(), origin, provenance, chordPro: v.string() })),
+    chordSourcesAsked: v.array(v.string()),
   },
   returns: v.null(),
-  handler: async (ctx, { songId, lyricsId, sheets }) => {
+  handler: async (ctx, { songId, lyricsId, sheets, chordSourcesAsked }) => {
     const stored = await ctx.db
       .query("chordSheets")
       .withIndex("by_song", (q) => q.eq("songId", songId))
       .first();
     if (!stored) for (const sheet of sheets) await ctx.db.insert("chordSheets", { songId, lyricsId, ...sheet });
-    await patchFill(ctx, songId, { state: "done", chords: sheets.length > 0 ? "ready" : "none" });
+    if (sheets.length > 0) await ctx.db.patch(songId, { hasSheets: true });
+    await patchFill(ctx, songId, { state: "done", chords: sheets.length > 0 ? "ready" : "none", chordSourcesAsked });
     return null;
   },
 });
 
-async function patchFill(ctx: MutationCtx, songId: Id<"songs">, changes: Partial<{ state: "done"; lyrics: "ready" | "missing"; chords: "ready" | "none" }>) {
+async function patchFill(ctx: MutationCtx, songId: Id<"songs">, changes: Partial<{ state: "done"; lyrics: "ready" | "missing"; chords: "ready" | "none"; chordSourcesAsked: string[] }>) {
   const fill = await fillOf(ctx, songId);
   if (!fill) throw new Error(`The fill of Song ${songId} is gone, so the Song was taken down while it ran`);
   await ctx.db.patch(fill._id, changes);

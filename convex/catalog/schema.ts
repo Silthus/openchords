@@ -2,13 +2,13 @@ import { defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export const provenance = v.object({
-  source: v.union(v.literal("builtIn"), v.literal("lrclib")),
+  source: v.union(v.literal("builtIn"), v.literal("lrclib"), v.literal("ai")),
   recordId: v.string(),
   licence: v.string(),
   fetchedAt: v.number(),
 });
 
-export const origin = v.literal("builtIn");
+export const origin = v.union(v.literal("builtIn"), v.literal("ai"));
 
 export const catalogTables = {
   songs: defineTable({
@@ -48,6 +48,7 @@ export const catalogTables = {
     retryAt: v.optional(v.number()),
     error: v.optional(v.string()),
     runId: v.optional(v.string()),
+    chordSourcesAsked: v.optional(v.array(v.string())),
   })
     .index("by_song", ["songId"])
     .index("by_run", ["runId"]),

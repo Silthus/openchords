@@ -20,7 +20,8 @@ export type ChordLayer = {
 export class InvalidChordLayer extends Error {}
 
 const directivePattern = /^\{(\w+):\s*(.*?)\s*\}$/;
-const chordPattern = /\[([^\]]*)\]/g;
+const chordOrEscapePattern = /\\([\\[\]{}])|\[([^\]]*)\]/g;
+const syntaxCharacter = /[\\[\]{}]/g;
 
 export function parse(chordPro: string): ParsedSheet {
   const sheet: ParsedSheet = { meta: { title: "", artist: "", capo: 0 }, notation: "international", sections: [] };
@@ -51,9 +52,11 @@ function parseLyricLine(line: string): SheetLine {
   const placements: Array<{ at: number; chord: string }> = [];
   let text = "";
   let consumed = 0;
-  for (const mark of line.matchAll(chordPattern)) {
+  for (const mark of line.matchAll(chordOrEscapePattern)) {
     text += line.slice(consumed, mark.index);
-    placements.push({ at: text.length, chord: mark[1]! });
+    const [, escaped, chord] = mark;
+    if (escaped !== undefined) text += escaped;
+    else placements.push({ at: text.length, chord: chord! });
     consumed = mark.index + mark[0].length;
   }
   text += line.slice(consumed);
@@ -124,5 +127,9 @@ function placeChords(text: string, chords: ChordLayer["lines"][number]["chords"]
       .map((chord) => `[${chord.chord}]`)
       .join("");
   const afterLastWord = marksAt(words.length);
-  return [...words.map((word, index) => marksAt(index) + word), ...(afterLastWord === "" ? [] : [afterLastWord])].join(" ");
+  return [...words.map((word, index) => marksAt(index) + escaped(word)), ...(afterLastWord === "" ? [] : [afterLastWord])].join(" ");
+}
+
+function escaped(word: string) {
+  return word.replace(syntaxCharacter, (character) => `\\${character}`);
 }

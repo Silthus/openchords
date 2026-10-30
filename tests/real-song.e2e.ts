@@ -4,7 +4,7 @@ import { openAsReader } from "./reader";
 
 const outsideSourcesAreOff = process.env.APP_URL !== undefined && "outside sources are on only on dev, through the local app";
 
-test("She opens a song nobody opened before and gets words, then chords", { skip: outsideSourcesAreOff }, async ({ agent, app, screen }) => {
+test("She opens a song nobody opened before and gets words, then chords", { skip: outsideSourcesAreOff, timeout: 180_000 }, async ({ agent, app, screen }) => {
   await openAsReader(app, screen, "/");
   await agent.act("Type Ring of Fire Johnny Cash into the search field");
   await expect(screen.getByRole("link").filter({ hasText: "Ring of Fire" }).first()).toContainText("Johnny Cash · Words only");
@@ -13,8 +13,12 @@ test("She opens a song nobody opened before and gets words, then chords", { skip
 
   await agent.act("Open Ring of Fire by Johnny Cash");
   await agent.waitFor("the words of Ring of Fire are shown");
-  await expect(screen.getByText("Johnny Cash · No chords yet")).toBeVisible();
+  await expect(screen.getByText("Johnny Cash · Writing chords…")).toBeVisible();
   await app.screenshot("The words arrive for a song opened the first time");
+
+  await expect(screen.getByText(/^Johnny Cash · AI draft · Key /)).toBeVisible({ timeout: 90_000 });
+  await expect(screen.getByText("AI draft: unverified, chords may be wrong")).toBeVisible();
+  await app.screenshot("An unverified AI draft puts chords over the words");
 });
 
 test("A second search within a second brings its results a moment later", { skip: outsideSourcesAreOff }, async ({ app, browser, screen }) => {

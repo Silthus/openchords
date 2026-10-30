@@ -259,3 +259,65 @@ describe("when the lyrics service cannot be reached", () => {
     expect(await backend.run((ctx) => ctx.db.query("lyrics").collect())).toHaveLength(1);
   });
 });
+
+describe("when the AI drafts chords", () => {
+  const withTheAi = "builtIn,lrclib,ai";
+
+  async function aSongWithWordsOnly(chordSourcesAsked?: string[]) {
+    const opened = await aSongNobodyOpened();
+    await opened.backend.run(async (ctx) => {
+      await ctx.db.insert("lyrics", { songId: opened.songId, lines: ["Amazing grace, how sweet the sound"], provenance: { source: "lrclib", recordId: "19200992", licence: "lrclib-api", fetchedAt: Date.now() } });
+      await ctx.db.insert("fills", { songId: opened.songId, state: "done", lyrics: "ready", chords: "none", chordSourcesAsked });
+    });
+    return opened;
+  }
+
+  test("she reads the words while the chords are written", async () => {
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await backend.run(async (ctx) => {
+      await ctx.db.insert("lyrics", { songId, lines: ["Amazing grace, how sweet the sound"], provenance: { source: "lrclib", recordId: "19200992", licence: "lrclib-api", fetchedAt: Date.now() } });
+      await ctx.db.insert("fills", { songId, state: "running", lyrics: "ready", chords: "pending", runId: "a-run" });
+    });
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ wordsOnly: ["Amazing grace, how sweet the sound"], writingChords: true });
+  });
+
+  test("a song that got only its words before the AI drafted gets a draft when she opens it", async () => {
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await openAndWait(backend, reader, songId);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ writingChords: false });
+    process.env.OPENCHORDS_SOURCES = withTheAi;
+    await reader.mutation(api.catalog.index.open, { songId });
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: true });
+  });
+
+  test("a song the AI could not draft for is not asked again", async () => {
+    process.env.OPENCHORDS_SOURCES = withTheAi;
+    const { reader, songId } = await aSongWithWordsOnly(["builtIn", "ai"]);
+    await reader.mutation(api.catalog.index.open, { songId });
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: false });
+  });
+
+  test("a drafted song comes first among many words-only songs in search", async () => {
+    const backend = testBackend();
+    const covers = Array.from({ length: 25 }, (_, index) => ({ title: "Amazing Grace", artist: `Choir ${index}`, durationSec: 200 }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: covers });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Amazing Grace", artist: "Judy Collins", durationSec: 234 }] });
+    const songId = (await backend.run((ctx) => ctx.db.query("songs").order("desc").first()))!._id;
+    const lyricsId = await backend.run(async (ctx) => {
+      await ctx.db.insert("fills", { songId, state: "running", lyrics: "ready", chords: "pending" });
+      return await ctx.db.insert("lyrics", { songId, lines: ["Amazing grace, how sweet the sound"], provenance: { source: "lrclib", recordId: "19200992", licence: "lrclib-api", fetchedAt: Date.now() } });
+    });
+    const chordPro = "{title: Amazing Grace}\n{artist: Judy Collins}\n{capo: 0}\n[G]Amazing grace, how sweet the sound\n";
+    const provenance = { source: "ai" as const, recordId: "openai/gpt-6.1-terra#94c9ad36d9c0", licence: "ai-generated", fetchedAt: Date.now() };
+    await backend.mutation(internal.catalog.fill.storeChordSheets, { songId, lyricsId, sheets: [{ name: "AI draft", origin: "ai", provenance, chordPro }], chordSourcesAsked: ["builtIn", "ai"] });
+    const reader = await invitedReader(backend);
+    const [first] = await reader.query(api.catalog.index.search, { query: "Amazing Grace" });
+    expect(first).toMatchObject({ songId, hasSheets: true });
+  });
+
+  test("taking ai out of OPENCHORDS_SOURCES stops new drafts", async () => {
+    const { reader, songId } = await aSongWithWordsOnly();
+    await reader.mutation(api.catalog.index.open, { songId });
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: false });
+  });
+});

@@ -1,0 +1,21 @@
+{
+  "id": "22d5ff62-d56c-4518-b25f-452902d54dff",
+  "object": "chat.completion",
+  "created": 1793337256,
+  "model": "openai/gpt-6.1-terra",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"abstain\":false,\"key\":\"F\",\"capo\":0,\"sections\":[{\"name\":\"verse\",\"line\":0},{\"name\":\"verse\",\"line\":4},{\"name\":\"verse\",\"line\":8},{\"name\":\"verse\",\"line\":12},{\"name\":\"verse\",\"line\":16},{\"name\":\"outro\",\"line\":20}],\"placements\":[{\"line\":0,\"word\":0,\"chord\":\"F\"},{\"line\":0,\"word\":1,\"chord\":\"Bb\"},{\"line\":0,\"word\":2,\"chord\":\"F\"},{\"line\":1,\"word\":0,\"chord\":\"F\"},{\"line\":1,\"word\":5,\"chord\":\"C7\"},{\"line\":2,\"word\":0,\"chord\":\"F\"},{\"line\":2,\"word\":5,\"chord\":\"Bb\"},{\"line\":2,\"word\":7,\"chord\":\"F\"},{\"line\":3,\"word\":0,\"chord\":\"F\"},{\"line\":3,\"word\":3,\"chord\":\"C7\"},{\"line\":3,\"word\":5,\"chord\":\"F\"},{\"line\":4,\"word\":0,\"chord\":\"F\"},{\"line\":4,\"word\":2,\"chord\":\"Bb\"},{\"line\":4,\"word\":3,\"chord\":\"F\"},{\"line\":5,\"word\":0,\"chord\":\"F\"},{\"line\":5,\"word\":3,\"chord\":\"C7\"},{\"line\":6,\"word\":0,\"chord\":\"F\"},{\"line\":6,\"word\":5,\"chord\":\"Bb\"},{\"line\":6,\"word\":6,\"chord\":\"F\"},{\"line\":7,\"word\":0,\"chord\":\"F\"},{\"line\":7,\"word\":3,\"chord\":\"C7\"},{\"line\":7,\"word\":5,\"chord\":\"F\"},{\"line\":8,\"word\":0,\"chord\":\"F\"},{\"line\":8,\"word\":1,\"chord\":\"Bb\"},{\"line\":8,\"word\":2,\"chord\":\"F\"},{\"line\":9,\"word\":0,\"chord\":\"F\"},{\"line\":9,\"word\":5,\"chord\":\"C7\"},{\"line\":10,\"word\":0,\"chord\":\"F\"},{\"line\":10,\"word\":5,\"chord\":\"Bb\"},{\"line\":10,\"word\":7,\"chord\":\"F\"},{\"line\":11,\"word\":0,\"chord\":\"F\"},{\"line\":11,\"word\":3,\"chord\":\"C7\"},{\"line\":11,\"word\":5,\"chord\":\"F\"},{\"line\":12,\"word\":0,\"chord\":\"F\"},{\"line\":12,\"word\":1,\"chord\":\"Bb\"},{\"line\":12,\"word\":2,\"chord\":\"F\"},{\"line\":13,\"word\":0,\"chord\":\"F\"},{\"line\":13,\"word\":4,\"chord\":\"C7\"},{\"line\":14,\"word\":0,\"chord\":\"F\"},{\"line\":14,\"word\":4,\"chord\":\"Bb\"},{\"line\":14,\"word\":5,\"chord\":\"F\"},{\"line\":15,\"word\":0,\"chord\":\"F\"},{\"line\":15,\"word\":3,\"chord\":\"C7\"},{\"line\":15,\"word\":4,\"chord\":\"F\"},{\"line\":16,\"word\":0,\"chord\":\"F\"},{\"line\":16,\"word\":1,\"chord\":\"Bb\"},{\"line\":16,\"word\":2,\"chord\":\"F\"},{\"line\":17,\"word\":0,\"chord\":\"F\"},{\"line\":17,\"word\":5,\"chord\":\"C7\"},{\"line\":18,\"word\":0,\"chord\":\"F\"},{\"line\":18,\"word\":5,\"chord\":\"Bb\"},{\"line\":18,\"word\":7,\"chord\":\"F\"},{\"line\":19,\"word\":0,\"chord\":\"F\"},{\"line\":19,\"word\":3,\"chord\":\"C7\"},{\"line\":19,\"word\":5,\"chord\":\"F\"},{\"line\":20,\"word\":0,\"chord\":\"F\"},{\"line\":20,\"word\":1,\"chord\":\"Bb\"},{\"line\":20,\"word\":2,\"chord\":\"F\"},{\"line\":21,\"word\":0,\"chord\":\"F\"},{\"line\":21,\"word\":5,\"chord\":\"C7\"},{\"line\":22,\"word\":0,\"chord\":\"F\"},{\"line\":22,\"word\":5,\"chord\":\"Bb\"},{\"line\":22,\"word\":7,\"chord\":\"F\"},{\"line\":23,\"word\":0,\"chord\":\"F\"},{\"line\":23,\"word\":3,\"chord\":\"C7\"},{\"line\":23,\"word\":5,\"chord\":\"F\"}]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 629,
+    "completion_tokens": 1883,
+    "total_tokens": 2512
+  }
+}

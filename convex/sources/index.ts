@@ -1,17 +1,20 @@
+import { getServiceToken } from "convex/server";
 import type { ChordLayer } from "../../src/sheet";
+import { ai } from "./ai";
 import * as builtIn from "./builtIn";
 import { lrclib } from "./lrclib";
 import { musicbrainz } from "./musicbrainz";
 
-export type Provenance = { source: "builtIn" | "lrclib"; recordId: string; licence: string; fetchedAt: number };
+export type Provenance = { source: "builtIn" | "lrclib" | "ai"; recordId: string; licence: string; fetchedAt: number };
 export type SongHit = { title: string; artist: string; durationSec?: number; builtInId?: string };
 export type Lyrics = { lines: string[]; provenance: Provenance };
-export type ChordDraft = { name: string; layer: ChordLayer; origin: "builtIn"; provenance: Provenance };
+export type ChordDraft = { name: string; layer: ChordLayer; origin: "builtIn" | "ai"; provenance: Provenance };
 
 export type Sources = {
   findSongs?: (query: string) => Promise<SongHit[]>;
   lyricsFor: (song: SongHit) => Promise<Lyrics | null>;
   chordsFor: (song: SongHit, lyrics: Lyrics) => Promise<ChordDraft[]>;
+  chordSources: string[];
 };
 
 type SourcesEnv = Record<string, string | undefined>;
@@ -27,7 +30,7 @@ export class SourceUnavailable extends Error {
 
 export const builtIns: Array<SongHit & { builtInId: string }> = builtIn.builtIns;
 
-const outsideSources = ["musicbrainz", "lrclib"];
+const outsideSources = ["musicbrainz", "lrclib", "ai"];
 
 export function sourcesFor(env: SourcesEnv): Sources {
   const enabled = (env.OPENCHORDS_SOURCES ?? "builtIn").split(",").map((name) => name.trim());
@@ -37,6 +40,7 @@ export function sourcesFor(env: SourcesEnv): Sources {
     throw new Error("Outside sources need OPENCHORDS_INVITES=on, so only invited readers reach them");
   }
   const lyricSources = [builtIn.lyricsFor, ...(enabled.includes("lrclib") ? [lrclibFrom(env).lyricsFor] : [])];
+  const chordSources = { builtIn: builtIn.chordsFor, ...(enabled.includes("ai") ? { ai: aiDraftsFromTheGateway().chordsFor } : {}) };
   return {
     findSongs: enabled.includes("musicbrainz") ? musicbrainz(fetch).findSongs : undefined,
     lyricsFor: async (song) => {
@@ -46,8 +50,19 @@ export function sourcesFor(env: SourcesEnv): Sources {
       }
       return null;
     },
-    chordsFor: builtIn.chordsFor,
+    chordsFor: async (song, lyrics) => {
+      for (const chordsFrom of Object.values(chordSources)) {
+        const drafts = await chordsFrom(song, lyrics);
+        if (drafts.length > 0) return drafts;
+      }
+      return [];
+    },
+    chordSources: Object.keys(chordSources),
   };
+}
+
+function aiDraftsFromTheGateway() {
+  return ai({ fetch, token: () => getServiceToken("ai-gateway") });
 }
 
 function lrclibFrom(env: SourcesEnv) {
