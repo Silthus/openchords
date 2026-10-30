@@ -134,7 +134,7 @@ export const song = query({
     v.object({
       song: songSummary,
       sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
-      lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing")),
+      lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing"), v.literal("unreachable")),
       wordsOnly: v.union(v.null(), v.array(v.string())),
     }),
   ),
@@ -151,7 +151,7 @@ export const song = query({
       .query("fills")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
       .unique();
-    const lyrics = fill?.lyrics ?? "pending";
+    const lyrics = lyricsStateOf(fill);
     return {
       song: summaryOf(song),
       sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
@@ -160,6 +160,11 @@ export const song = query({
     };
   },
 });
+
+function lyricsStateOf(fill: Doc<"fills"> | null): Doc<"fills">["lyrics"] | "unreachable" {
+  if (!fill) return "pending";
+  return fill.state === "failed" && fill.lyrics === "pending" ? "unreachable" : fill.lyrics;
+}
 
 async function linesOf(ctx: QueryCtx, song: Doc<"songs">) {
   const lyrics = await ctx.db

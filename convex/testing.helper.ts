@@ -22,10 +22,12 @@ async function componentFrom(packageName: string) {
 
 const rateLimiter = await componentFrom("@convex-dev/rate-limiter");
 const batchWorker = await componentFrom("@convex-dev/batch-worker");
+const actionRetrier = await componentFrom("@convex-dev/action-retrier");
 
 function withComponents(backend: TestConvex<typeof schema>) {
   backend.registerComponent("rateLimiter", rateLimiter.schema, rateLimiter.modules);
   backend.registerComponent("rateLimiter/batchWorker", batchWorker.schema, batchWorker.modules);
+  backend.registerComponent("actionRetrier", actionRetrier.schema, actionRetrier.modules);
   return backend;
 }
 

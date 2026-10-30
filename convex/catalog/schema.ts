@@ -46,5 +46,8 @@ export const catalogTables = {
     chords: v.union(v.literal("pending"), v.literal("ready"), v.literal("none")),
     retryAt: v.optional(v.number()),
     error: v.optional(v.string()),
-  }).index("by_song", ["songId"]),
+    runId: v.optional(v.string()),
+  })
+    .index("by_song", ["songId"])
+    .index("by_run", ["runId"]),
 };

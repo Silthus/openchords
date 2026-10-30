@@ -1,7 +1,8 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test";
 import amazingGrace from "../fixtures/lrclibAmazingGrace.json";
 import { api, internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
+import { sourcesFor } from "../sources";
 import { testBackend } from "../testing.helper";
 
 type Backend = ReturnType<typeof testBackend>;
@@ -108,5 +109,90 @@ describe("opening a song nobody opened before", () => {
     expect(song).toMatchObject({ lyrics: "ready", wordsOnly: null });
     expect(song?.sheets).toHaveLength(3);
     expect(lrclibRequests).toBe(0);
+  });
+});
+
+describe("when the lyrics service cannot be reached", () => {
+  const busy = () => new Response("busy", { status: 503 });
+  const anHour = 60 * 60 * 1000;
+
+  async function openAndRetry(backend: Backend, reader: Reader, songId: Id<"songs">) {
+    await reader.mutation(api.catalog.index.open, { songId });
+    await backend.finishAllScheduledFunctions(() => jest.runAllTimers());
+  }
+
+  async function aSongLrclibCouldNotServe() {
+    lrclibAnswers(busy);
+    const opened = await aSongNobodyOpened();
+    await openAndRetry(opened.backend, opened.reader, opened.songId);
+    return opened;
+  }
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2026-10-30T08:00:00Z"));
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  test("a refused first try still brings the words", async () => {
+    let answers = 0;
+    lrclibAnswers(() => (answers++ === 0 ? busy() : Response.json(amazingGrace)));
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    await openAndRetry(backend, reader, songId);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready" });
+    expect(lrclibRequests).toBe(2);
+  });
+
+  test("tries three times, then says it will try again soon", async () => {
+    const { reader, songId } = await aSongLrclibCouldNotServe();
+    expect(lrclibRequests).toBe(3);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "unreachable", wordsOnly: null });
+  });
+
+  test("opening it again within the hour asks nobody", async () => {
+    const { backend, reader, songId } = await aSongLrclibCouldNotServe();
+    jest.setSystemTime(Date.now() + anHour / 2);
+    await openAndRetry(backend, reader, songId);
+    expect(lrclibRequests).toBe(3);
+  });
+
+  test("opening it after the hour starts a new run that brings the words", async () => {
+    const { backend, reader, songId } = await aSongLrclibCouldNotServe();
+    lrclibAnswers(() => Response.json(amazingGrace));
+    jest.setSystemTime(Date.now() + anHour);
+    await openAndRetry(backend, reader, songId);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready" });
+    expect(lrclibRequests).toBe(1);
+  });
+
+  test("a new run does not ask LRCLIB again for words it already stored", async () => {
+    const { backend, reader, songId } = await aSongNobodyOpened();
+    const stored = ["Amazing grace, how sweet the sound", "That saved a wretch like me"];
+    await backend.run(async (ctx) => {
+      await ctx.db.insert("lyrics", { songId, lines: stored, provenance: { source: "lrclib", recordId: "19200992", licence: "lrclib-api", fetchedAt: Date.now() } });
+      await ctx.db.insert("fills", { songId, state: "failed", lyrics: "ready", chords: "pending", retryAt: Date.now() });
+    });
+    await openAndRetry(backend, reader, songId);
+    expect((await reader.query(api.catalog.index.song, { songId }))?.wordsOnly).toEqual(stored);
+    expect(lrclibRequests).toBe(0);
+  });
+
+  test("a new run keeps the words an earlier run stored and brings what is still missing", async () => {
+    const backend = testBackend();
+    const reader = await invitedReader(backend);
+    const risingSun = { title: "House of the Rising Sun", artist: "Traditional", builtInId: "house-of-the-rising-sun" };
+    const words = (await sourcesFor({}).lyricsFor(risingSun))!;
+    const songId = await backend.run(async (ctx) => {
+      const songId = await ctx.db.insert("songs", { ...risingSun, searchText: "House of the Rising Sun Traditional" });
+      await ctx.db.insert("lyrics", { songId, ...words });
+      await ctx.db.insert("fills", { songId, state: "failed", lyrics: "ready", chords: "pending", retryAt: Date.now() });
+      return songId;
+    });
+    await openAndRetry(backend, reader, songId);
+    expect((await reader.query(api.catalog.index.song, { songId }))?.sheets).toHaveLength(3);
+    expect(await backend.run((ctx) => ctx.db.query("lyrics").collect())).toHaveLength(1);
   });
 });
