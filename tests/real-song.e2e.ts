@@ -13,7 +13,7 @@ test("She opens a song nobody opened before and gets words, then chords", { skip
   await agent.assert("a result for Ring of Fire by Johnny Cash is shown");
   await app.screenshot("Search finds a real song");
 
-  await agent.act("Open Ring of Fire by Johnny Cash");
+  await agent.act("Open Ring of Fire by Johnny Cash to read its words");
   await agent.waitFor("the words of Ring of Fire are shown");
   await expect(screen.getByText("Johnny Cash · Writing chords…")).toBeVisible();
   await app.screenshot("The words arrive for a song opened the first time");
