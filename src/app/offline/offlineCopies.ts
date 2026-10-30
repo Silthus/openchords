@@ -22,11 +22,8 @@ export function offlineCopies(storage: () => IDBFactory) {
   const keep = (copy: OfflineCopy) =>
     inStore("readwrite", (songs) => {
       if (signingOut) return;
-      songs.put(copy, copy.found.song.songId);
-      const all = songs.getAll();
-      all.onsuccess = () => {
-        for (const old of letGo([...(all.result as OfflineCopy[])])) songs.delete(old.found.song.songId);
-      };
+      if (hasNoWords(copy.found)) songs.delete(copy.found.song.songId);
+      else putLettingOldOnesGo(songs, copy);
     });
 
   const markOpened = (songId: string, openedAt: number) =>
@@ -49,10 +46,11 @@ export function offlineCopies(storage: () => IDBFactory) {
 
   const dropRemoved = async (answerFor: AnswerFor) => {
     const kept = (await inStore("readonly", (songs) => songs.getAllKeys())) as string[];
-    const removed = await Promise.all(kept.map((songId) => isRemoved(songId, answerFor)));
-    await inStore("readwrite", (songs) => {
-      for (const songId of kept.filter((_, index) => removed[index])) songs.delete(songId);
-    });
+    await Promise.all(kept.map((songId) => dropIfRemoved(songId, answerFor)));
+  };
+
+  const dropIfRemoved = async (songId: string, answerFor: AnswerFor) => {
+    if (await isRemoved(songId, answerFor)) await inStore("readwrite", (songs) => songs.delete(songId));
   };
 
   return {
@@ -78,10 +76,22 @@ type AnswerFor = (songId: string) => Promise<FoundSong | null>;
 async function isRemoved(songId: string, answerFor: AnswerFor) {
   try {
     const answer = await answerFor(songId);
-    return answer === null || answer.lyrics === "missing";
+    return answer === null || hasNoWords(answer);
   } catch {
     return false;
   }
+}
+
+function putLettingOldOnesGo(songs: IDBObjectStore, copy: OfflineCopy) {
+  songs.put(copy, copy.found.song.songId);
+  const all = songs.getAll();
+  all.onsuccess = () => {
+    for (const old of letGo([...(all.result as OfflineCopy[])])) songs.delete(old.found.song.songId);
+  };
+}
+
+function hasNoWords(found: FoundSong) {
+  return found.lyrics === "missing";
 }
 
 function letGo(copies: OfflineCopy[]) {

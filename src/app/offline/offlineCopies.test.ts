@@ -167,6 +167,23 @@ describe("Songs removed while she was away", () => {
     expect((await copies.saved()).map((copy) => copy.found.song.title).toSorted()).toEqual(["with-chords", "words-only"]);
   });
 
+  test("leave her phone when the Song is taken down while she reads it", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const shenandoah = copyOf("shenandoah", 1, true);
+    await copies.keep(shenandoah);
+    await copies.keep({ ...shenandoah, found: takenDown(shenandoah), openedAt: 2 });
+    expect(await openedOffline(copies, shenandoah.found.song.songId)).toBeUndefined();
+  });
+
+  test("leave her phone without waiting for a Song whose answer has not come yet", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const [gone, unanswered] = [copyOf("gone", 1, true), copyOf("unanswered", 2, true)];
+    await keepAll(copies, [gone, unanswered]);
+    void copies.dropRemoved((songId) => (songId === "gone" ? Promise.resolve(null) : new Promise(() => {})));
+    await until(async () => (await copies.saved()).length === 1);
+    expect((await copies.saved()).map((copy) => copy.found.song.title)).toEqual(["unanswered"]);
+  });
+
   test("stay when asking about the Song fails", async () => {
     const copies = offlineCopies(() => new IDBFactory());
     await copies.keep(copyOf("shenandoah", 1, true));
@@ -211,4 +228,8 @@ function refusingWrites(factory: IDBFactory) {
       return opening;
     },
   } as IDBFactory;
+}
+
+async function until(holds: () => Promise<boolean>) {
+  for (let attempt = 0; attempt < 100 && !(await holds()); attempt++) await Bun.sleep(1);
 }
