@@ -20,20 +20,40 @@ function lrclibAnswers(response: () => Response) {
   }) as unknown as typeof fetch;
 }
 
-function lrclibAnswersOnceAskedTwice() {
-  let markAskedTwice = () => {};
-  let release = () => {};
-  const askedTwice = new Promise<void>((resolve) => (markAskedTwice = resolve));
-  const released = new Promise<void>((resolve) => (release = resolve));
-  lrclibAnswers(() => Response.json(amazingGrace));
-  const answer = globalThis.fetch;
-  let waiting = 0;
-  globalThis.fetch = (async (...request: Parameters<typeof fetch>) => {
-    if (++waiting === 2) markAskedTwice();
-    await released;
-    return answer(...request);
-  }) as typeof fetch;
-  return { askedTwice, release };
+function lrclibThatAnswersEachRequestWhenTold() {
+  const pending: Array<(response: Response) => void> = [];
+  const askedFor: Array<() => void> = [];
+  const asked = (times: number) => new Promise<void>((resolve) => (pending.length >= times ? resolve() : (askedFor[times] = resolve)));
+  lrclibRequests = 0;
+  globalThis.fetch = (() =>
+    new Promise<Response>((resolve) => {
+      lrclibRequests++;
+      pending.push(resolve);
+      askedFor[pending.length]?.();
+    })) as unknown as typeof fetch;
+  return { asked, answer: (request: number, response: Response) => pending[request - 1]!(response) };
+}
+
+async function lyricsRowsOf(backend: Backend, songId: Id<"songs">) {
+  return await backend.run((ctx) => ctx.db.query("lyrics").withIndex("by_song", (q) => q.eq("songId", songId)).collect());
+}
+
+async function untilItsWordsAreStored(backend: Backend, songId: Id<"songs">) {
+  while ((await lyricsRowsOf(backend, songId)).length === 0) await new Promise((resolve) => setTimeout(resolve, 5));
+}
+
+async function aSongWhoseEarlierFillStillFetchesWhenOpened() {
+  const opened = await aSongNobodyOpened();
+  const lrclib = lrclibThatAnswersEachRequestWhenTold();
+  await opened.backend.run(async (ctx) => {
+    await ctx.db.insert("fills", { songId: opened.songId, state: "running", lyrics: "pending", chords: "pending" });
+    await ctx.scheduler.runAfter(0, internal.catalog.fill.run, { songId: opened.songId });
+  });
+  const bothFills = opened.backend.finishAllScheduledFunctions(() => {});
+  await lrclib.asked(1);
+  await opened.reader.mutation(api.catalog.index.open, { songId: opened.songId });
+  await lrclib.asked(2);
+  return { ...opened, lrclib, bothFills };
 }
 
 async function invitedReader(backend: Backend) {
@@ -116,21 +136,23 @@ describe("opening a song nobody opened before", () => {
   });
 
   test("opened while the fill an earlier version started still fetches, it stores its words once", async () => {
-    const { backend, reader, songId } = await aSongNobodyOpened();
-    const lrclib = lrclibAnswersOnceAskedTwice();
-    await backend.run(async (ctx) => {
-      await ctx.db.insert("fills", { songId, state: "running", lyrics: "pending", chords: "pending" });
-      await ctx.scheduler.runAfter(0, internal.catalog.fill.run, { songId });
-    });
-    const earlierFill = backend.finishAllScheduledFunctions(() => {});
-    await reader.mutation(api.catalog.index.open, { songId });
-    await lrclib.askedTwice;
-    lrclib.release();
-    await earlierFill;
-    await backend.finishAllScheduledFunctions(() => {});
-    const lyricsRows = await backend.run((ctx) => ctx.db.query("lyrics").withIndex("by_song", (q) => q.eq("songId", songId)).collect());
-    expect(lyricsRows).toHaveLength(1);
+    const { backend, reader, songId, lrclib, bothFills } = await aSongWhoseEarlierFillStillFetchesWhenOpened();
+    lrclib.answer(1, Response.json(amazingGrace));
+    lrclib.answer(2, Response.json(amazingGrace));
+    await bothFills;
+    expect(await lyricsRowsOf(backend, songId)).toHaveLength(1);
     expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready" });
+  });
+
+  test("an earlier fill that finds no words keeps the words a newer fill stored", async () => {
+    const { backend, reader, songId, lrclib, bothFills } = await aSongWhoseEarlierFillStillFetchesWhenOpened();
+    lrclib.answer(2, Response.json(amazingGrace));
+    await untilItsWordsAreStored(backend, songId);
+    lrclib.answer(1, new Response("not found", { status: 404 }));
+    await bothFills;
+    const song = await reader.query(api.catalog.index.song, { songId });
+    expect(song?.lyrics).toBe("ready");
+    expect(song?.wordsOnly?.slice(0, 2)).toEqual(["Amazing grace, how sweet the sound", "That saved a wretch like me"]);
   });
 
   test("a built-in Song gets its words and Chord sheets without asking LRCLIB", async () => {

@@ -75,6 +75,7 @@ export const noLyrics = internalMutation({
   args: { songId: v.id("songs") },
   returns: v.null(),
   handler: async (ctx, { songId }) => {
+    if (await lyricsOf(ctx, songId)) return null;
     await patchFill(ctx, songId, { state: "done", lyrics: "missing", chords: "none" });
     return null;
   },
