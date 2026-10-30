@@ -156,6 +156,11 @@ describe("compose", () => {
     expect(() => compose(lyrics, { ...layer, lines: [line] }, meta)).toThrow(InvalidChordLayer);
   });
 
+  test("refuses a line given twice", () => {
+    const twice = [{ lyricLine: 0, chords: [{ word: 0, chord: "H" }] }, { lyricLine: 0, chords: [{ word: 0, chord: "B" }] }];
+    expect(() => compose(lyrics, { ...layer, notation: "german", lines: twice }, meta)).toThrow(InvalidChordLayer);
+  });
+
   test.each([
     ["a key that is no chord", { key: "G}\n{title: Other" }],
     ["a capo past the eleventh fret", { capo: 12 }],

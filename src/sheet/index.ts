@@ -141,6 +141,7 @@ function refuseUnplayable({ key, capo, sections, lines }: ChordLayer) {
   refuseUnless(Number.isInteger(capo) && capo >= 0 && capo <= highestCapo, `A capo on fret ${capo} is no fret`);
   refuseUnless(sections.every(({ label }) => !/[\r\n]/.test(label)), "A section label breaks its line");
   refuseUnless(lines.every(({ lyricLine }) => Number.isInteger(lyricLine)), "A line lies between two lyric lines");
+  refuseUnless(new Set(lines.map(({ lyricLine }) => lyricLine)).size === lines.length, "A line is given twice");
   refuseUnless(chords.every(({ word }) => Number.isInteger(word)), "A chord lies between two words");
   refuseUnless(chords.every(({ chord }) => isChord(chord)), "A chord is no chord");
 }
