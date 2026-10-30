@@ -6,6 +6,7 @@ const sheetWithCapo = (chordSheetId: string, capo: number) => ({
   name: chordSheetId,
   origin: "builtIn" as const,
   chordPro: `{title: Song}\n{artist: Someone}\n{capo: ${capo}}\n\n[Am]words`,
+  replaces: [] as string[],
 });
 
 const classic = sheetWithCapo("classic", 0);
@@ -35,6 +36,14 @@ describe("how a Song opens", () => {
   test("falls back to the first Chord sheet when hers is gone", () => {
     const gone = { ...herEntry, chordSheetId: "removed", capos: { removed: 7 } };
     expect(openingChoices(sheets, { linked: undefined, entry: gone })).toEqual({ sheet: classic, view: { transpose: 2, capo: 0 }, speed: 6 });
+  });
+
+  test("opens a person's newest version for a link or an entry that names an older one", () => {
+    const annasNewest = { ...sheetWithCapo("annas-newest", 0), replaces: ["annas-first"] };
+    const withHers = [...sheets, annasNewest];
+    const onHerFirst = { ...herEntry, chordSheetId: "annas-first" };
+    expect(openingChoices(withHers, { linked: undefined, entry: onHerFirst })?.sheet).toEqual(annasNewest);
+    expect(openingChoices(withHers, { linked: "annas-first", entry: undefined })?.sheet).toEqual(annasNewest);
   });
 
   test("has nothing to open on a Song without Chord sheets", () => {

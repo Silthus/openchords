@@ -31,7 +31,7 @@ function versesOf(lines: string[]) {
   return verses.filter((verse) => verse.length > 0);
 }
 
-function LyricsAtHerTextSize({ children }: { children: ReactNode }) {
+export function LyricsAtHerTextSize({ children }: { children: ReactNode }) {
   const [textSize] = useTextSize();
   return (
     <div data-lyrics className="mt-6" style={{ fontSize: `${(lyricsRemAtFullSize * textSize) / 100}rem` }}>

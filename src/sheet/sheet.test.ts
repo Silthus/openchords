@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { InvalidChordLayer, compose, layerOf, lyricsOf, parse, type ChordLayer } from ".";
+import { InvalidChordLayer, compose, layerOf, lyricsOf, parse, transpose, type ChordLayer } from ".";
 
 const risingSun = `{title: House of the Rising Sun}
 {artist: Traditional}
@@ -124,6 +124,20 @@ describe("compose", () => {
     expect(parse(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta))).toEqual(sheet);
   });
 
+  test("keeps a German sheet German when no chord shows it, so B stays B flat", () => {
+    const german = parse("{title: Song}\n{artist: Someone}\n[Fis]One [H]two [Cis]three");
+    const transposedDown = transpose(german, -1);
+    const saved = parse(compose(lyricsOf(transposedDown), layerOf(transposedDown), transposedDown.meta));
+    expect(saved.notation).toBe("german");
+    expect(layerOf(saved).lines[0]!.chords.map(({ chord }) => chord)).toEqual(["F", "B", "C"]);
+  });
+
+  test("gives back a German sheet whose chords show it as it was written", () => {
+    const written = compose(["One two three"], { capo: 0, sections: [], lines: [{ lyricLine: 0, chords: [{ word: 0, chord: "H" }, { word: 2, chord: "Fis" }] }] }, meta);
+    const sheet = parse(written);
+    expect(compose(lyricsOf(sheet), layerOf(sheet), sheet.meta)).toBe(written);
+  });
+
   test("keeps brackets, braces and backslashes in her words as words, not chords or directives", () => {
     const words = ["[Chorus]", "I fell into a [burning] ring", "{spoken: come home}", "back\\slash"];
     const sheet = parse(compose(words, { capo: 0, sections: [], lines: [{ lyricLine: 1, chords: [{ word: 0, chord: "G" }] }] }, meta));
@@ -134,7 +148,25 @@ describe("compose", () => {
   test.each([
     ["a line past the lyrics", { lyricLine: 2, chords: [] }],
     ["a word past the end of its line", { lyricLine: 1, chords: [{ word: 7, chord: "D" }] }],
+    ["a line between two lyric lines", { lyricLine: 0.5, chords: [{ word: 0, chord: "D" }] }],
+    ["a word between two words", { lyricLine: 1, chords: [{ word: 1.5, chord: "D" }] }],
+    ["a chord that is no chord", { lyricLine: 1, chords: [{ word: 0, chord: "Xyz" }] }],
+    ["a chord that closes its own brackets", { lyricLine: 1, chords: [{ word: 0, chord: "G]That" }] }],
   ])("refuses %s", (_, line) => {
     expect(() => compose(lyrics, { ...layer, lines: [line] }, meta)).toThrow(InvalidChordLayer);
+  });
+
+  test("refuses a line given twice", () => {
+    const twice = [{ lyricLine: 0, chords: [{ word: 0, chord: "H" }] }, { lyricLine: 0, chords: [{ word: 0, chord: "B" }] }];
+    expect(() => compose(lyrics, { ...layer, notation: "german", lines: twice }, meta)).toThrow(InvalidChordLayer);
+  });
+
+  test.each([
+    ["a key that is no chord", { key: "G}\n{title: Other" }],
+    ["a capo past the eleventh fret", { capo: 12 }],
+    ["a capo between two frets", { capo: 1.5 }],
+    ["a section label that starts a new line", { sections: [{ label: "Verse\n{title: Other}", fromLine: 0 }] }],
+  ])("refuses %s", (_, changed) => {
+    expect(() => compose(lyrics, { ...layer, ...changed }, meta)).toThrow(InvalidChordLayer);
   });
 });

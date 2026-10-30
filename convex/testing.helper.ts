@@ -45,10 +45,10 @@ export async function testBackendWith(env: Record<string, string>) {
 
 const anna = { email: "anna@example.com", name: "Anna Berg" };
 
-export async function invitedReader(backend: TestConvex<typeof schema>) {
-  await backend.mutation(internal.access.invites.add, { email: anna.email });
+export async function invitedReader(backend: TestConvex<typeof schema>, person = anna) {
+  await backend.mutation(internal.access.invites.add, { email: person.email });
   const subject = await backend.run(async (ctx) => {
-    const userId = await ctx.db.insert("users", { ...anna, emailVerificationTime: Date.now() });
+    const userId = await ctx.db.insert("users", { ...person, emailVerificationTime: Date.now() });
     const sessionId = await ctx.db.insert("authSessions", { userId, expirationTime: Date.now() + 60 * 60 * 1000 });
     return `${userId}|${sessionId}`;
   });

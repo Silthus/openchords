@@ -1,12 +1,14 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
 import { useEffect, useState, type ReactNode } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { useLibraryEntry, type Choices } from "../../library";
-import { easierCapo, parse, shapes, type SheetMeta, type View } from "../../sheet";
+import { easierCapo, parse, shapes, type ChordLayer, type SheetMeta, type View } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
+import { ChordEditor } from "./ChordEditor";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
 import { openingChoices } from "./openingChoices";
@@ -36,7 +38,10 @@ type FoundSong = NonNullable<FunctionReturnType<typeof api.catalog.index.song>>;
 
 function SongWithChords({ found, linked }: { found: FoundSong; linked: string | undefined }) {
   const library = useLibraryEntry(found.song.songId);
+  const saveVersion = useMutation(api.catalog.index.saveVersion);
+  const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [fixing, setFixing] = useState(false);
   const opening = library && openingChoices(found.sheets, { linked, entry: library.entry });
   if (!library || !opening) return null;
 
@@ -46,11 +51,21 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
   const stored = { chordSheetId: chosen.chordSheetId, transpose: view.transpose, capos: library.entry?.capos ?? {}, speed, saved: library.entry?.saved ?? false };
   const choose = (changed: Partial<Choices>) => library.save({ ...stored, ...changed });
   const changeView = ({ transpose, capo }: View) => choose({ transpose, capos: { ...stored.capos, [chosen.chordSheetId]: capo } });
+  const saveFixed = async (layer: ChordLayer) => {
+    const chordSheetId = await saveVersion({ from: chosen.chordSheetId, layer });
+    choose({ chordSheetId, transpose: 0 });
+    setFixing(false);
+    await navigate({ to: "/songs/$songId/sheets/$chordSheetId", params: { songId: found.song.songId, chordSheetId }, replace: true });
+  };
   return (
     <SongPage songId={found.song.songId} title={found.song.title} save={<SaveToggle saved={stored.saved} onToggle={() => choose({ saved: !stored.saved })} />}>
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
       <UnverifiedMark origin={chosen.origin} />
-      <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
+      {fixing ? (
+        <ChordEditor sheet={shapes(written, { transpose: view.transpose, capo: written.meta.capo })} onSave={saveFixed} onCancel={() => setFixing(false)} />
+      ) : (
+        <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
+      )}
       {settingsOpen && (
         <SettingsSheet
           songId={found.song.songId}
@@ -63,6 +78,10 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
           onView={changeView}
           speed={speed}
           onSpeed={(changed) => choose({ speed: changed })}
+          onFixChords={() => {
+            setSettingsOpen(false);
+            setFixing(true);
+          }}
           onClose={() => setSettingsOpen(false)}
         />
       )}

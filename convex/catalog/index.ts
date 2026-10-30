@@ -3,10 +3,11 @@ import { ConvexError, v } from "convex/values";
 import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import { action, internalMutation, internalQuery, mutation, query, type MutationCtx, type QueryCtx } from "../_generated/server";
-import { requireInvitedWhileInvitesOn } from "../access";
+import { compose, InvalidChordLayer } from "../../src/sheet";
+import { requireInvited, requireInvitedWhileInvitesOn } from "../access";
 import { builtIns as builtInHits, identityKeyOf, SourceUnavailable, sourcesFor, wordsOf } from "../sources";
 import { startFill } from "./fill";
-import { origin } from "./schema";
+import { chordLayer, origin } from "./schema";
 
 export { catalogTables } from "./schema";
 
@@ -220,7 +221,7 @@ export const song = query({
     v.null(),
     v.object({
       song: songSummary,
-      sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
+      sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string(), replaces: v.array(v.id("chordSheets")) })),
       lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing"), v.literal("unreachable")),
       wordsOnly: v.union(v.null(), v.array(v.string())),
       writingChords: v.boolean(),
@@ -231,10 +232,11 @@ export const song = query({
     const songId = ctx.db.normalizeId("songs", args.songId);
     const song = songId && (await ctx.db.get(songId));
     if (!song) return null;
-    const sheets = await ctx.db
+    const stored = await ctx.db
       .query("chordSheets")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
       .collect();
+    const sheets = newestVersionOfEachPerson(stored);
     const fill = await ctx.db
       .query("fills")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
@@ -242,13 +244,56 @@ export const song = query({
     const lyrics = lyricsStateOf(song, fill);
     return {
       song: summaryOf(song),
-      sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
+      sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro, replaces: olderVersionsOf(sheet, stored) })),
       lyrics,
       wordsOnly: lyrics === "ready" && sheets.length === 0 ? await linesOf(ctx, song) : null,
       writingChords: fill?.state === "running" && fill.lyrics === "ready" && fill.chords === "pending",
     };
   },
 });
+
+function newestVersionOfEachPerson(sheets: Doc<"chordSheets">[]) {
+  const newest = new Map(sheets.filter(isPersonVersion).map((sheet) => [sheet.provenance.recordId, sheet._id]));
+  return sheets.filter((sheet) => !isPersonVersion(sheet) || newest.get(sheet.provenance.recordId) === sheet._id);
+}
+
+function olderVersionsOf(newest: Doc<"chordSheets">, stored: Doc<"chordSheets">[]) {
+  if (!isPersonVersion(newest)) return [];
+  return stored.filter((sheet) => isPersonVersion(sheet) && sheet.provenance.recordId === newest.provenance.recordId && sheet._id !== newest._id).map((sheet) => sheet._id);
+}
+
+function isPersonVersion(sheet: Doc<"chordSheets">) {
+  return sheet.origin === "person";
+}
+
+export const saveVersion = mutation({
+  args: { from: v.id("chordSheets"), layer: chordLayer },
+  returns: v.id("chordSheets"),
+  handler: async (ctx, { from, layer }) => {
+    const { userId, firstName } = await requireInvited(ctx);
+    const fixed = await ctx.db.get(from);
+    const song = fixed && (await ctx.db.get(fixed.songId));
+    const lyrics = fixed && (await ctx.db.get(fixed.lyricsId));
+    if (!fixed || !song || !lyrics) throw new ConvexError({ code: "NOT_FOUND" });
+    return await ctx.db.insert("chordSheets", {
+      songId: song._id,
+      name: `${firstName}'s version`,
+      origin: "person",
+      chordPro: playable(() => compose(lyrics.lines, layer, song, lyrics.verseStarts)),
+      lyricsId: lyrics._id,
+      provenance: { source: "person", recordId: userId, licence: "contributed", fetchedAt: Date.now() },
+    });
+  },
+});
+
+function playable(composed: () => string) {
+  try {
+    return composed();
+  } catch (error) {
+    if (error instanceof InvalidChordLayer) throw new ConvexError({ code: "INVALID_CHORDS", reason: error.message });
+    throw error;
+  }
+}
 
 function lyricsStateOf(song: Doc<"songs">, fill: Doc<"fills"> | null): Doc<"fills">["lyrics"] | "unreachable" {
   if (song.takenDownAt !== undefined) return "missing";
