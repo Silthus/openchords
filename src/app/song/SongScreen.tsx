@@ -82,7 +82,7 @@ function SongWithChords({ found, linked, library }: SongProps & { library: Entry
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
       <UnverifiedMark origin={chosen.origin} />
       {fixing ? (
-        <ChordEditor sheet={shapes(written, { transpose: view.transpose, capo: written.meta.capo })} onSave={saveFixed} onCancel={() => setFixing(false)} />
+        <ChordEditor sheet={sheet} onSave={saveFixed} onCancel={() => setFixing(false)} />
       ) : (
         <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
       )}
