@@ -17,7 +17,7 @@ function StartScreen() {
   const navigate = Route.useNavigate();
   const [query, setQuery] = useState(Route.useSearch().q ?? "");
   const { searching, songs } = useSongsFor(query.trim());
-  const { looking, moreComing } = useDiscovery(query.trim());
+  const discovery = useDiscovery(query.trim());
 
   const changeQuery = (next: string) => {
     setQuery(next);
@@ -39,7 +39,7 @@ function StartScreen() {
       />
       {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length === 0 ? (
-        !looking && <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
+        discoveryEnded(discovery) && <p className="mt-6 text-lg text-muted">No Songs found for “{query.trim()}”.</p>
       ) : (
         <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
@@ -55,8 +55,7 @@ function StartScreen() {
           ))}
         </ul>
       )}
-      {looking && <p className="mt-4 text-base text-muted">Looking for more songs…</p>}
-      {moreComing && <p className="mt-4 text-base text-muted">More results in a moment</p>}
+      {discovery !== "done" && <p className="mt-4 text-base text-muted">{discoveryMessages[discovery]}</p>}
     </main>
   );
 }
@@ -70,9 +69,21 @@ function useSongsFor(query: string) {
 
 const typingPauseMs = 400;
 
-function useDiscovery(query: string) {
+type Discovery = "looking" | "moreComing" | "gaveUp" | "done";
+
+const discoveryMessages = {
+  looking: "Looking for more songs…",
+  moreComing: "More results in a moment",
+  gaveUp: "No more results right now. Try again in a moment.",
+};
+
+function discoveryEnded(discovery: Discovery) {
+  return discovery === "done" || discovery === "gaveUp";
+}
+
+function useDiscovery(query: string): Discovery {
   const discover = useAction(api.catalog.index.discover);
-  const [answer, setAnswer] = useState<{ query: string; complete: boolean }>();
+  const [answer, setAnswer] = useState<{ query: string; discovery: Discovery }>();
   const searching = query.length >= 2;
 
   useEffect(() => {
@@ -80,10 +91,12 @@ function useDiscovery(query: string) {
     let stale = false;
     let timer: ReturnType<typeof setTimeout>;
     const ask = async (isRepeat: boolean) => {
-      const { complete, retryAt } = await discover({ query }).catch(() => ({ complete: true, retryAt: undefined }));
+      const { complete, retryAt } = await discover({ query }).catch(() => ({ complete: false, retryAt: undefined }));
       if (stale) return;
-      setAnswer({ query, complete });
-      if (!complete && !isRepeat && retryAt) timer = setTimeout(() => void ask(true), retryAt - Date.now());
+      if (complete) return setAnswer({ query, discovery: "done" });
+      if (isRepeat || retryAt === undefined) return setAnswer({ query, discovery: "gaveUp" });
+      setAnswer({ query, discovery: "moreComing" });
+      timer = setTimeout(() => void ask(true), retryAt - Date.now());
     };
     timer = setTimeout(() => void ask(false), typingPauseMs);
     return () => {
@@ -92,8 +105,8 @@ function useDiscovery(query: string) {
     };
   }, [discover, query, searching]);
 
-  const answered = answer?.query === query;
-  return { looking: searching && !answered, moreComing: searching && answered && !answer.complete };
+  if (!searching) return "done";
+  return answer?.query === query ? answer.discovery : "looking";
 }
 
 function useLastAnswer<T>(answer: T | undefined) {
