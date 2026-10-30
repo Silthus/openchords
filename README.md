@@ -79,6 +79,15 @@ bunx convex run --prod catalog/takedown:song '{"songId": "<song id from its link
 
 It deletes the Song's words, Chord sheets and fill, and marks it taken down: its link shows no words, search and the start screen leave it out, and opening it never fetches its words again.
 
+Songs whose words came from LRCLIB before verse breaks were kept read as one block. List them, then give each its verse breaks, one Song a run:
+
+```sh
+bunx convex run --prod catalog/verses:pending
+bunx convex run --prod catalog/verses:refetch '{"songId": "<song id>"}'
+```
+
+It asks LRCLIB for the words again and stores where each verse starts only when the words are still the same, and puts the gaps into each Chord sheet with the same chords on the same words. A Chord sheet that would change in any other way, or chords still being written, leave the Song as it is. Taking `lrclib` out of `OPENCHORDS_SOURCES` stops it.
+
 ## On her phone
 
 OpenChords installs to the home screen: Android offers to install it, and on iOS she adds it with Share → Add to Home Screen. A service worker from [vite-plugin-pwa](https://vite-pwa-org.netlify.app) keeps the app shell (HTML, JS, CSS, icons), never Convex data. When a new version is deployed, the app shows "New version ready." with a Reload button and never reloads by itself, so an update never interrupts a Song.
