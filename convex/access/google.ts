@@ -6,4 +6,6 @@ export function profileFromGoogle(claims: GoogleClaims) {
   return { id: claims.sub, name: claims.name, email: claims.email, image: claims.picture, emailVerified: claims.email_verified };
 }
 
-export const google = Google({ profile: profileFromGoogle });
+const pickAnAccountEveryTime = { params: { prompt: "select_account" } };
+
+export const google = Google({ profile: profileFromGoogle, authorization: pickAnAccountEveryTime });

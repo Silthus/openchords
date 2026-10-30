@@ -15,7 +15,7 @@ test("A visitor Google turns away is told OpenChords is invite-only and keeps th
   await browser.goto(callbackWithoutASession(await toGoogle));
 
   await expect(screen.getByRole("alert")).toHaveText("OpenChords is invite-only. Ask the person who shared this link.");
-  await expect(screen.getByRole("button", "Sign in with Google")).toBeVisible();
+  await expect(screen.getByRole("button", "Try another account")).toBeVisible();
   expect(new URL(await browser.url()).searchParams.get("to")).toBe("/?q=rising");
   await app.screenshot("Back from Google without a session, the visitor learns OpenChords is invite-only");
 });

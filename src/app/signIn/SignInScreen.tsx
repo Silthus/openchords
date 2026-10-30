@@ -20,13 +20,13 @@ export function SignInScreen({ to, returned }: { to?: string; returned: boolean 
       ) : (
         <p className="mt-4 text-lg text-muted">Sign in to play along.</p>
       )}
-      <SignInWithGoogle destination={destination} />
+      <SignInWithGoogle destination={destination} label={returned ? "Try another account" : "Sign in with Google"} />
       {import.meta.env.VITE_TEST_SIGN_IN === "1" && <SignInAsTestUser />}
     </main>
   );
 }
 
-function SignInWithGoogle({ destination }: { destination: string }) {
+function SignInWithGoogle({ destination, label }: { destination: string; label: string }) {
   const { signIn } = useAuthActions();
   const comeBackHere = `/sign-in?${new URLSearchParams({ to: destination, returned: "1" })}`;
   return (
@@ -35,7 +35,7 @@ function SignInWithGoogle({ destination }: { destination: string }) {
       onClick={() => void signIn("google", { redirectTo: comeBackHere })}
       className="mt-8 w-full rounded-xl bg-orange-500 py-3 text-lg font-semibold text-white"
     >
-      Sign in with Google
+      {label}
     </button>
   );
 }

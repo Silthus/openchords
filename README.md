@@ -19,7 +19,7 @@ Every push to `main` deploys to production and uploads the app to Convex static 
 
 ## Sign-in
 
-People sign in with Google, and only invited emails get in. Invite someone with:
+People sign in with Google, and only invited emails get in. Google asks which account to sign in with every time, so someone turned away can try another one. Invite someone with:
 
 ```sh
 bunx convex run access/invites:add '{"email": "her@example.com"}'          # dev
