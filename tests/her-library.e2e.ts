@@ -2,7 +2,7 @@ import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
 import { openAsReader } from "./reader";
 
-test("Her choices for a Song follow her to another device", async ({ agent, app, browser, screen }) => {
+test("Her choices for a Song follow her to another device", async ({ agent, app, screen }) => {
   const her = `library-${crypto.randomUUID()}`;
   await openAsReader(app, screen, "/?q=amazing", her);
   await agent.act("Open Amazing Grace");
@@ -14,7 +14,7 @@ test("Her choices for a Song follow her to another device", async ({ agent, app,
   await expect(screen.getByRole("button", "★ Saved")).toHaveAttribute("aria-pressed", "true");
   await app.screenshot("She saved a Song with her own key");
 
-  await browser.evaluate(clearSiteData);
+  await app.clearState();
   await openAsReader(app, screen, "/", her);
   const yourLibrary = screen.getByRole("region", "Your Library");
   await expect(yourLibrary).toBeVisible();
@@ -27,8 +27,3 @@ test("Her choices for a Song follow her to another device", async ({ agent, app,
   await app.screenshot("The Song opens with the key she chose");
 });
 
-function clearSiteData() {
-  window.localStorage.clear();
-  window.sessionStorage.clear();
-  return true;
-}
