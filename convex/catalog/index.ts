@@ -36,13 +36,25 @@ export const search = query({
     await requireInvitedWhileInvitesOn(ctx);
     const query = searchable(args.query);
     if (!query) return [];
-    const songs = await ctx.db
-      .query("songs")
-      .withSearchIndex("search", (q) => q.search("searchText", query))
-      .take(20);
+    const songs = await songsWithSheetsFirst(ctx, query);
     return await Promise.all(songs.map(async (song) => ({ ...summaryOf(song), hasSheets: await hasSheets(ctx, song._id) })));
   },
 });
+
+const searchLimit = 20;
+
+async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
+  const withSheets = await ctx.db
+    .query("songs")
+    .withSearchIndex("search", (q) => q.search("searchText", query).eq("hasSheets", true))
+    .take(searchLimit);
+  const all = await ctx.db
+    .query("songs")
+    .withSearchIndex("search", (q) => q.search("searchText", query))
+    .take(searchLimit);
+  const seen = new Set(withSheets.map((song) => song._id));
+  return [...withSheets, ...all.filter((song) => !seen.has(song._id))].slice(0, searchLimit);
+}
 
 const rateLimiter = new RateLimiter(components.rateLimiter, {
   musicbrainz: { kind: "token bucket", rate: 1, period: SECOND, capacity: 1 },
@@ -160,7 +172,7 @@ export const seed = internalMutation({
 });
 
 async function storeBuiltIn(ctx: MutationCtx, hit: (typeof builtInHits)[number]) {
-  const song = { ...hit, identityKey: identityKeyOf(hit), searchText: `${hit.title} ${hit.artist}` };
+  const song = { ...hit, identityKey: identityKeyOf(hit), hasSheets: true, searchText: `${hit.title} ${hit.artist}` };
   const existing = await ctx.db
     .query("songs")
     .withIndex("by_builtIn", (q) => q.eq("builtInId", hit.builtInId))

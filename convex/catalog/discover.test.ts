@@ -85,6 +85,20 @@ describe("searching beyond the built-in Songs", () => {
     ]);
   });
 
+  test("Songs with Chord sheets come first, however many songs share her words, also in a Catalog seeded before", async () => {
+    const backend = testBackend();
+    const risings = Array.from({ length: 25 }, (_, n) => ({ title: `Rising ${n}`, artist: "Rising" }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: risings });
+    await backend.mutation(internal.catalog.index.seed, {});
+    await backend.run(async (ctx) => {
+      for (const song of await ctx.db.query("songs").collect()) await ctx.db.patch(song._id, { hasSheets: undefined });
+    });
+    await backend.mutation(internal.catalog.index.seed, {});
+    const reader = await invitedReader(backend);
+    const [first] = await reader.query(api.catalog.index.search, { query: "rising" });
+    expect(first).toMatchObject({ title: "House of the Rising Sun", hasSheets: true });
+  });
+
   test("searching the same song again keeps one Song for it", async () => {
     const reader = await readerWithSongSearch();
     await reader.action(api.catalog.index.discover, { query: "ring of fire johnny cash" });
