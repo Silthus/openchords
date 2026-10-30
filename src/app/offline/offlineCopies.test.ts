@@ -82,6 +82,17 @@ describe("the Songs her phone keeps", () => {
   });
 });
 
+describe("reopening a Song offline", () => {
+  test("keeps a change made to it meanwhile", async () => {
+    const copies = offlineCopies(() => new IDBFactory());
+    const shenandoah = copyOf("shenandoah", 1, true);
+    await copies.keep(shenandoah);
+    const unsaved = { ...shenandoah, entry: { ...shenandoah.entry!, saved: false }, openedAt: 2 };
+    await Promise.all([openedOffline(copies, "shenandoah"), copies.keep(unsaved)]);
+    expect(await copies.saved()).toEqual([]);
+  });
+});
+
 describe("signing out", () => {
   test("takes every Song and her choices off the phone", async () => {
     const copies = offlineCopies(() => new IDBFactory());
@@ -99,6 +110,28 @@ describe("signing out", () => {
     signedOut();
     await signingOut;
     expect(await copies.saved()).toEqual([]);
+  });
+
+  test("leaves nothing that another tab kept while she signed out", async () => {
+    const phone = new IDBFactory();
+    const [thisTab, otherTab] = [offlineCopies(() => phone), offlineCopies(() => phone)];
+    let signedOut = () => {};
+    const signingOut = thisTab.forgetAllWhile(() => new Promise<void>((resolve) => (signedOut = resolve)));
+    await otherTab.keep(copyOf("shenandoah", 1, true));
+    signedOut();
+    await signingOut;
+    expect(await thisTab.saved()).toEqual([]);
+  });
+
+  test("leaves nothing that another tab kept while a sign-out failed", async () => {
+    const phone = new IDBFactory();
+    const [thisTab, otherTab] = [offlineCopies(() => phone), offlineCopies(() => phone)];
+    let failed = () => {};
+    const signingOut = thisTab.forgetAllWhile(() => new Promise<void>((_, reject) => (failed = () => reject(new Error("token storage")))));
+    await otherTab.keep(copyOf("shenandoah", 1, true));
+    failed();
+    await signingOut.catch(() => undefined);
+    expect(await thisTab.saved()).toEqual([]);
   });
 
   test("keeps Songs again once she has signed out", async () => {

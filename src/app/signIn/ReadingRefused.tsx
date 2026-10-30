@@ -1,7 +1,7 @@
-import { useAuthActions } from "@convex-dev/auth/react";
 import { ErrorComponent, useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { ConvexError } from "convex/values";
 import { useEffect, useRef } from "react";
+import { useSignOut } from "./useSignOut";
 
 type Refusal = "SIGN_IN_REQUIRED" | "NOT_INVITED";
 
@@ -19,7 +19,7 @@ function refusalOf(error: unknown): Refusal | undefined {
 
 function SendToSignIn({ refusal }: { refusal: Refusal }) {
   const router = useRouter();
-  const { signOut } = useAuthActions();
+  const signOut = useSignOut();
   const sent = useRef(false);
   useEffect(() => {
     if (sent.current) return;
