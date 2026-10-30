@@ -58,6 +58,7 @@ function songsOf(recordings: Recording[]): SongHit[] {
     title: takes[0]!.title,
     artist: takes[0]!.artist,
     durationSec: mostCommon(takes.flatMap((take) => take.durationSec ?? [])),
+    takes: takes.length,
   }));
 }
 

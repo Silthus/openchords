@@ -17,10 +17,10 @@ function recording(title: string, artist: string, length: number) {
 }
 
 describe("the MusicBrainz source", () => {
-  test("folds every recording of a song into one Song, with the duration most recordings share", async () => {
+  test("folds every recording of a song into one Song, with the duration most recordings share and how many recordings it has", async () => {
     const { fetch } = answering(Response.json(ringOfFire));
     expect(await musicbrainz(fetch).findSongs("ring of fire johnny cash")).toEqual([
-      { title: "Ring of Fire", artist: "Johnny Cash", durationSec: 156 },
+      { title: "Ring of Fire", artist: "Johnny Cash", durationSec: 156, takes: 24 },
     ]);
   });
 

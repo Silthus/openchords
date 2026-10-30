@@ -53,21 +53,31 @@ async function rankedSongs(ctx: QueryCtx, query: string) {
   const songs = await songsWithSheetsFirst(ctx, query);
   const words = wordsOf(query);
   return songs
-    .map((song) => ({ song, match: matchOf(song, words) }))
-    .sort((a, b) => byCloserMatch(a.match, b.match))
+    .map((song) => ({ song, rank: rankOf(song, words) }))
+    .sort((a, b) => byRank(a.rank, b.rank))
     .slice(0, searchLimit)
     .map(({ song }) => song);
 }
 
-type Match = { namesArtistAndTitle: boolean; titledAsTyped: boolean };
+type Rank = { namesArtistAndTitle: boolean; titledAsTyped: boolean; hasSheets: boolean; takes: number };
 
-function matchOf(song: Doc<"songs">, words: string[]): Match {
+function rankOf(song: Doc<"songs">, words: string[]): Rank {
   const placed = words.map((word) => ({ word, inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
-  return { namesArtistAndTitle: namesArtistAndTitle(placed), titledAsTyped: titledAsTyped(song, placed) };
+  return {
+    namesArtistAndTitle: namesArtistAndTitle(placed),
+    titledAsTyped: titledAsTyped(song, placed),
+    hasSheets: song.hasSheets === true,
+    takes: song.takes ?? 0,
+  };
 }
 
-function byCloserMatch(a: Match, b: Match) {
-  return Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) || Number(b.titledAsTyped) - Number(a.titledAsTyped);
+function byRank(a: Rank, b: Rank) {
+  return (
+    Number(b.namesArtistAndTitle) - Number(a.namesArtistAndTitle) ||
+    Number(b.titledAsTyped) - Number(a.titledAsTyped) ||
+    Number(b.hasSheets) - Number(a.hasSheets) ||
+    b.takes - a.takes
+  );
 }
 
 async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
@@ -143,7 +153,7 @@ export const mayRead = internalQuery({
 });
 
 export const storeHits = internalMutation({
-  args: { hits: v.array(v.object({ title: v.string(), artist: v.string(), durationSec: v.optional(v.number()) })) },
+  args: { hits: v.array(v.object({ title: v.string(), artist: v.string(), durationSec: v.optional(v.number()), takes: v.optional(v.number()) })) },
   returns: v.null(),
   handler: async (ctx, { hits }) => {
     await keySongsStoredWithoutIdentity(ctx);
@@ -154,6 +164,7 @@ export const storeHits = internalMutation({
         .withIndex("by_identity", (q) => q.eq("identityKey", identityKey))
         .first();
       if (!known) await ctx.db.insert("songs", { ...hit, identityKey, searchText: `${hit.title} ${hit.artist}` });
+      else if ((hit.takes ?? 0) > (known.takes ?? 0)) await ctx.db.patch(known._id, { takes: hit.takes });
     }
     return null;
   },

@@ -138,6 +138,24 @@ describe("Catalog search", () => {
     expect((await titlesFound(backend, "Agnes Obel Philharmonics"))[0]).toBe("Philharmonics");
   });
 
+  test("among Songs titled as she typed, the one MusicBrainz knows most recordings of comes first", async () => {
+    const backend = await seeded();
+    const covers = Array.from({ length: 25 }, (_, n) => ({ title: "Ring of Fire", artist: `Cover Band ${n}`, takes: 2 }));
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [...covers, { title: "Ring of Fire", artist: "Johnny Cash", takes: 18 }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
+  test("a Song stored before keeps the most recordings MusicBrainz has shown of it since", async () => {
+    const backend = await seeded();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash" }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Wall of Voodoo", takes: 3 }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash", takes: 18 }] });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Ring of Fire", artist: "Johnny Cash", takes: 1 }] });
+    const [first] = await backend.query(api.catalog.index.search, { query: "ring of fire" });
+    expect(first).toMatchObject({ title: "Ring of Fire", artist: "Johnny Cash" });
+  });
+
   test("a title that only starts with her words is no exact match", async () => {
     const backend = await seeded();
     await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Homes", artist: "Ola Gjeilo" }, { title: "Home", artist: "Phillip Phillips" }] });
