@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAction, useQuery } from "convex/react";
 import { useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
+import { discoveryOf, type Discovery } from "../discovery";
 import { Logo } from "../Logo";
 import { SongLink } from "../song/SongLink";
 
@@ -67,10 +68,6 @@ function useSongsFor(query: string) {
   return { searching, songs: useLastAnswer(searching ? found : builtIns) };
 }
 
-const typingPauseMs = 400;
-
-type Discovery = "looking" | "moreComing" | "gaveUp" | "done";
-
 const discoveryMessages = {
   looking: "Looking for more songs…",
   moreComing: "More results in a moment",
@@ -83,30 +80,23 @@ function discoveryEnded(discovery: Discovery) {
 
 function useDiscovery(query: string): Discovery {
   const discover = useAction(api.catalog.index.discover);
-  const [answer, setAnswer] = useState<{ query: string; discovery: Discovery }>();
+  const [shown, setShown] = useState<{ query: string; discovery: Discovery }>();
   const searching = query.length >= 2;
 
   useEffect(() => {
     if (!searching) return;
-    let stale = false;
-    let timer: ReturnType<typeof setTimeout>;
-    const ask = async (isRepeat: boolean) => {
-      const { complete, retryAt } = await discover({ query }).catch(() => ({ complete: false, retryAt: undefined }));
-      if (stale) return;
-      if (complete) return setAnswer({ query, discovery: "done" });
-      if (isRepeat || retryAt === undefined) return setAnswer({ query, discovery: "gaveUp" });
-      setAnswer({ query, discovery: "moreComing" });
-      timer = setTimeout(() => void ask(true), retryAt - Date.now());
-    };
-    timer = setTimeout(() => void ask(false), typingPauseMs);
-    return () => {
-      stale = true;
-      clearTimeout(timer);
-    };
+    return discoveryOf({
+      discover: () => discover({ query }),
+      show: (discovery) => setShown({ query, discovery }),
+      later: (run, delayMs) => {
+        const timer = setTimeout(run, delayMs);
+        return () => clearTimeout(timer);
+      },
+    });
   }, [discover, query, searching]);
 
   if (!searching) return "done";
-  return answer?.query === query ? answer.discovery : "looking";
+  return shown?.query === query ? shown.discovery : "looking";
 }
 
 function useLastAnswer<T>(answer: T | undefined) {

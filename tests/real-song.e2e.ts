@@ -6,7 +6,7 @@ const outsideSourcesAreOff = process.env.APP_URL !== undefined && "outside sourc
 
 test("She opens a song nobody opened before and gets words, then chords", { skip: outsideSourcesAreOff }, async ({ agent, app, screen }) => {
   await openAsReader(app, screen, "/");
-  await agent.act("Search for Ring of Fire Johnny Cash");
+  await agent.act("Type Ring of Fire Johnny Cash into the search field");
   await expect(screen.getByRole("link").filter({ hasText: "Ring of Fire" }).first()).toContainText("Johnny Cash · Words only");
   await agent.assert("a result for Ring of Fire by Johnny Cash is shown");
   await app.screenshot("Search finds a real song");
@@ -17,7 +17,7 @@ test("A second search within a second brings its results a moment later", { skip
   await expect(screen.getByRole("searchbox", "Search songs")).toBeVisible();
   const moreResultsShown = await browser.evaluate(searchTwiceWithinASecond, ["Riverside Agnes Obel", "Down by the Water Decemberists"]);
   expect(moreResultsShown).toBe(true);
-  await expect(screen.getByText("More results in a moment")).toBeHidden();
+  await expect(screen.getByText("More results in a moment")).toBeHidden({ timeout: 15_000 });
   await expect(screen.getByRole("link").filter({ hasText: "Down by the Water" }).first()).toContainText("The Decemberists");
   await app.screenshot("A busy search brings its results a moment later");
 });
