@@ -86,7 +86,7 @@ bunx convex run --prod catalog/verses:pending
 bunx convex run --prod catalog/verses:refetch '{"songId": "<song id>"}'
 ```
 
-It asks LRCLIB for the words again and stores where each verse starts only when the words are still the same, and puts the gaps into each Chord sheet with the same chords on the same words. A Chord sheet that would change in any other way leaves the Song as it is. Taking `lrclib` out of `OPENCHORDS_SOURCES` stops it.
+It asks LRCLIB for the words again and stores where each verse starts only when the words are still the same, and puts the gaps into each Chord sheet with the same chords on the same words. A Chord sheet that would change in any other way, or chords still being written, leave the Song as it is. Taking `lrclib` out of `OPENCHORDS_SOURCES` stops it.
 
 ## On her phone
 

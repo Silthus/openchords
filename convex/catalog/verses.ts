@@ -11,6 +11,7 @@ const outcome = v.union(
   v.literal("not from LRCLIB"),
   v.literal("no words from LRCLIB"),
   v.literal("words changed"),
+  v.literal("fill running"),
   v.literal("sheet would change"),
 );
 type Outcome = Infer<typeof outcome>;
@@ -55,6 +56,7 @@ export const store = internalMutation({
     if (!song || !lyrics) return "not from LRCLIB";
     if (lyrics.verseStarts !== undefined) return "already has verses";
     if (!sameWords(lyrics.lines, lines)) return "words changed";
+    if (await fillIsRunning(ctx, songId)) return "fill running";
     const sheets = await ctx.db
       .query("chordSheets")
       .withIndex("by_song", (q) => q.eq("songId", songId))
@@ -80,6 +82,14 @@ function withVerseBreaks(sheet: Doc<"chordSheets">, lyrics: Doc<"lyrics">, song:
 
 function sameWords(stored: string[], fetched: string[]) {
   return stored.length === fetched.length && stored.every((line, index) => line === fetched[index]);
+}
+
+async function fillIsRunning(ctx: QueryCtx, songId: Id<"songs">) {
+  const fill = await ctx.db
+    .query("fills")
+    .withIndex("by_song", (q) => q.eq("songId", songId))
+    .unique();
+  return fill?.state === "running";
 }
 
 async function lrclibWordsOf(ctx: QueryCtx, songId: Id<"songs">) {

@@ -33,7 +33,7 @@ const aiDraft: ChordLayer = {
   ],
 };
 
-async function aSongStoredBeforeVerseBreaks(sheets: string[] = []) {
+async function aSongStoredBeforeVerseBreaks(sheets: string[] = [], fillState: "done" | "running" = "done") {
   const backend = testBackend();
   const songId = await backend.run(async (ctx) => {
     const songId = await ctx.db.insert("songs", { ...song, searchText: "Amazing Grace Judy Collins", hasSheets: sheets.length > 0 });
@@ -45,7 +45,7 @@ async function aSongStoredBeforeVerseBreaks(sheets: string[] = []) {
     for (const chordPro of sheets) {
       await ctx.db.insert("chordSheets", { songId, lyricsId, name: "AI draft", origin: "ai", chordPro, provenance: { source: "ai", recordId: "a-draft", licence: "ai-draft", fetchedAt: Date.now() } });
     }
-    await ctx.db.insert("fills", { songId, state: "done", lyrics: "ready", chords: sheets.length > 0 ? "ready" : "none" });
+    await ctx.db.insert("fills", { songId, state: fillState, lyrics: "ready", chords: sheets.length > 0 ? "ready" : "none" });
     return songId;
   });
   return { backend, songId };
@@ -97,11 +97,20 @@ describe("refetching the verse breaks of a Song stored before they were kept", (
     expect((await songScreenOf(backend, songId)).sheets[0]?.chordPro).toBe(draft);
   });
 
-  test("leaves the Song as it is when a Chord sheet does not write its own words back the same", async () => {
-    const handEdited = compose(wordsAsStoredBeforeVerseBreaks, aiDraft, song).replace("{capo: 0}", "{capo: 0}\n{comment: an aside}");
-    const { backend, songId } = await aSongStoredBeforeVerseBreaks([handEdited]);
+  test("leaves the Song as it is when one of its Chord sheets does not write its own words back the same", async () => {
+    const draft = compose(wordsAsStoredBeforeVerseBreaks, aiDraft, song);
+    const handEdited = draft.replace("{capo: 0}", "{capo: 0}\n{comment: an aside}");
+    const { backend, songId } = await aSongStoredBeforeVerseBreaks([draft, handEdited]);
     expect(await backend.action(internal.catalog.verses.refetch, { songId })).toBe("sheet would change");
-    expect((await songScreenOf(backend, songId)).sheets[0]?.chordPro).toBe(handEdited);
+    expect((await songScreenOf(backend, songId)).sheets.map((sheet) => sheet.chordPro)).toEqual([draft, handEdited]);
+    expect(await backend.query(internal.catalog.verses.pending, {})).toEqual([songId]);
+  });
+
+  test("leaves the Song as it is while its chords are still being written", async () => {
+    const { backend, songId } = await aSongStoredBeforeVerseBreaks([], "running");
+    expect(await backend.action(internal.catalog.verses.refetch, { songId })).toBe("fill running");
+    expect((await songScreenOf(backend, songId)).wordsOnly).toEqual(wordsAsStoredBeforeVerseBreaks);
+    expect(await backend.query(internal.catalog.verses.pending, {})).toEqual([songId]);
   });
 
   test("asks LRCLIB once, however often it runs", async () => {
