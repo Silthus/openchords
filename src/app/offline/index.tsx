@@ -35,7 +35,7 @@ export function useDropOffline(songId: string) {
 
 export function useDropRemovedSongs() {
   const convex = useConvex();
-  const { isLoading } = useConvexAuth();
+  const { isLoading, isAuthenticated } = useConvexAuth();
   const { isWebSocketConnected, connectionCount } = useConvexConnectionState();
   const ready = isWebSocketConnected && !isLoading;
   useEffect(() => {
@@ -43,7 +43,7 @@ export function useDropRemovedSongs() {
     onThePhone()
       .dropRemoved((songId) => convex.query(api.catalog.index.song, { songId }))
       .catch(() => undefined);
-  }, [convex, ready, connectionCount]);
+  }, [convex, ready, isAuthenticated, connectionCount]);
 }
 
 export function forgetEverySongWhile(signOut: () => Promise<void>) {
