@@ -17,6 +17,18 @@ test("A Song she finds gone leaves her phone", { skip: productionOffersNoTestUse
   await expect.poll(() => browser.evaluate(songIdsOnThePhone)).not.toContain(goneSongId);
 });
 
+test("A Song gone while she was signed out leaves her phone when she signs in", { skip: productionOffersNoTestUser }, async ({ app, browser, screen }) => {
+  await app.open(`/sign-in?${new URLSearchParams({ to: "/", testUser: `walker-${crypto.randomUUID()}` })}`);
+  await expect(screen.getByRole("button", "Sign in with Google")).toBeVisible();
+  await browser.evaluate(keepACopyOfAGoneSong, goneSongId);
+  await expect.poll(() => browser.evaluate(songIdsOnThePhone)).toEqual([goneSongId]);
+
+  await screen.getByRole("button", "Sign in as the test user").click();
+  await expect(screen.getByRole("searchbox")).toBeVisible();
+  await expect.poll(() => browser.evaluate(songIdsOnThePhone)).toEqual([]);
+  await app.screenshot("A Song gone while she was signed out left her phone when she signed in");
+});
+
 async function openInTheApp(browser: Browser, path: string) {
   await browser.evaluate((to) => {
     history.pushState({}, "", to);
@@ -39,5 +51,14 @@ async function keepACopyUnder(songId: string) {
   type Kept = { found: { song: { songId: string } } };
   const [kept] = await new Promise<[Kept]>((resolve) => (all.onsuccess = () => resolve(all.result as [Kept])));
   transaction.objectStore("songs").put({ ...kept, found: { ...kept.found, song: { ...kept.found.song, songId } } }, songId);
+  return new Promise<string>((resolve) => (transaction.oncomplete = () => resolve(songId)));
+}
+
+async function keepACopyOfAGoneSong(songId: string) {
+  const opening = indexedDB.open("openchords-offline", 1);
+  opening.onupgradeneeded = () => opening.result.createObjectStore("songs");
+  const database = await new Promise<IDBDatabase>((resolve) => (opening.onsuccess = () => resolve(opening.result)));
+  const transaction = database.transaction("songs", "readwrite");
+  transaction.objectStore("songs").put({ found: { song: { songId } }, entry: undefined, openedAt: Date.now() }, songId);
   return new Promise<string>((resolve) => (transaction.oncomplete = () => resolve(songId)));
 }
