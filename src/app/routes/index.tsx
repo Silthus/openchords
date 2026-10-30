@@ -5,7 +5,8 @@ import { api } from "../../../convex/_generated/api";
 import { discoveryOf, type Discovery } from "../discovery";
 import { Logo } from "../Logo";
 import { SearchStatus } from "../SearchStatus";
-import { SongLink } from "../song/SongLink";
+import { YourLibrary } from "../YourLibrary";
+import { SongRow } from "../SongRow";
 
 type StartSearch = { q?: string };
 
@@ -39,19 +40,12 @@ function StartScreen() {
         aria-label="Search songs"
         className="mt-8 w-full rounded-xl border border-line bg-page px-4 py-3 text-lg outline-none focus:border-accent"
       />
+      {!searching && <YourLibrary />}
       {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length !== 0 && (
         <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
-            <li key={song.songId}>
-              <SongLink songId={song.songId} className="block py-3">
-                <span className="block text-lg font-semibold">{song.title}</span>
-                <span className="block text-muted">
-                  {song.artist}
-                  {"hasSheets" in song && !song.hasSheets && " · Words only"}
-                </span>
-              </SongLink>
-            </li>
+            <SongRow key={song.songId} song={song} />
           ))}
         </ul>
       )}

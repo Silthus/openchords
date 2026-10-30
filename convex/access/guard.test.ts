@@ -15,6 +15,7 @@ const signedOutCalls: Record<string, (backend: Backend, songId: Id<"songs">) => 
   "catalog/index:discover": (backend) => backend.action(api.catalog.index.discover, { query: "Rising" }),
   "catalog/index:song": (backend, songId) => backend.query(api.catalog.index.song, { songId }),
   "catalog/index:open": (backend, songId) => backend.mutation(api.catalog.index.open, { songId }),
+  "catalog/index:summaries": (backend, songId) => backend.query(api.catalog.index.summaries, { songIds: [songId] }),
   "library/index:entries": (backend) => backend.query(api.library.index.entries, {}),
   "library/index:save": async (backend, songId) =>
     backend.mutation(api.library.index.save, { songId, chordSheetId: await aChordSheetId(backend), transpose: 0, capos: {}, speed: 3, saved: false }),

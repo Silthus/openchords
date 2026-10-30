@@ -10,6 +10,7 @@ import { BackToSearch } from "./BackToSearch";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
 import { openingChoices } from "./openingChoices";
+import { SaveToggle } from "./SaveToggle";
 import { SettingsSheet } from "./SettingsSheet";
 import { UnverifiedMark, WordsOnly } from "./SongStates";
 
@@ -46,7 +47,7 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
   const choose = (changed: Partial<Choices>) => library.save({ ...stored, ...changed });
   const changeView = ({ transpose, capo }: View) => choose({ transpose, capos: { ...stored.capos, [chosen.chordSheetId]: capo } });
   return (
-    <SongPage songId={found.song.songId} title={found.song.title}>
+    <SongPage songId={found.song.songId} title={found.song.title} save={<SaveToggle saved={stored.saved} onToggle={() => choose({ saved: !stored.saved })} />}>
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
       <UnverifiedMark origin={chosen.origin} />
       <ChordSheetView sheet={sheet} speed={speed} onOpenSettings={() => setSettingsOpen(true)} />
@@ -76,12 +77,17 @@ const lyricsMessages = {
   unreachable: "Couldn't reach the lyrics service. Trying again soon.",
 };
 
-function SongPage({ songId, title, children }: { songId: Id<"songs">; title: string; children: ReactNode }) {
+type SongPageProps = { songId: Id<"songs">; title: string; save?: ReactNode; children: ReactNode };
+
+function SongPage({ songId, title, save, children }: SongPageProps) {
   return (
     <main className="mx-auto max-w-2xl px-5 pt-2 pb-24">
       <OpenSong songId={songId} />
       <BackToSearch />
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <div className="flex items-start justify-between gap-3">
+        <h1 className="text-2xl font-bold">{title}</h1>
+        {save}
+      </div>
       {children}
     </main>
   );
