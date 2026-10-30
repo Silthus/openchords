@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { compose } from "../../../src/sheet";
 import recorded from "../../fixtures/aiAmazingGrace.json";
+import ringOfFire from "../../fixtures/aiRingOfFire.json";
 import amazingGrace from "../../fixtures/lrclibAmazingGrace.json";
 import { SourceUnavailable, type Lyrics } from "..";
 import { ai } from ".";
@@ -32,7 +33,7 @@ function answering(...responses: Response[]) {
 }
 
 const aMadeUpChord = withPlacements((placements) => placements.map((placement, index) => (index === 3 ? { ...placement, chord: "Fsus9x" } : placement)));
-const aWordPastTheLine = withPlacements((placements) => [...placements, { line: 23, word: 6, chord: "F" }]);
+const aWordPastTheLine = withPlacements((placements) => [...placements, { line: 23, word: 7, chord: "F" }]);
 const aLinePastTheWords = withPlacements((placements) => [...placements, { line: 24, word: 0, chord: "F" }]);
 const outOfOrder = withPlacements(([first, second, ...rest]) => [second!, first!, ...rest]);
 
@@ -50,6 +51,18 @@ describe("the AI source", () => {
     ]);
     const firstLines = compose(lyrics.lines, draft!.layer, judyCollins).split("\n").slice(6, 8);
     expect(firstLines).toEqual(["[F]Amazing [Bb]grace, [F]how sweet the sound", "[F]That saved a wretch like [C7]me"]);
+  });
+
+  test("keeps a chord after the last word of a line at the end of that line", async () => {
+    const johnnyCash = { title: "Ring of Fire", artist: "Johnny Cash" };
+    const sameWordCounts: Lyrics = { ...lyrics, lines: ringOfFire.wordsPerLine.map((count) => Array.from({ length: count }, () => "la").join(" ")) };
+    const { source } = answering(Response.json(ringOfFire.completion));
+    const [draft] = await source.chordsFor(johnnyCash, sameWordCounts);
+    expect(draft!.layer.lines[17]!.chords).toEqual([
+      { word: 0, chord: "D" },
+      { word: 6, chord: "G" },
+    ]);
+    expect(compose(sameWordCounts.lines, draft!.layer, johnnyCash).split("\n")).toContain("[D]la la la la la la [G]");
   });
 
   test("asks Terra at medium effort with only the title, the artist and her numbered words", async () => {
@@ -91,6 +104,12 @@ describe("the AI source", () => {
     const { source, requests } = answering(aMadeUpChord, aWordPastTheLine, Response.json(recorded));
     expect(await source.chordsFor(judyCollins, lyrics)).toEqual([]);
     expect(requests).toHaveLength(2);
+  });
+
+  test("a retry asks once, so a refused song costs at most one more draft", async () => {
+    const { source, requests } = answering(aMadeUpChord, Response.json(recorded));
+    expect(await source.chordsFor(judyCollins, lyrics, { retrying: true })).toEqual([]);
+    expect(requests).toHaveLength(1);
   });
 
   test.each([429, 503])("a busy gateway (%i) says to try again later", async (status) => {

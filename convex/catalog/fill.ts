@@ -14,10 +14,11 @@ export async function startFill(ctx: MutationCtx, song: Doc<"songs">) {
   if (song.takenDownAt !== undefined) return;
   const songId = song._id;
   const fill = await fillOf(ctx, songId);
-  if (fill && !mayRetry(fill) && !mayDraftChords(fill)) return;
+  const retryingTheDraft = fill !== null && mayRetryTheDraft(fill);
+  if (fill && !mayRetry(fill) && !mayDraftChords(fill) && !retryingTheDraft) return;
   const retrier = new ActionRetrier(components.actionRetrier, threeAttemptsAboutOneAndFourSecondsApart);
   const runId = await retrier.run(ctx, internal.catalog.fill.run, { songId }, { onComplete: internal.catalog.fill.finished });
-  if (fill) await ctx.db.patch(fill._id, { state: "running", chords: "pending", retryAt: undefined, error: undefined, runId });
+  if (fill) await ctx.db.patch(fill._id, { state: "running", chords: "pending", retryAt: undefined, error: undefined, runId, draftRetried: fill.draftRetried || retryingTheDraft });
   else await ctx.db.insert("fills", { songId, state: "running", lyrics: "pending", chords: "pending", runId });
 }
 
@@ -28,9 +29,18 @@ function mayRetry(fill: Doc<"fills">) {
 }
 
 function mayDraftChords(fill: Doc<"fills">) {
-  if (fill.state !== "done" || fill.lyrics !== "ready" || fill.chords !== "none") return false;
+  if (!hasWordsWithoutChords(fill)) return false;
   const asked = fill.chordSourcesAsked ?? ["builtIn"];
   return sourcesFor(process.env).chordSources.some((source) => !asked.includes(source));
+}
+
+function mayRetryTheDraft(fill: Doc<"fills">) {
+  const theAiRefusedIt = hasWordsWithoutChords(fill) && (fill.chordSourcesAsked ?? []).includes("ai");
+  return theAiRefusedIt && !fill.draftRetried && sourcesFor(process.env).chordSources.includes("ai");
+}
+
+function hasWordsWithoutChords(fill: Doc<"fills">) {
+  return fill.state === "done" && fill.lyrics === "ready" && fill.chords === "none";
 }
 
 export const run = internalAction({
@@ -39,7 +49,7 @@ export const run = internalAction({
   handler: async (ctx, { songId }) => {
     const toFill = await ctx.runQuery(internal.catalog.fill.songToFill, { songId });
     if (!toFill) return null;
-    const { song, storedLyrics } = toFill;
+    const { song, storedLyrics, retryingTheDraft } = toFill;
     const { lyricsFor, chordsFor, chordSources } = sourcesFor(process.env);
     const lyrics = storedLyrics ?? (await lyricsFor(song));
     if (!lyrics) {
@@ -47,7 +57,7 @@ export const run = internalAction({
       return null;
     }
     const lyricsId = storedLyrics?._id ?? (await ctx.runMutation(internal.catalog.fill.storeLyrics, { songId, ...lyrics }));
-    const drafts = await chordsFor(song, lyrics);
+    const drafts = await chordsFor(song, lyrics, { retrying: retryingTheDraft });
     const sheets = drafts.map(({ name, origin, provenance, layer }) => ({ name, origin, provenance, chordPro: compose(lyrics.lines, layer, song, lyrics.verseStarts) }));
     await ctx.runMutation(internal.catalog.fill.storeChordSheets, { songId, lyricsId, sheets, chordSourcesAsked: chordSources });
     return null;
@@ -56,11 +66,12 @@ export const run = internalAction({
 
 export const songToFill = internalQuery({
   args: { songId: v.id("songs") },
-  handler: async (ctx, { songId }): Promise<{ song: Doc<"songs">; storedLyrics: Doc<"lyrics"> | null } | null> => {
+  handler: async (ctx, { songId }): Promise<{ song: Doc<"songs">; storedLyrics: Doc<"lyrics"> | null; retryingTheDraft: boolean } | null> => {
     const song = await ctx.db.get(songId);
-    if (!song || song.takenDownAt !== undefined || !(await fillOf(ctx, songId))) return null;
+    const fill = await fillOf(ctx, songId);
+    if (!song || song.takenDownAt !== undefined || !fill) return null;
     const storedLyrics = await lyricsOf(ctx, songId);
-    return { song, storedLyrics };
+    return { song, storedLyrics, retryingTheDraft: fill.draftRetried === true };
   },
 });
 

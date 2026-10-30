@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, jest, mock, test } from "bun:test";
+import * as convexServer from "convex/server";
 import amazingGrace from "../fixtures/lrclibAmazingGrace.json";
 import { api, internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
@@ -8,6 +9,8 @@ import { invitedReader, testBackend } from "../testing.helper";
 
 type Backend = ReturnType<typeof testBackend>;
 type Reader = ReturnType<Backend["withIdentity"]>;
+
+mock.module("convex/server", () => ({ ...convexServer, getServiceToken: async () => "deployment-token" }));
 
 const realFetch = globalThis.fetch;
 let lrclibRequests = 0;
@@ -301,6 +304,19 @@ describe("when the AI drafts chords", () => {
     return opened;
   }
 
+  function theAiAnswers(placements: Array<{ line: number; word: number; chord: string }>) {
+    const chart = { abstain: false, key: "G", capo: 0, sections: [{ name: "verse", line: 0 }], placements };
+    const asked = { times: 0 };
+    globalThis.fetch = (async () => {
+      asked.times++;
+      return Response.json({ choices: [{ message: { role: "assistant", content: JSON.stringify(chart) } }] });
+    }) as unknown as typeof fetch;
+    return asked;
+  }
+
+  const aDraft = [{ line: 0, word: 0, chord: "G" }];
+  const aRefusedDraft = [{ line: 0, word: 0, chord: "Gsus9x" }];
+
   test("she reads the words while the chords are written", async () => {
     const { backend, reader, songId } = await aSongNobodyOpened();
     await backend.run(async (ctx) => {
@@ -315,15 +331,30 @@ describe("when the AI drafts chords", () => {
     await openAndWait(backend, reader, songId);
     expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ writingChords: false });
     process.env.OPENCHORDS_SOURCES = withTheAi;
+    theAiAnswers(aDraft);
     await reader.mutation(api.catalog.index.open, { songId });
     expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: true });
+    await backend.finishAllScheduledFunctions(() => {});
+    expect((await reader.query(api.catalog.index.song, { songId }))?.sheets.map(({ name }) => name)).toEqual(["AI draft"]);
   });
 
-  test("a song the AI could not draft for is not asked again", async () => {
+  test("a song the AI could not draft for gets one more try when she opens it again", async () => {
     process.env.OPENCHORDS_SOURCES = withTheAi;
-    const { reader, songId } = await aSongWithWordsOnly(["builtIn", "ai"]);
-    await reader.mutation(api.catalog.index.open, { songId });
-    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: false });
+    const { backend, reader, songId } = await aSongWithWordsOnly(["builtIn", "ai"]);
+    const ai = theAiAnswers(aDraft);
+    await openAndWait(backend, reader, songId);
+    expect((await reader.query(api.catalog.index.song, { songId }))?.sheets.map(({ name }) => name)).toEqual(["AI draft"]);
+    expect(ai.times).toBe(1);
+  });
+
+  test("a song the AI could not draft for on its second try is asked once and never again", async () => {
+    process.env.OPENCHORDS_SOURCES = withTheAi;
+    const { backend, reader, songId } = await aSongWithWordsOnly(["builtIn", "ai"]);
+    const ai = theAiAnswers(aRefusedDraft);
+    await openAndWait(backend, reader, songId);
+    await openAndWait(backend, reader, songId);
+    expect(await reader.query(api.catalog.index.song, { songId })).toMatchObject({ lyrics: "ready", writingChords: false, sheets: [] });
+    expect(ai.times).toBe(1);
   });
 
   test("a drafted song comes first among many words-only songs in search", async () => {
