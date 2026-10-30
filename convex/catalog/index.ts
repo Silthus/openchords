@@ -4,7 +4,7 @@ import { components, internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import { action, internalMutation, internalQuery, mutation, query, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { requireInvitedWhileInvitesOn } from "../access";
-import { builtIns as builtInHits, identityKeyOf, SourceUnavailable, sourcesFor } from "../sources";
+import { builtIns as builtInHits, identityKeyOf, SourceUnavailable, sourcesFor, wordsOf } from "../sources";
 import { startFill } from "./fill";
 import { origin } from "./schema";
 
@@ -37,7 +37,7 @@ export const search = query({
     const query = searchable(args.query);
     if (!query) return [];
     await answerAgainWhenSongsArrive(ctx);
-    const songs = await songsWithSheetsFirst(ctx, query);
+    const songs = await rankedSongs(ctx, query);
     return await Promise.all(songs.map(async (song) => ({ ...summaryOf(song), hasSheets: await hasSheets(ctx, song._id) })));
   },
 });
@@ -47,6 +47,15 @@ async function answerAgainWhenSongsArrive(ctx: QueryCtx) {
 }
 
 const searchLimit = 20;
+const candidateLimit = 100;
+
+async function rankedSongs(ctx: QueryCtx, query: string) {
+  const songs = await songsWithSheetsFirst(ctx, query);
+  const words = wordsOf(query);
+  const naming = songs.filter((song) => namesArtistAndTitle(song, words));
+  const rest = songs.filter((song) => !naming.includes(song));
+  return [...naming, ...rest].slice(0, searchLimit);
+}
 
 async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
   const withSheets = await ctx.db
@@ -56,9 +65,22 @@ async function songsWithSheetsFirst(ctx: QueryCtx, query: string) {
   const all = await ctx.db
     .query("songs")
     .withSearchIndex("search", (q) => q.search("searchText", query))
-    .take(searchLimit);
+    .take(candidateLimit);
   const seen = new Set(withSheets.map((song) => song._id));
-  return [...withSheets, ...all.filter((song) => !seen.has(song._id))].slice(0, searchLimit);
+  return [...withSheets, ...all.filter((song) => !seen.has(song._id))];
+}
+
+function namesArtistAndTitle(song: Doc<"songs">, words: string[]) {
+  const placed = words.map((word) => ({ inTitle: startsAWordOf(song.title, word), inArtist: startsAWordOf(song.artist, word) }));
+  return (
+    placed.every(({ inTitle, inArtist }) => inTitle || inArtist) &&
+    placed.some(({ inTitle, inArtist }) => inTitle && !inArtist) &&
+    placed.some(({ inTitle, inArtist }) => inArtist && !inTitle)
+  );
+}
+
+function startsAWordOf(text: string, word: string) {
+  return wordsOf(text).some((textWord) => textWord.startsWith(word));
 }
 
 const rateLimiter = new RateLimiter(components.rateLimiter, {
@@ -88,7 +110,7 @@ export const discover = action({
 export const listedFor = internalQuery({
   args: { query: v.string() },
   returns: v.number(),
-  handler: async (ctx, { query }) => (await songsWithSheetsFirst(ctx, query)).length,
+  handler: async (ctx, { query }) => (await rankedSongs(ctx, query)).length,
 });
 
 export const mayRead = internalQuery({

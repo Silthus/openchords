@@ -103,6 +103,26 @@ describe("Catalog search", () => {
     expect(await titlesFound(backend, "John Newton")).toEqual(["Amazing Grace"]);
   });
 
+  test("the Song that matches her artist and her title comes first, however many songs share the title", async () => {
+    const backend = await seeded();
+    const otherZombies = Array.from({ length: 25 }, (_, n) => ({ title: "Zombie Zombie", artist: `Band ${n}` }));
+    const cover = { title: "Zombie (Cranberries cover)", artist: "Elderdawn" };
+    const hits = [...otherZombies, cover, { title: "Zombie", artist: "The Cranberries" }];
+    await backend.mutation(internal.catalog.index.storeHits, { hits });
+    const [first] = await backend.query(api.catalog.index.search, { query: "Cranberries Zombie" });
+    expect(first).toMatchObject({ title: "Zombie", artist: "The Cranberries" });
+  });
+
+  test("the Song that matches her artist and her title comes before a Song with Chord sheets that matches only her title", async () => {
+    const backend = await seeded();
+    await backend.run(async (ctx) => {
+      await ctx.db.insert("songs", { title: "Zombie Jamboree", artist: "Harry Belafonte", hasSheets: true, searchText: "Zombie Jamboree Harry Belafonte" });
+    });
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ title: "Zombie", artist: "The Cranberries" }] });
+    const titles = (await backend.query(api.catalog.index.search, { query: "Cranberries Zombie" })).map((song) => song.title);
+    expect(titles).toEqual(["Zombie", "Zombie Jamboree"]);
+  });
+
   test("answers only queries of 2 to 100 characters", async () => {
     const backend = await seeded();
     expect(await titlesFound(backend, " S ")).toEqual([]);

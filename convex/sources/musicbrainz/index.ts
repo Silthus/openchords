@@ -15,7 +15,7 @@ type Recording = {
 export function musicbrainz(fetch: Fetch) {
   return {
     async findSongs(query: string): Promise<SongHit[]> {
-      const response = await fetch(`${searchUrl}?${new URLSearchParams({ query: titleOrArtist(query), fmt: "json", limit: "25" })}`, {
+      const response = await fetch(`${searchUrl}?${new URLSearchParams({ query: searchFor(query), fmt: "json", limit: "25" })}`, {
         headers: { "User-Agent": userAgent, Accept: "application/json" },
       });
       if (response.status === 503 || response.status === 429 || response.status >= 500) {
@@ -28,9 +28,14 @@ export function musicbrainz(fetch: Fetch) {
   };
 }
 
-function titleOrArtist(query: string) {
-  const words = query.replace(/[+\-&|!(){}[\]^"~*?:\\/]+/g, " ").replace(/\s+/g, " ").trim();
-  return `recording:(${words}) OR artist:(${words})`;
+function searchFor(query: string) {
+  const words = query.replace(/[+\-&|!(){}[\]^"~*?:\\/]+/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+  return `${everyWordInTitleOrArtist(words)}^4 OR recording:(${words}) OR artist:(${words})`;
+}
+
+function everyWordInTitleOrArtist(words: string) {
+  const clauses = words.split(" ").map((word) => `(recording:${word} OR artist:${word})`);
+  return `(${clauses.join(" AND ")})`;
 }
 
 function retryAfterMs(response: Response) {
