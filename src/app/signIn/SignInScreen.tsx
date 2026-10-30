@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Logo } from "../Logo";
 import { returnPath } from "./returnPath";
 
-export function SignInScreen({ to, returned }: { to?: string; returned: boolean }) {
+export function SignInScreen({ to, returned, testUser }: { to?: string; returned: boolean; testUser?: string }) {
   const { isLoading, isAuthenticated } = useConvexAuth();
   const destination = returnPath(to);
   if (isLoading) return null;
@@ -21,7 +21,7 @@ export function SignInScreen({ to, returned }: { to?: string; returned: boolean 
         <p className="mt-4 text-lg text-muted">Sign in to play along.</p>
       )}
       <SignInWithGoogle destination={destination} label={returned ? "Try another account" : "Sign in with Google"} />
-      {import.meta.env.VITE_TEST_SIGN_IN === "1" && <SignInAsTestUser />}
+      {import.meta.env.VITE_TEST_SIGN_IN === "1" && <SignInAsTestUser name={testUser ?? "walker"} />}
     </main>
   );
 }
@@ -40,12 +40,12 @@ function SignInWithGoogle({ destination, label }: { destination: string; label: 
   );
 }
 
-function SignInAsTestUser() {
+function SignInAsTestUser({ name }: { name: string }) {
   const { signIn } = useAuthActions();
   return (
     <button
       type="button"
-      onClick={() => void signIn("test-user", { email: "walker@test.openchords.invalid" })}
+      onClick={() => void signIn("test-user", { email: `${name}@test.openchords.invalid` })}
       className="mt-3 w-full rounded-xl bg-panel py-3 text-lg font-semibold"
     >
       Sign in as the test user
