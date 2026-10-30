@@ -50,10 +50,28 @@ afterEach(() => {
 describe("searching beyond the built-in Songs", () => {
   test("she finds a song nobody searched before, as words only", async () => {
     const reader = await readerWithSongSearch();
-    expect(await reader.action(api.catalog.index.discover, { query: "ring of fire johnny cash" })).toEqual({ complete: true });
+    expect(await reader.action(api.catalog.index.discover, { query: "ring of fire johnny cash" })).toEqual({ complete: true, found: expect.any(Number) });
     expect((await ringsOfFire(reader)).map(({ title, artist, hasSheets }) => ({ title, artist, hasSheets }))).toEqual([
       { title: "Ring of Fire", artist: "Johnny Cash", hasSheets: false },
     ]);
+  });
+
+  test("says how many songs it found, so the list can wait for them", async () => {
+    const reader = await readerWithSongSearch();
+    const answer = await reader.action(api.catalog.index.discover, { query: "ring of fire johnny cash" });
+    const listed = await reader.query(api.catalog.index.search, { query: "ring of fire johnny cash" });
+    expect(answer.found).toBe(listed.length);
+  });
+
+  test("says it found nothing when MusicBrainz knows no such song", async () => {
+    musicbrainzAnswers(() => Response.json({ ...ringOfFire, count: 0, recordings: [] }));
+    const reader = await readerWithSongSearch();
+    expect(await reader.action(api.catalog.index.discover, { query: "no such song anywhere" })).toEqual({ complete: true, found: 0 });
+  });
+
+  test("says it found nothing when the songs MusicBrainz returns do not match her words", async () => {
+    const reader = await readerWithSongSearch();
+    expect(await reader.action(api.catalog.index.discover, { query: "qzxv" })).toEqual({ complete: true, found: 0 });
   });
 
   test("a built-in Song found by search has its Chord sheets", async () => {
@@ -129,7 +147,7 @@ describe("searching beyond the built-in Songs", () => {
     delete process.env.OPENCHORDS_INVITES;
     delete process.env.OPENCHORDS_SOURCES;
     const backend = testBackend();
-    expect(await backend.action(api.catalog.index.discover, { query: "ring of fire" })).toEqual({ complete: true });
+    expect(await backend.action(api.catalog.index.discover, { query: "ring of fire" })).toEqual({ complete: true, found: 0 });
     expect(musicbrainzRequests).toBe(0);
   });
 });

@@ -36,10 +36,15 @@ export const search = query({
     await requireInvitedWhileInvitesOn(ctx);
     const query = searchable(args.query);
     if (!query) return [];
+    await answerAgainWhenSongsArrive(ctx);
     const songs = await songsWithSheetsFirst(ctx, query);
     return await Promise.all(songs.map(async (song) => ({ ...summaryOf(song), hasSheets: await hasSheets(ctx, song._id) })));
   },
 });
+
+async function answerAgainWhenSongsArrive(ctx: QueryCtx) {
+  await ctx.db.query("songs").order("desc").first();
+}
 
 const searchLimit = 20;
 
@@ -62,22 +67,28 @@ const rateLimiter = new RateLimiter(components.rateLimiter, {
 
 export const discover = action({
   args: { query: v.string() },
-  returns: v.object({ complete: v.boolean(), retryAt: v.optional(v.number()) }),
-  handler: async (ctx, args) => {
+  returns: v.object({ complete: v.boolean(), found: v.optional(v.number()), retryAt: v.optional(v.number()) }),
+  handler: async (ctx, args): Promise<{ complete: boolean; found?: number; retryAt?: number }> => {
     await ctx.runQuery(internal.catalog.index.mayRead, {});
     const { findSongs } = sourcesFor(process.env);
     const query = searchable(args.query);
-    if (!findSongs || !query) return { complete: true };
+    if (!findSongs || !query) return { complete: true, found: 0 };
     const { ok, retryAfter } = await rateLimiter.limit(ctx, "musicbrainz");
     if (!ok) return { complete: false, retryAt: Date.now() + retryAfter };
     try {
       await ctx.runMutation(internal.catalog.index.storeHits, { hits: await findSongs(query) });
-      return { complete: true };
+      return { complete: true, found: await ctx.runQuery(internal.catalog.index.listedFor, { query }) };
     } catch (error) {
       if (error instanceof SourceUnavailable) return { complete: false, retryAt: Date.now() + error.retryAfterMs };
       throw error;
     }
   },
+});
+
+export const listedFor = internalQuery({
+  args: { query: v.string() },
+  returns: v.number(),
+  handler: async (ctx, { query }) => (await songsWithSheetsFirst(ctx, query)).length,
 });
 
 export const mayRead = internalQuery({

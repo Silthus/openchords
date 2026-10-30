@@ -1,6 +1,6 @@
-export type Discovery = "looking" | "moreComing" | "gaveUp" | "done";
+export type Discovery = "looking" | "moreComing" | "gaveUp" | "found" | "nothingFound";
 
-type Answer = { complete: boolean; retryAt?: number };
+type Answer = { complete: boolean; found?: number; retryAt?: number };
 
 type DiscoveryPorts = {
   discover: () => Promise<Answer>;
@@ -15,7 +15,7 @@ export function discoveryOf({ discover, show, later }: DiscoveryPorts) {
   const ask = async (isRepeat: boolean) => {
     const answer = await discover().catch(() => null);
     if (typedOver) return;
-    if (answer?.complete) return show("done");
+    if (answer?.complete) return show(answer.found ? "found" : "nothingFound");
     if (!answer || isRepeat || answer.retryAt === undefined) return show("gaveUp");
     show("moreComing");
     cancelNext = later(() => void ask(true), answer.retryAt - Date.now());
