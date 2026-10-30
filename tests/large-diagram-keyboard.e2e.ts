@@ -13,6 +13,7 @@ test("She opens and closes a large diagram from the keyboard", async ({ app, bro
   await expect(large).toBeVisible();
   await browser.keyboard.press("Escape");
   await expect(large).toBeHidden();
+  await expect(browser.locator("dialog")).toHaveCount(0);
   await expect(am).toBeFocused();
 
   await browser.keyboard.press("Enter");

@@ -108,6 +108,6 @@ APP_URL=https://<preview>.convex.site bunx e2e run   # against a pull request's 
 
 The install check needs a build with its service worker, so it runs only with `APP_URL` set.
 
-Where the app offers "Sign in as the test user" (dev and previews), each walk signs in with it first; on production, which offers none, the walks read signed out.
+Where the app offers "Sign in as the test user" (dev and previews), each walk signs in with it first; on production, which offers none, each walk checks that its first page asks to sign in, then skips the rest.
 
 The real-song walk (`tests/real-song.e2e.ts`) needs outside sources, so it runs only against the local app on dev. The other walks expect only the built-in Songs, so run them against a preview.
