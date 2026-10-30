@@ -1,11 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
-import type { FunctionReturnType } from "convex/server";
 import { useEffect, useState, type ReactNode } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
-import { useLibraryEntry, type Choices } from "../../library";
+import { useEntryInMemory, useLibraryEntry, type Choices, type EntryForSong } from "../../library";
 import { easierCapo, parse, shapes, type ChordLayer, type SheetMeta, type View } from "../../sheet";
+import { OfflineBadge, useKeepOffline, useOffline, useOfflineCopy, type FoundSong, type OfflineCopy } from "../offline";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordEditor } from "./ChordEditor";
@@ -18,32 +18,52 @@ import { UnverifiedMark, WordsOnly } from "./SongStates";
 
 export function SongScreen({ songId, chordSheetId }: { songId: string; chordSheetId?: string }) {
   const found = useQuery(api.catalog.index.song, { songId });
-  if (found === undefined) return null;
+  const offline = useOffline();
+  if (found === undefined) return offline ? <KeptSong songId={songId} linked={chordSheetId} /> : null;
   if (found === null) return <PageNotFound />;
-  if (found.sheets.length === 0) {
-    return (
-      <SongPage songId={found.song.songId} title={found.song.title}>
-        {found.wordsOnly ? (
-          <WordsOnly artist={found.song.artist} lines={found.wordsOnly} writingChords={found.writingChords} />
-        ) : (
-          <p className="text-base text-muted">{lyricsMessages[found.lyrics]}</p>
-        )}
-      </SongPage>
-    );
-  }
-  return <SongWithChords found={found} linked={chordSheetId} />;
+  return <OnlineSong found={found} linked={chordSheetId} />;
 }
 
-type FoundSong = NonNullable<FunctionReturnType<typeof api.catalog.index.song>>;
+type SongProps = { found: FoundSong; linked: string | undefined };
 
-function SongWithChords({ found, linked }: { found: FoundSong; linked: string | undefined }) {
+function OnlineSong({ found, linked }: SongProps) {
   const library = useLibraryEntry(found.song.songId);
+  useKeepOffline(found, library);
+  return <SongView found={found} linked={linked} library={library} />;
+}
+
+function KeptSong({ songId, linked }: { songId: string; linked: string | undefined }) {
+  const kept = useOfflineCopy(songId);
+  if (!kept.done) return null;
+  if (!kept.value) return <SongNeedsAConnection />;
+  return <OfflineSong copy={kept.value} linked={linked} />;
+}
+
+function OfflineSong({ copy, linked }: { copy: OfflineCopy; linked: string | undefined }) {
+  const library = useEntryInMemory(copy.found.song.songId, copy.entry);
+  return <SongView found={copy.found} linked={linked} library={library} />;
+}
+
+function SongView({ found, linked, library }: SongProps & { library: EntryForSong | undefined }) {
+  if (found.sheets.length > 0) return library ? <SongWithChords found={found} linked={linked} library={library} /> : null;
+  return (
+    <SongPage songId={found.song.songId} title={found.song.title}>
+      {found.wordsOnly ? (
+        <WordsOnly artist={found.song.artist} lines={found.wordsOnly} writingChords={found.writingChords} />
+      ) : (
+        <p className="text-base text-muted">{lyricsMessages[found.lyrics]}</p>
+      )}
+    </SongPage>
+  );
+}
+
+function SongWithChords({ found, linked, library }: SongProps & { library: EntryForSong }) {
   const saveVersion = useMutation(api.catalog.index.saveVersion);
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [fixing, setFixing] = useState(false);
-  const opening = library && openingChoices(found.sheets, { linked, entry: library.entry });
-  if (!library || !opening) return null;
+  const opening = openingChoices(found.sheets, { linked, entry: library.entry });
+  if (!opening) return null;
 
   const { sheet: chosen, view, speed } = opening;
   const written = parse(chosen.chordPro);
@@ -100,12 +120,31 @@ type SongPageProps = { songId: Id<"songs">; title: string; save?: ReactNode; chi
 
 function SongPage({ songId, title, save, children }: SongPageProps) {
   return (
-    <main className="mx-auto max-w-2xl px-5 pt-2 pb-24">
+    <SongFrame>
       <OpenSong songId={songId} />
-      <BackToSearch />
       <div className="flex items-start justify-between gap-3">
         <h1 className="text-2xl font-bold">{title}</h1>
         {save}
+      </div>
+      {children}
+    </SongFrame>
+  );
+}
+
+function SongNeedsAConnection() {
+  return (
+    <SongFrame>
+      <p className="text-lg text-muted">This Song isn't on your phone yet. Open it once with a connection to read it offline.</p>
+    </SongFrame>
+  );
+}
+
+function SongFrame({ children }: { children: ReactNode }) {
+  return (
+    <main className="mx-auto max-w-2xl px-5 pt-2 pb-24">
+      <div className="flex items-center justify-between gap-3">
+        <BackToSearch />
+        <OfflineBadge />
       </div>
       {children}
     </main>

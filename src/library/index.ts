@@ -6,7 +6,7 @@ import type { Id } from "../../convex/_generated/dataModel";
 
 export type LibraryEntry = FunctionReturnType<typeof api.library.index.entries>[number];
 export type Choices = Omit<LibraryEntry, "songId" | "updatedAt">;
-type EntryForSong = { entry: LibraryEntry | undefined; save: (choices: Choices) => void };
+export type EntryForSong = { entry: LibraryEntry | undefined; save: (choices: Choices) => void };
 
 export function useLibraryEntry(songId: Id<"songs">): EntryForSong | undefined {
   const { isLoading, isAuthenticated } = useConvexAuth();
@@ -28,8 +28,8 @@ function useStoredEntry(songId: Id<"songs">, signedIn: boolean): EntryForSong | 
   return { entry: entries.find((entry) => entry.songId === songId), save: (choices) => void save({ songId, ...choices }) };
 }
 
-function useEntryInMemory(songId: Id<"songs">): EntryForSong {
-  const [entry, setEntry] = useState<LibraryEntry>();
+export function useEntryInMemory(songId: Id<"songs">, kept?: LibraryEntry): EntryForSong {
+  const [entry, setEntry] = useState(kept);
   return {
     entry: entry?.songId === songId ? entry : undefined,
     save: (choices) => setEntry({ songId, ...choices, updatedAt: Date.now() }),
