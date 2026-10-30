@@ -123,6 +123,17 @@ describe("signing out", () => {
     expect(await thisTab.saved()).toEqual([]);
   });
 
+  test("leaves nothing that another tab kept while a sign-out failed", async () => {
+    const phone = new IDBFactory();
+    const [thisTab, otherTab] = [offlineCopies(() => phone), offlineCopies(() => phone)];
+    let failed = () => {};
+    const signingOut = thisTab.forgetAllWhile(() => new Promise<void>((_, reject) => (failed = () => reject(new Error("token storage")))));
+    await otherTab.keep(copyOf("shenandoah", 1, true));
+    failed();
+    await signingOut.catch(() => undefined);
+    expect(await thisTab.saved()).toEqual([]);
+  });
+
   test("keeps Songs again once she has signed out", async () => {
     const copies = offlineCopies(() => new IDBFactory());
     await copies.forgetAllWhile(async () => {});

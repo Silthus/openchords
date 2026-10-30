@@ -55,8 +55,8 @@ export function offlineCopies(storage: () => IDBFactory) {
       try {
         await forgetAll();
         await signOut();
-        await forgetAll();
       } finally {
+        await forgetAll();
         signingOut = false;
       }
     },
