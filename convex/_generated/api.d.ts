@@ -16,6 +16,7 @@ import type * as access_testUser from "../access/testUser.js";
 import type * as auth from "../auth.js";
 import type * as catalog_fill from "../catalog/fill.js";
 import type * as catalog_index from "../catalog/index.js";
+import type * as catalog_neverOpened from "../catalog/neverOpened.js";
 import type * as catalog_takedown from "../catalog/takedown.js";
 import type * as catalog_verses from "../catalog/verses.js";
 import type * as http from "../http.js";
@@ -49,6 +50,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "catalog/fill": typeof catalog_fill;
   "catalog/index": typeof catalog_index;
+  "catalog/neverOpened": typeof catalog_neverOpened;
   "catalog/takedown": typeof catalog_takedown;
   "catalog/verses": typeof catalog_verses;
   http: typeof http;
