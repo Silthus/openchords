@@ -16,7 +16,7 @@ export const entries = query({
       .query("libraryEntries")
       .withIndex("by_user_song", (q) => q.eq("userId", userId))
       .collect();
-    return stored.map(({ songId, chordSheetId, transpose, capo, speed, saved, updatedAt }) => ({ songId, chordSheetId, transpose, capo, speed, saved, updatedAt }));
+    return stored.map(({ songId, chordSheetId, transpose, capos, speed, saved, updatedAt }) => ({ songId, chordSheetId, transpose, capos, speed, saved, updatedAt }));
   },
 });
 

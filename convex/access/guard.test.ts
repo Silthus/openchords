@@ -17,7 +17,7 @@ const signedOutCalls: Record<string, (backend: Backend, songId: Id<"songs">) => 
   "catalog/index:open": (backend, songId) => backend.mutation(api.catalog.index.open, { songId }),
   "library/index:entries": (backend) => backend.query(api.library.index.entries, {}),
   "library/index:save": async (backend, songId) =>
-    backend.mutation(api.library.index.save, { songId, chordSheetId: await aChordSheetId(backend), transpose: 0, capo: 0, speed: 3, saved: false }),
+    backend.mutation(api.library.index.save, { songId, chordSheetId: await aChordSheetId(backend), transpose: 0, capos: {}, speed: 3, saved: false }),
 };
 
 afterEach(() => {

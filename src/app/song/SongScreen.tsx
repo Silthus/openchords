@@ -4,12 +4,12 @@ import { useEffect, useState, type ReactNode } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { useLibraryEntry, type Choices } from "../../library";
-import { easierCapo, parse, shapes, type SheetMeta } from "../../sheet";
+import { easierCapo, parse, shapes, type SheetMeta, type View } from "../../sheet";
 import { PageNotFound } from "../PageNotFound";
 import { BackToSearch } from "./BackToSearch";
 import { ChordSheetView } from "./ChordSheetView";
 import { describeCapo } from "./describeChordSheet";
-import { openingChoices, writtenCapo } from "./openingChoices";
+import { openingChoices } from "./openingChoices";
 import { SettingsSheet } from "./SettingsSheet";
 import { UnverifiedMark, WordsOnly } from "./SongStates";
 
@@ -42,8 +42,9 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
   const { sheet: chosen, view, speed } = opening;
   const written = parse(chosen.chordPro);
   const sheet = shapes(written, view);
-  const choose = (changed: Partial<Choices>) =>
-    library.save({ chordSheetId: chosen.chordSheetId, ...view, speed, saved: library.entry?.saved ?? false, ...changed });
+  const stored = { chordSheetId: chosen.chordSheetId, transpose: view.transpose, capos: library.entry?.capos ?? {}, speed, saved: library.entry?.saved ?? false };
+  const choose = (changed: Partial<Choices>) => library.save({ ...stored, ...changed });
+  const changeView = ({ transpose, capo }: View) => choose({ transpose, capos: { ...stored.capos, [chosen.chordSheetId]: capo } });
   return (
     <SongPage songId={found.song.songId} title={found.song.title}>
       <p className="text-base text-muted">{headerLine(found.song.artist, chosen.name, sheet.meta)}</p>
@@ -54,11 +55,11 @@ function SongWithChords({ found, linked }: { found: FoundSong; linked: string | 
           songId={found.song.songId}
           sheets={found.sheets}
           chosenId={chosen.chordSheetId}
-          onChordSheet={(picked) => choose({ chordSheetId: picked.chordSheetId, capo: writtenCapo(picked) })}
+          onChordSheet={(picked) => choose({ chordSheetId: picked.chordSheetId })}
           shownKey={sheet.meta.key}
           view={view}
           easierCapo={easierCapo(written, view)}
-          onView={choose}
+          onView={changeView}
           speed={speed}
           onSpeed={(changed) => choose({ speed: changed })}
           onClose={() => setSettingsOpen(false)}

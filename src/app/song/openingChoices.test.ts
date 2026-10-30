@@ -13,7 +13,7 @@ const easy = sheetWithCapo("easy", 5);
 const bluesy = sheetWithCapo("bluesy", 2);
 const sheets = [classic, easy, bluesy];
 
-const herEntry = { chordSheetId: "easy", transpose: 2, capo: 7, speed: 6 };
+const herEntry = { chordSheetId: "easy", transpose: 2, capos: { easy: 7, classic: 3 }, speed: 6 };
 
 describe("how a Song opens", () => {
   test("opens on the first Chord sheet as written when she has no entry", () => {
@@ -24,12 +24,16 @@ describe("how a Song opens", () => {
     expect(openingChoices(sheets, { linked: undefined, entry: herEntry })).toEqual({ sheet: easy, view: { transpose: 2, capo: 7 }, speed: 6 });
   });
 
-  test("opens an exact Chord sheet link over her entry, at that sheet's own capo", () => {
+  test("opens an exact Chord sheet link over her entry, at the capo she set on that sheet", () => {
+    expect(openingChoices(sheets, { linked: "classic", entry: herEntry })).toEqual({ sheet: classic, view: { transpose: 2, capo: 3 }, speed: 6 });
+  });
+
+  test("opens a Chord sheet she never set a capo on at its own capo", () => {
     expect(openingChoices(sheets, { linked: "bluesy", entry: herEntry })).toEqual({ sheet: bluesy, view: { transpose: 2, capo: 2 }, speed: 6 });
   });
 
   test("falls back to the first Chord sheet when hers is gone", () => {
-    const gone = { ...herEntry, chordSheetId: "removed" };
+    const gone = { ...herEntry, chordSheetId: "removed", capos: { removed: 7 } };
     expect(openingChoices(sheets, { linked: undefined, entry: gone })).toEqual({ sheet: classic, view: { transpose: 2, capo: 0 }, speed: 6 });
   });
 

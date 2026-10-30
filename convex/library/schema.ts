@@ -4,7 +4,7 @@ import { v } from "convex/values";
 export const choices = {
   chordSheetId: v.id("chordSheets"),
   transpose: v.number(),
-  capo: v.number(),
+  capos: v.record(v.id("chordSheets"), v.number()),
   speed: v.number(),
   saved: v.boolean(),
 };

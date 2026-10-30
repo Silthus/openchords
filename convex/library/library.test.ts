@@ -35,8 +35,10 @@ async function aSheet(backend: Backend) {
   return { songId: sheet!.songId, chordSheetId: sheet!._id };
 }
 
-function choices(sheet: { songId: Id<"songs">; chordSheetId: Id<"chordSheets"> }, changed: Partial<{ transpose: number; capo: number; speed: number; saved: boolean }> = {}) {
-  return { ...sheet, transpose: 0, capo: 0, speed: 3, saved: false, ...changed };
+type Choices = { transpose: number; capos: Record<Id<"chordSheets">, number>; speed: number; saved: boolean };
+
+function choices(sheet: { songId: Id<"songs">; chordSheetId: Id<"chordSheets"> }, changed: Partial<Choices> = {}) {
+  return { ...sheet, transpose: 0, capos: {}, speed: 3, saved: false, ...changed };
 }
 
 describe("her Library", () => {
@@ -45,9 +47,9 @@ describe("her Library", () => {
     const sheet = await aSheet(backend);
     const her = await signedIn(backend, anna);
     await her.mutation(api.library.index.save, choices(sheet, { transpose: 2 }));
-    await her.mutation(api.library.index.save, choices(sheet, { transpose: 2, capo: 3, speed: 5 }));
+    await her.mutation(api.library.index.save, choices(sheet, { transpose: 2, capos: { [sheet.chordSheetId]: 3 }, speed: 5 }));
     expect(await her.query(api.library.index.entries, {})).toEqual([
-      expect.objectContaining({ ...sheet, transpose: 2, capo: 3, speed: 5, saved: false }),
+      expect.objectContaining({ ...sheet, transpose: 2, capos: { [sheet.chordSheetId]: 3 }, speed: 5, saved: false }),
     ]);
   });
 
