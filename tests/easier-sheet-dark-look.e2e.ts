@@ -18,7 +18,11 @@ test("She picks a Chord sheet, a look and a text size", async ({ agent, app, bro
   await agent.assert("the Easy shapes card is highlighted, and the line under the Song's title names Easy shapes and Capo on fret 5", { vision: true });
 
   const lyricsBefore = await browser.evaluate(lyricsFontSize);
-  await agent.act("Choose the Dark look and press Text size + twice, then Done");
+  await agent.act("Choose the Dark look");
+  await expect(sheet.getByRole("button", "☾ Dark")).toHaveAttribute("aria-pressed", "true");
+  await agent.act("Press Text size + twice");
+  await expect(sheet.getByText("120%")).toBeVisible();
+  await agent.act("Press Done");
   await expect(sheet).toBeHidden();
   await expect.poll(() => browser.evaluate(looksDark)).toBe(true);
   expect(await browser.evaluate(lyricsFontSize)).toBeCloseTo(lyricsBefore * 1.2, 0);
