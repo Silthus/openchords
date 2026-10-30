@@ -28,6 +28,19 @@ async function aSongWithWordsAndAnAiDraft() {
   return { backend, songId };
 }
 
+function lrclibThatAnswersWhenReleased() {
+  let markAsked = () => {};
+  let release = () => {};
+  const asked = new Promise<void>((resolve) => (markAsked = resolve));
+  const released = new Promise<void>((resolve) => (release = resolve));
+  globalThis.fetch = (async () => {
+    markAsked();
+    await released;
+    return Response.json(amazingGrace);
+  }) as unknown as typeof fetch;
+  return { asked, release };
+}
+
 async function searchFor(backend: Backend, query: string) {
   return await (await invitedReader(backend)).query(api.catalog.index.search, { query });
 }
@@ -75,6 +88,20 @@ describe("putting a Song back to never opened, for walks on dev", () => {
     const backend = testBackend();
     await backend.mutation(internal.catalog.neverOpened.reset, judyCollins);
     expect(await searchFor(backend, "amazing grace judy collins")).toEqual([]);
+  });
+
+  test("a Song still being filled is refused, so the running fill finishes with what it stored", async () => {
+    const backend = testBackend();
+    await backend.mutation(internal.catalog.index.storeHits, { hits: [{ ...judyCollins, durationSec: 234 }] });
+    const [song] = await backend.run((ctx) => ctx.db.query("songs").take(1));
+    const lrclib = lrclibThatAnswersWhenReleased();
+    await (await invitedReader(backend)).mutation(api.catalog.index.open, { songId: song!._id });
+    const filling = backend.finishAllScheduledFunctions(() => {});
+    await lrclib.asked;
+    await expect(backend.mutation(internal.catalog.neverOpened.reset, judyCollins)).rejects.toThrow("still being filled");
+    lrclib.release();
+    await filling;
+    expect((await (await invitedReader(backend)).query(api.catalog.index.song, { songId: song!._id }))?.lyrics).toBe("ready");
   });
 
   test("production refuses, and the Song keeps its words and Chord sheets", async () => {
