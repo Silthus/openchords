@@ -23,7 +23,7 @@ test("She learns the shapes before she plays", async ({ agent, app, screen }) =>
   await agent.assert("a large Am diagram covers the Song", { vision: true });
   await app.screenshot("Tapping a chord shows its diagram large");
 
-  await agent.act("Tap the large diagram");
+  await agent.act("Tap the large diagram to close it");
   await expect(screen.getByRole("dialog")).toBeHidden();
   await agent.assert("the large diagram no longer covers the Song and the lyrics are visible", { vision: true });
   await app.screenshot("One tap closes the diagram");
