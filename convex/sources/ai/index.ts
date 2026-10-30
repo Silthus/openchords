@@ -8,7 +8,7 @@ const attempts = 2;
 
 type Fetch = (url: string, init: RequestInit) => Promise<Response>;
 type Placement = { line: number; word: number; chord: string };
-type Chart = { abstain: boolean; key: string; capo: number; sections: Array<{ name: string; line: number }>; placements: Placement[] };
+type Section = { name: string; line: number };
 
 export function ai({ fetch, token }: { fetch: Fetch; token: () => Promise<string> }) {
   async function ask(prompt: string): Promise<string> {
@@ -49,38 +49,62 @@ async function provenance() {
 }
 
 function layerFrom(answer: string, lines: string[]): ChordLayer | null {
-  const chart = chartIn(answer);
-  if (!chart || chart.abstain || typeof chart.key !== "string" || !isChord(chart.key) || !isCapo(chart.capo)) return null;
-  if (chart.placements.length === 0 || !chart.placements.every((placement) => isPlacedOn(placement, lines))) return null;
-  if (!inReadingOrder(chart.placements) || !inReadingOrder(chart.sections.map(({ line }) => ({ line, word: 0 })))) return null;
-  if (!chart.sections.every(({ line }) => line >= 0 && line < lines.length)) return null;
+  const chart = jsonIn(answer);
+  if (!isRecord(chart) || chart.abstain !== false || !isChordName(chart.key) || !isCapo(chart.capo)) return null;
+  const sections = everyOrNothing(chart.sections, (section) => sectionOn(section, lines));
+  const placements = everyOrNothing(chart.placements, (placement) => placementOn(placement, lines));
+  if (!sections || !placements || placements.length === 0) return null;
+  if (!inReadingOrder(placements) || !inReadingOrder(sections.map(({ line }) => ({ line, word: 0 })))) return null;
   return {
     key: chart.key,
     capo: chart.capo,
-    sections: chart.sections.map(({ name, line }) => ({ label: labelOf(name), fromLine: line })),
+    sections: sections.map(({ name, line }) => ({ label: labelOf(name), fromLine: line })),
     lines: lines.map((_, lyricLine) => ({
       lyricLine,
-      chords: chart.placements.filter(({ line }) => line === lyricLine).map(({ word, chord }) => ({ word, chord })),
+      chords: placements.filter(({ line }) => line === lyricLine).map(({ word, chord }) => ({ word, chord })),
     })),
   };
 }
 
-function chartIn(answer: string): Chart | null {
+function jsonIn(answer: string): unknown {
   try {
-    const chart = JSON.parse(answer) as Chart;
-    return Array.isArray(chart?.placements) && Array.isArray(chart.sections) ? chart : null;
+    return JSON.parse(answer);
   } catch {
     return null;
   }
 }
 
-function isCapo(capo: unknown) {
-  return Number.isInteger(capo) && (capo as number) >= 0 && (capo as number) < 12;
+function everyOrNothing<T>(items: unknown, decode: (item: unknown) => T | null): T[] | null {
+  if (!Array.isArray(items)) return null;
+  const decoded = items.map(decode);
+  return decoded.every((item) => item !== null) ? (decoded as T[]) : null;
 }
 
-function isPlacedOn({ line, word, chord }: Placement, lines: string[]) {
-  const words = lines[line]?.split(/\s+/).filter((text) => text !== "") ?? [];
-  return Number.isInteger(word) && word >= 0 && word < words.length && typeof chord === "string" && isChord(chord);
+function sectionOn(section: unknown, lines: string[]): Section | null {
+  if (!isRecord(section) || typeof section.name !== "string" || !isIndexBelow(section.line, lines.length)) return null;
+  return { name: section.name, line: section.line };
+}
+
+function placementOn(placement: unknown, lines: string[]): Placement | null {
+  if (!isRecord(placement) || !isChordName(placement.chord) || !isIndexBelow(placement.line, lines.length)) return null;
+  const words = lines[placement.line]!.split(/\s+/).filter((text) => text !== "");
+  return isIndexBelow(placement.word, words.length) ? { line: placement.line, word: placement.word, chord: placement.chord } : null;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isChordName(value: unknown): value is string {
+  return typeof value === "string" && isChord(value);
+}
+
+function isCapo(value: unknown): value is number {
+  return isIndexBelow(value, 12);
+}
+
+function isIndexBelow(value: unknown, length: number): value is number {
+  return Number.isInteger(value) && (value as number) >= 0 && (value as number) < length;
 }
 
 function inReadingOrder(anchors: Array<{ line: number; word: number }>) {

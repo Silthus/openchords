@@ -71,9 +71,18 @@ describe("the AI source", () => {
     ["no chords at all", withPlacements(() => [])],
     ["an abstention", answer({ ...recordedDraft, abstain: true })],
     ["an answer that is not a chart", answer("I cannot help with that" as unknown as Draft)],
+    ["a placement that is not an anchor", withPlacements((placements) => [...placements, null as unknown as Draft["placements"][number]])],
+    ["a line number written as text", withPlacements((placements) => placements.map((placement) => ({ ...placement, line: String(placement.line) as unknown as number })))],
+    ["a section without a name", answer({ ...recordedDraft, sections: [{ line: 0 }] })],
   ])("a draft with %s is asked for again once", async (_, wrong) => {
     const { source, requests } = answering(wrong, Response.json(recorded));
-    expect(await source.chordsFor(judyCollins, lyrics)).toHaveLength(1);
+    const [draft, ...more] = await source.chordsFor(judyCollins, lyrics);
+    expect(more).toHaveLength(0);
+    expect(draft!.layer.lines[0]!.chords).toEqual([
+      { word: 0, chord: "F" },
+      { word: 1, chord: "Bb" },
+      { word: 2, chord: "F" },
+    ]);
     expect(requests).toHaveLength(2);
   });
 
