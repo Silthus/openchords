@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import { discoveryOf, type Discovery } from "../discovery";
 import { Logo } from "../Logo";
+import { OfflineBadge, useOffline } from "../offline";
 import { SearchStatus } from "../SearchStatus";
 import { YourLibrary } from "../YourLibrary";
 import { SongRow } from "../SongRow";
@@ -21,6 +22,7 @@ function StartScreen() {
   const [query, setQuery] = useState(Route.useSearch().q ?? "");
   const { searching, songs } = useSongsFor(query.trim());
   const discovery = useDiscovery(query.trim());
+  const offline = useOffline();
 
   const changeQuery = (next: string) => {
     setQuery(next);
@@ -29,7 +31,10 @@ function StartScreen() {
 
   return (
     <main className="mx-auto max-w-xl px-5 pt-16 pb-24">
-      <Logo />
+      <div className="flex items-center justify-between gap-3">
+        <Logo />
+        <OfflineBadge />
+      </div>
       <p className="mt-2 text-lg text-muted">Chords over the words, without the ads.</p>
       <input
         type="search"
@@ -41,7 +46,7 @@ function StartScreen() {
         className="mt-8 w-full rounded-xl border border-line bg-page px-4 py-3 text-lg outline-none focus:border-accent"
       />
       {!searching && <YourLibrary />}
-      {!searching && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
+      {!searching && songs !== undefined && <h2 className="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">Built-in Songs</h2>}
       {songs?.length !== 0 && (
         <ul className="mt-4 divide-y divide-line">
           {songs?.map((song) => (
@@ -49,7 +54,7 @@ function StartScreen() {
           ))}
         </ul>
       )}
-      <SearchStatus query={query.trim()} discovery={discovery} listIsEmpty={songs?.length === 0} />
+      <SearchStatus query={query.trim()} discovery={discovery} listIsEmpty={songs?.length === 0} offline={offline && searching} />
     </main>
   );
 }

@@ -16,6 +16,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "prompt",
+      includeAssets: ["favicon.svg"],
       manifest: {
         name: "OpenChords",
         short_name: "OpenChords",

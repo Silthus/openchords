@@ -1,11 +1,27 @@
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useLibrary } from "../library";
+import { useOffline, useSavedOffline } from "./offline";
 import { SongRow } from "./SongRow";
 
+type SongSummary = { songId: string; title: string; artist: string };
+
 export function YourLibrary() {
+  return useOffline() ? <LibraryOnThePhone /> : <LibraryOnline />;
+}
+
+function LibraryOnline() {
   const saved = useLibrary();
   const songs = useQuery(api.catalog.index.summaries, saved?.length ? { songIds: saved.map((entry) => entry.songId) } : "skip");
+  return <LibraryList songs={songs} />;
+}
+
+function LibraryOnThePhone() {
+  const kept = useSavedOffline();
+  return <LibraryList songs={kept.done ? kept.value?.map((copy) => copy.found.song) : undefined} />;
+}
+
+function LibraryList({ songs }: { songs: SongSummary[] | undefined }) {
   if (!songs?.length) return null;
   return (
     <section aria-label="Your Library" className="mt-8">
