@@ -60,6 +60,10 @@ export function identityKeyOf(song: { title: string; artist: string }) {
   return `${normalised(song.artist)}|${normalised(song.title)}`;
 }
 
+export function wordsOf(text: string) {
+  return normalised(text).split(" ").filter(Boolean);
+}
+
 function normalised(text: string) {
   return text
     .normalize("NFKD")

@@ -44,7 +44,23 @@ describe("the MusicBrainz source", () => {
     await musicbrainz(fetch).findSongs('AC/DC: "Back in Black"');
     const [request] = requests;
     expect(request?.headers.get("User-Agent")).toMatch(/^OpenChords\/\S+ \( https:\/\/github\.com\/Silthus\/openchords \)$/);
-    expect(new URL(request!.url).searchParams.get("query")).toBe("recording:(AC DC Back in Black) OR artist:(AC DC Back in Black)");
+    expect(new URL(request!.url).searchParams.get("query")).toEndWith("OR recording:(ac dc back in black) OR artist:(ac dc back in black)");
+  });
+
+  test("asks first for the recordings whose title and artist hold every word she typed", async () => {
+    const { fetch, requests } = answering(Response.json({ recordings: [] }));
+    await musicbrainz(fetch).findSongs("Cranberries Zombie");
+    expect(new URL(requests[0]!.url).searchParams.get("query")).toStartWith(
+      "((recording:cranberries OR artist:cranberries) AND (recording:zombie OR artist:zombie))^4 OR ",
+    );
+  });
+
+  test("an AND she types is a word, not an operator", async () => {
+    const { fetch, requests } = answering(Response.json({ recordings: [] }));
+    await musicbrainz(fetch).findSongs("Simon AND Garfunkel");
+    const query = new URL(requests[0]!.url).searchParams.get("query");
+    expect(query).toContain("(recording:and OR artist:and)");
+    expect(query).toEndWith("recording:(simon and garfunkel) OR artist:(simon and garfunkel)");
   });
 
   test("a busy MusicBrainz says when to try again", async () => {
