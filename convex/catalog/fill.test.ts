@@ -3,13 +3,12 @@ import amazingGrace from "../fixtures/lrclibAmazingGrace.json";
 import { api, internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
 import { sourcesFor } from "../sources";
-import { testBackend } from "../testing.helper";
+import { invitedReader, testBackend } from "../testing.helper";
 
 type Backend = ReturnType<typeof testBackend>;
 type Reader = ReturnType<Backend["withIdentity"]>;
 
 const realFetch = globalThis.fetch;
-const anna = { email: "anna@example.com", name: "Anna Berg" };
 let lrclibRequests = 0;
 
 function lrclibAnswers(response: () => Response) {
@@ -54,16 +53,6 @@ async function aSongWhoseEarlierFillStillFetchesWhenOpened() {
   await opened.reader.mutation(api.catalog.index.open, { songId: opened.songId });
   await lrclib.asked(2);
   return { ...opened, lrclib, bothFills };
-}
-
-async function invitedReader(backend: Backend) {
-  await backend.mutation(internal.access.invites.add, { email: anna.email });
-  const subject = await backend.run(async (ctx) => {
-    const userId = await ctx.db.insert("users", { ...anna, emailVerificationTime: Date.now() });
-    const sessionId = await ctx.db.insert("authSessions", { userId, expirationTime: Date.now() + 60 * 60 * 1000 });
-    return `${userId}|${sessionId}`;
-  });
-  return backend.withIdentity({ subject });
 }
 
 async function aSongNobodyOpened() {

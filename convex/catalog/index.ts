@@ -25,7 +25,7 @@ export const builtIns = query({
       .query("songs")
       .withIndex("by_builtIn", (q) => q.gt("builtInId", ""))
       .collect();
-    return songs.map(summaryOf);
+    return songs.filter((song) => song.takenDownAt === undefined).map(summaryOf);
   },
 });
 
@@ -151,7 +151,7 @@ export const song = query({
       .query("fills")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
       .unique();
-    const lyrics = lyricsStateOf(fill);
+    const lyrics = lyricsStateOf(song, fill);
     return {
       song: summaryOf(song),
       sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
@@ -161,7 +161,8 @@ export const song = query({
   },
 });
 
-function lyricsStateOf(fill: Doc<"fills"> | null): Doc<"fills">["lyrics"] | "unreachable" {
+function lyricsStateOf(song: Doc<"songs">, fill: Doc<"fills"> | null): Doc<"fills">["lyrics"] | "unreachable" {
+  if (song.takenDownAt !== undefined) return "missing";
   if (!fill) return "pending";
   return fill.state === "failed" && fill.lyrics === "pending" ? "unreachable" : fill.lyrics;
 }
@@ -200,11 +201,12 @@ async function storeBuiltIn(ctx: MutationCtx, hit: (typeof builtInHits)[number])
     .withIndex("by_builtIn", (q) => q.eq("builtInId", hit.builtInId))
     .unique();
   if (!existing) return await ctx.db.insert("songs", song);
-  await ctx.db.patch(existing._id, song);
+  if (existing.takenDownAt === undefined) await ctx.db.patch(existing._id, song);
   return existing._id;
 }
 
 async function openSong(ctx: MutationCtx, songId: Id<"songs">) {
-  if (!(await ctx.db.get(songId))) throw new ConvexError({ code: "NOT_FOUND" });
-  await startFill(ctx, songId);
+  const song = await ctx.db.get(songId);
+  if (!song) throw new ConvexError({ code: "NOT_FOUND" });
+  await startFill(ctx, song);
 }

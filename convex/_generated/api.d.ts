@@ -16,6 +16,7 @@ import type * as access_testUser from "../access/testUser.js";
 import type * as auth from "../auth.js";
 import type * as catalog_fill from "../catalog/fill.js";
 import type * as catalog_index from "../catalog/index.js";
+import type * as catalog_takedown from "../catalog/takedown.js";
 import type * as http from "../http.js";
 import type * as sources_builtIn_amazingGrace from "../sources/builtIn/amazingGrace.js";
 import type * as sources_builtIn_houseOfTheRisingSun from "../sources/builtIn/houseOfTheRisingSun.js";
@@ -44,6 +45,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "catalog/fill": typeof catalog_fill;
   "catalog/index": typeof catalog_index;
+  "catalog/takedown": typeof catalog_takedown;
   http: typeof http;
   "sources/builtIn/amazingGrace": typeof sources_builtIn_amazingGrace;
   "sources/builtIn/houseOfTheRisingSun": typeof sources_builtIn_houseOfTheRisingSun;
