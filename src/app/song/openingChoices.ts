@@ -7,7 +7,8 @@ type StoredChoices = { chordSheetId: string; transpose: number; capos: Record<st
 type Opening = { linked: string | undefined; entry: StoredChoices | undefined };
 
 export function openingChoices<Sheet extends ChordSheetChoice>(sheets: Sheet[], { linked, entry }: Opening) {
-  const byId = (chordSheetId: string | undefined) => sheets.find((sheet) => sheet.chordSheetId === chordSheetId);
+  const byId = (chordSheetId: string | undefined) =>
+    chordSheetId === undefined ? undefined : sheets.find((sheet) => sheet.chordSheetId === chordSheetId || sheet.replaces.includes(chordSheetId));
   const sheet = byId(linked) ?? byId(entry?.chordSheetId) ?? sheets[0];
   if (!sheet) return undefined;
   const view: View = { transpose: entry?.transpose ?? 0, capo: entry?.capos[sheet.chordSheetId] ?? writtenCapo(sheet) };

@@ -221,7 +221,7 @@ export const song = query({
     v.null(),
     v.object({
       song: songSummary,
-      sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string() })),
+      sheets: v.array(v.object({ chordSheetId: v.id("chordSheets"), name: v.string(), origin, chordPro: v.string(), replaces: v.array(v.id("chordSheets")) })),
       lyrics: v.union(v.literal("pending"), v.literal("ready"), v.literal("missing"), v.literal("unreachable")),
       wordsOnly: v.union(v.null(), v.array(v.string())),
       writingChords: v.boolean(),
@@ -232,12 +232,11 @@ export const song = query({
     const songId = ctx.db.normalizeId("songs", args.songId);
     const song = songId && (await ctx.db.get(songId));
     if (!song) return null;
-    const sheets = newestVersionOfEachPerson(
-      await ctx.db
-        .query("chordSheets")
-        .withIndex("by_song", (q) => q.eq("songId", song._id))
-        .collect(),
-    );
+    const stored = await ctx.db
+      .query("chordSheets")
+      .withIndex("by_song", (q) => q.eq("songId", song._id))
+      .collect();
+    const sheets = newestVersionOfEachPerson(stored);
     const fill = await ctx.db
       .query("fills")
       .withIndex("by_song", (q) => q.eq("songId", song._id))
@@ -245,7 +244,7 @@ export const song = query({
     const lyrics = lyricsStateOf(song, fill);
     return {
       song: summaryOf(song),
-      sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro })),
+      sheets: sheets.map((sheet) => ({ chordSheetId: sheet._id, name: sheet.name, origin: sheet.origin, chordPro: sheet.chordPro, replaces: olderVersionsOf(sheet, stored) })),
       lyrics,
       wordsOnly: lyrics === "ready" && sheets.length === 0 ? await linesOf(ctx, song) : null,
       writingChords: fill?.state === "running" && fill.lyrics === "ready" && fill.chords === "pending",
@@ -256,6 +255,11 @@ export const song = query({
 function newestVersionOfEachPerson(sheets: Doc<"chordSheets">[]) {
   const newest = new Map(sheets.filter(isPersonVersion).map((sheet) => [sheet.provenance.recordId, sheet._id]));
   return sheets.filter((sheet) => !isPersonVersion(sheet) || newest.get(sheet.provenance.recordId) === sheet._id);
+}
+
+function olderVersionsOf(newest: Doc<"chordSheets">, stored: Doc<"chordSheets">[]) {
+  if (!isPersonVersion(newest)) return [];
+  return stored.filter((sheet) => isPersonVersion(sheet) && sheet.provenance.recordId === newest.provenance.recordId && sheet._id !== newest._id).map((sheet) => sheet._id);
 }
 
 function isPersonVersion(sheet: Doc<"chordSheets">) {

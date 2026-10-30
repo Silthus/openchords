@@ -5,7 +5,7 @@ import type { Id } from "../_generated/dataModel";
 import { invitedReader, testBackend } from "../testing.helper";
 
 type Backend = ReturnType<typeof testBackend>;
-type Sheet = { chordSheetId: Id<"chordSheets">; name: string; origin: string; chordPro: string };
+type Sheet = { chordSheetId: Id<"chordSheets">; name: string; origin: string; chordPro: string; replaces: Id<"chordSheets">[] };
 
 const ben = { email: "ben@example.com", name: "Ben Ott" };
 
@@ -54,6 +54,8 @@ describe("her version of a Chord sheet", () => {
     const sheets = await sheetsOf(backend, songId);
     expect(sheets.map((sheet) => sheet.chordSheetId)).toEqual([classic.chordSheetId, newest]);
     expect(sheets[1]!.chordPro).toContain("[Em]Amazing");
+    expect(sheets[1]!.replaces).toEqual([first]);
+    expect(sheets[0]!.replaces).toEqual([]);
   });
 
   test("is one more Chord sheet for every other invited person, beside their own version", async () => {
