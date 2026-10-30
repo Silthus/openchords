@@ -29,13 +29,23 @@ export function offlineCopies(storage: () => IDBFactory) {
       };
     });
 
+  const markOpened = (songId: string, openedAt: number) =>
+    inStore("readwrite", (songs) => {
+      if (signingOut) return;
+      const current = songs.get(songId);
+      current.onsuccess = () => {
+        if (current.result) songs.put({ ...current.result, openedAt }, songId);
+      };
+    });
+
   const reopen = async (songId: string, openedAt: number) => {
     const kept = await inStore<OfflineCopy | undefined>("readonly", (songs) => songs.get(songId));
     if (!kept) return undefined;
-    const reopened = { ...kept, openedAt };
-    await keep(reopened).catch(() => undefined);
-    return reopened;
+    await markOpened(songId, openedAt).catch(() => undefined);
+    return { ...kept, openedAt };
   };
+
+  const forgetAll = () => inStore("readwrite", (songs) => songs.clear()).catch(() => undefined);
 
   return {
     keep,
@@ -43,8 +53,9 @@ export function offlineCopies(storage: () => IDBFactory) {
     forgetAllWhile: async (signOut: () => Promise<void>) => {
       signingOut = true;
       try {
-        await inStore("readwrite", (songs) => songs.clear()).catch(() => undefined);
+        await forgetAll();
         await signOut();
+        await forgetAll();
       } finally {
         signingOut = false;
       }
