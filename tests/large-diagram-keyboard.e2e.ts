@@ -13,7 +13,7 @@ test("She opens and closes a large diagram from the keyboard", async ({ app, bro
   await expect(large).toBeVisible();
   await browser.keyboard.press("Escape");
   await expect(large).toBeHidden();
-  await expect.poll(() => browser.evaluate(aDialogIsOnThePage)).toBe(false);
+  await expect(browser.locator("dialog")).toHaveCount(0);
   await expect(am).toBeFocused();
 
   await browser.keyboard.press("Enter");
@@ -21,7 +21,3 @@ test("She opens and closes a large diagram from the keyboard", async ({ app, bro
   await browser.keyboard.press("Enter");
   await expect(large).toBeHidden();
 });
-
-function aDialogIsOnThePage() {
-  return document.querySelector("dialog") !== null;
-}
