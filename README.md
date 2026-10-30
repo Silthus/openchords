@@ -52,7 +52,13 @@ bunx convex env set LRCLIB_API_KEY <api key>
 bunx convex env set OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib   # dev
 ```
 
-Previews and production stay on `builtIn` until production has invites on.
+Previews and production stay on `builtIn` until production has invites on. Once it does, switch production's outside sources on:
+
+```sh
+bunx convex env set --prod LRCLIB_APP_ID <app id>
+bunx convex env set --prod LRCLIB_API_KEY <api key>
+bunx convex env set --prod OPENCHORDS_SOURCES builtIn,musicbrainz,lrclib
+```
 
 To take a Song down, for example after a rights holder asks, run:
 
