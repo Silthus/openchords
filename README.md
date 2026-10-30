@@ -15,7 +15,7 @@ bun run gate:lane   # typecheck, lint and tests, as CI runs them
 
 Chord diagrams draw the first fingering of each chord from [chords-db](https://github.com/tombatossals/chords-db) at `df06fa7` (MIT, notice in `src/app/chords/chords-db/LICENSE`). `bun run scripts/vendor-chords-db.ts` vendors it again. Where none of its fingerings plays a chord, `src/app/chords/handWritten.ts` draws it by hand.
 
-Every push to `main` deploys to production and uploads the app to Convex static hosting. Every pull request from this repo, drafts included, deploys its own Convex preview `pr-<number>` and comments its link.
+Every push to `main` deploys to production and uploads the app to Convex static hosting. Every pull request from this repo, drafts included, deploys its own Convex preview `pr-<number>` and comments its link. Closing or merging the pull request deletes that preview.
 
 ## Sign-in
 
